@@ -1,3 +1,5 @@
+import Visual.GamePanel;
+
 import javax.swing.*;
 
 public class Frame extends JFrame {
