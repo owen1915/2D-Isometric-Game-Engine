@@ -30,8 +30,15 @@ public class GamePanel extends JPanel {
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        if (GameData.GAMESTATE == 1) {
-            mainMenu.render(g2);
+        // switch statement to check what to render using GAMESTATE
+        switch (GameData.GAMESTATE) {
+            case 1:
+                mainMenu.render(g2);
+                break;
+            default:
+                if (GameData.debug) {
+                    System.out.println("NOT RENDERING NOTHING: GAMESTATE = " + GameData.GAMESTATE);
+                }
         }
 
         // disposes graphics for garbage collection

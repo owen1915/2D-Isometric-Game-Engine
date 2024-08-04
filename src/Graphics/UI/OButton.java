@@ -1,7 +1,7 @@
 package Graphics.UI;
 
 /**
- * the highly elusive and hard to find OWEN BUTTONS
+ * custom button class because JButtons are terrible
  */
 public class OButton {
     //TO BE FINISHED LATER
