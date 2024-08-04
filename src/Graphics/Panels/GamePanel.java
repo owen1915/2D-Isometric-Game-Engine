@@ -8,11 +8,15 @@ import java.awt.*;
 public class GamePanel extends JPanel {
 
     // creating classes
-    private MainMenu mainMenu = new MainMenu();
+    private MainMenu mainMenu;
 
     public GamePanel() {
         setPreferredSize(new Dimension(GameData.width, GameData.height));
         setVisible(true);
+        setFocusable(true);
+        requestFocusInWindow();
+
+        mainMenu = new MainMenu(this);
     }
 
     /**
