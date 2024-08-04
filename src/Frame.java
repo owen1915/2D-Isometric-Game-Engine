@@ -1,3 +1,4 @@
+import MainConfig.GameLoop;
 import Visual.GamePanel;
 
 import javax.swing.*;
@@ -15,6 +16,8 @@ public class Frame extends JFrame {
         setResizable(false);
         setFocusable(false);
         setVisible(true);
+
+        new GameLoop();
     }
 
     public static void main(String[] args) {
