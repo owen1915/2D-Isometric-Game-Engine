@@ -68,7 +68,7 @@ public class OButton {
         rect = new Rectangle(rectX, rectY, stringWidth + buffer, stringHeight);
         g2.draw(rect);
         g2.setColor(Color.LIGHT_GRAY);
-        g2.fill(rect);
+        g2.fillRect(rect.x + 1, rect.y + 1, rect.width - 1, rect.height - 1);
         g2.setColor(color);
         g2.drawString(str, middleX, y + (stringHeight/2 + stringHeight/3) - buffer/2);
     }
