@@ -1,6 +1,5 @@
-package Visual;
+package Graphics;
 
 public class IsoCordTool {
-
 
 }

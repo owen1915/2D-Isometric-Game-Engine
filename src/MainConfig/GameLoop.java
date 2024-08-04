@@ -1,8 +1,14 @@
 package MainConfig;
 
+import Graphics.Panels.GamePanel;
+
 public class GameLoop implements Runnable {
 
-    public GameLoop() {
+    private GamePanel gamePanel;
+
+    public GameLoop(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
+
         new Thread(this).start();
     }
 
@@ -16,6 +22,7 @@ public class GameLoop implements Runnable {
             long startTime = System.currentTimeMillis();
 
             //render and update game here
+            gamePanel.update();
 
             long elaspedTime = System.currentTimeMillis() - startTime;
             long sleep = runTime - elaspedTime;
@@ -29,7 +36,8 @@ public class GameLoop implements Runnable {
             }
 
             frameCounter++;
-            if (System.currentTimeMillis() - lastTime > 1000) {
+            if (GameData.debug && System.currentTimeMillis() - lastTime > 1000) {
+                // debug for printing fps
                 System.out.println("FPS: " + frameCounter);
                 frameCounter = 0;
                 lastTime = System.currentTimeMillis();
