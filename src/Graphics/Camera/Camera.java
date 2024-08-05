@@ -8,9 +8,16 @@ import javax.swing.*;
 public class Camera {
     private GamePanel gamePanel;
 
+    private static int tileHeight = 64;
+    private static int tileWidth = 64;
+
+    private int xOffset = 0;
+    private int yOffset = 0;
+
+    float scale = 1;
+
     public Camera(){
-        //Create the game panel
-        this.gamePanel = new GamePanel();
+
 
     }
 

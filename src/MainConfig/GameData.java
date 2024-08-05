@@ -1,5 +1,6 @@
 package MainConfig;
 
+import Graphics.Camera.Camera;
 import World.World;
 
 public class GameData {
@@ -20,6 +21,7 @@ public class GameData {
 
     // max rows and cols
     public static World world = new World(15, 15);
+    public Camera camera = new Camera();
 
     /**
      * Game state indicates what we are drawing.
