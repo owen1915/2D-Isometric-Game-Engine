@@ -43,7 +43,7 @@ public class GamePanel extends JPanel {
                 mainMenu.render(g2);
                 break;
             case 2:
-                gameGraphics.render(g2, this);
+                gameGraphics.render(g2);
                 break;
             default:
                 if (GameData.debug) {
