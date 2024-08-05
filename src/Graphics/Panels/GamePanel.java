@@ -1,6 +1,7 @@
 package Graphics.Panels;
 
 import MainConfig.GameData;
+import Graphics.GameGraphics;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +10,7 @@ public class GamePanel extends JPanel {
 
     // creating classes
     private MainMenu mainMenu;
+    private GameGraphics gameGraphics;
 
     public GamePanel() {
         setPreferredSize(new Dimension(GameData.width, GameData.height));
@@ -17,6 +19,7 @@ public class GamePanel extends JPanel {
         requestFocusInWindow();
 
         mainMenu = new MainMenu(this);
+        gameGraphics = new GameGraphics();
     }
 
     /**
@@ -38,6 +41,9 @@ public class GamePanel extends JPanel {
         switch (GameData.GAMESTATE) {
             case 1:
                 mainMenu.render(g2);
+                break;
+            case 2:
+                gameGraphics.render(g2, this);
                 break;
             default:
                 if (GameData.debug) {
