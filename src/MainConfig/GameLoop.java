@@ -24,8 +24,10 @@ public class GameLoop implements Runnable {
             //render and update game here
             gamePanel.update();
 
+
             long elaspedTime = System.currentTimeMillis() - startTime;
             long sleep = runTime - elaspedTime;
+
 
             if (sleep > 0) {
                 try {
@@ -34,7 +36,6 @@ public class GameLoop implements Runnable {
                     throw new RuntimeException(e);
                 }
             }
-
             frameCounter++;
             if (GameData.debug && System.currentTimeMillis() - lastTime > 1000) {
                 // debug for printing fps

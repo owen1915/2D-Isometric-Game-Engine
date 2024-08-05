@@ -2,18 +2,18 @@ package Graphics;
 
 import Graphics.Panels.GamePanel;
 import MainConfig.GameData;
+import World.WorldTile;
 
 import java.awt.*;
 
 public class GameGraphics {
 
-    private int[][] tileMatrix = new int[GameData.MAXROWS][GameData.MAXCOLS];
     private int counter = 0;
 
     public GameGraphics() {
-        for (int y = 0; y < GameData.MAXROWS; y++) {
-            for (int i = 0; i < GameData.MAXCOLS; i++) {
-                tileMatrix[y][i] = 0;
+        for (int y = 0; y < GameData.world.getWorldYSize(); y++) {
+            for (int i = 0; i < GameData.world.getWorldXSize(); i++) {
+                GameData.world.setWorldTile(y, i, WorldTile.Tile.Grass);
             }
         }
     }
@@ -31,8 +31,8 @@ public class GameGraphics {
     }
 
     public void render(Graphics2D g2, GamePanel gp) {
-        for (int i = 0; i < tileMatrix.length; i++) {
-            for (int j = 0; j < tileMatrix[0].length; j++) {
+        for (int i = 0; i < GameData.world.getWorldYSize(); i++) {
+            for (int j = 0; j < GameData.world.getWorldXSize(); j++) {
                 Point isoPoint = IsoCordTool.convertToIso(i, j);
                 drawTile(g2, isoPoint.x + gp.getWidth() / 2, isoPoint.y);
             }

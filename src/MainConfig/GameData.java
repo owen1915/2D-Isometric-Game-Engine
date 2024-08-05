@@ -1,5 +1,7 @@
 package MainConfig;
 
+import World.World;
+
 public class GameData {
 
     // fps
@@ -17,12 +19,13 @@ public class GameData {
     public static int tileWidth = 64;
 
     // max rows and cols
-    public static final int MAXROWS = 15;
-    public static final int MAXCOLS = 15;
+    public static World world = new World(15, 15);
 
     /**
      * Game state indicates what we are drawing.
      * When GAMESTATE is 1 it will render the Menu, when GAMESTATE is 2 it can render the game, etc...
      */
     public static int GAMESTATE = 1;
+
+
 }
