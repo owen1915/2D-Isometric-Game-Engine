@@ -41,7 +41,7 @@ public class MainMenu {
 
         // title string
         int stringWidth = fm.stringWidth(strArr[0]);
-        g2.drawString(strArr[0], GameData.width/2 - stringWidth/2, 60);
+        g2.drawString(strArr[0], GameData.screenWidth /2 - stringWidth/2, 60);
 
         //draw buttons
         //change font for buttons

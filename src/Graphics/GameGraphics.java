@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class GameGraphics {
 
-    private int counter = 0;
+    private IsoCordTool isoCordTool = new IsoCordTool();
 
     public GameGraphics() {
         for (int y = 0; y < GameData.world.getWorldYSize(); y++) {
@@ -17,6 +17,8 @@ public class GameGraphics {
                 GameData.world.setWorldTile(y, i, WorldTile.Tile.Grass);
             }
         }
+        System.out.println(isoCordTool.getXIso(3, 1));
+        System.out.println(isoCordTool.getYIso(3, 1));
     }
 
     public void drawTile(Graphics2D g, int x, int y) {
@@ -27,21 +29,12 @@ public class GameGraphics {
 
         // more testing trying to figure out how to use iso rendering
         Image grassTile = new ImageIcon("res/grassIso.png").getImage();
-        int y = -10;
-        int x = 32;
 
         for (int i = 0; i < GameData.world.getWorldYSize(); i++) {
 
             for (int j = 0; j < GameData.world.getWorldXSize(); j++) {
-                g2.drawImage(grassTile, x, y, null);
-                x -= 32;
-                y += 10;
-                g2.drawImage(grassTile, x, y, null);
-                x += 96;
-                y -= 10;
+                g2.drawImage(grassTile, isoCordTool.getXIso(j, i), isoCordTool.getYIso(j, i), null);
             }
-            x = 32;
-            y += 20;
         }
     }
 }

@@ -13,7 +13,7 @@ public class GamePanel extends JPanel {
     private GameGraphics gameGraphics;
 
     public GamePanel() {
-        setPreferredSize(new Dimension(GameData.width, GameData.height));
+        setPreferredSize(new Dimension(GameData.screenWidth, GameData.screenHeight));
         setVisible(true);
         setFocusable(true);
         requestFocusInWindow();

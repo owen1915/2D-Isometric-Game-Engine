@@ -57,7 +57,7 @@ public class OButton {
         int stringWidth = fm.stringWidth(str);
         int stringHeight = fm.getHeight() + buffer;
 
-        int middleX = (GameData.width / 2 - stringWidth / 2);
+        int middleX = (GameData.screenWidth / 2 - stringWidth / 2);
 
         int rectX = 0;
         int rectY = y;

@@ -10,12 +10,12 @@ public class GameData {
     // when creating debug options like printing fps, always check if debug is true
     public static boolean debug = true;
 
-    // width and height
-    public static int width = 1280;
-    public static int height = 720;
+    // screenWidth and screenHeight
+    public static int screenWidth = 1280;
+    public static int screenHeight = 720;
 
-    // default tile height and width
-    public static int tileHeight = 32;
+    // default tile screenHeight and screenWidth
+    public static int tileHeight = 64;
     public static int tileWidth = 64;
 
     // max rows and cols

@@ -2,16 +2,20 @@ package Graphics;
 
 import MainConfig.GameData;
 
-import java.awt.*;
-
 public class IsoCordTool {
 
-    public static Point convertToIso(int x, int y) {
-        int isoX = (x - y) * (GameData.tileWidth / 2);
-        int isoY = (x + y) * (GameData.tileHeight / 2);
-        return new Point(isoX, isoY);
+    private int width = GameData.tileWidth;
+    private int height = GameData.tileHeight;
+    private double[] xVector = {0.5 * width, 0.25 * height};
+    private double[] yVector = {-0.5 * width, 0.25 * height};
+
+    public int getXIso(int x, int y) {
+        double isoX = x * xVector[0] + y * yVector[0];
+        return (int) isoX - width/2 + GameData.screenWidth/2;
     }
 
-
-
+    public int getYIso(int x, int y) {
+        double isoY = x * xVector[1] + y * yVector[1];
+        return (int) isoY;
+    }
 }
