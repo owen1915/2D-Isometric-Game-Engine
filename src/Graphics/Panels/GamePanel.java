@@ -5,6 +5,8 @@ import Graphics.GameGraphics;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class GamePanel extends JPanel {
 
@@ -20,6 +22,24 @@ public class GamePanel extends JPanel {
 
         mainMenu = new MainMenu(this);
         gameGraphics = new GameGraphics();
+
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_W) {
+                    GameData.camera.setyOffset(GameData.camera.getyOffset() - 16);
+                }
+                if (e.getKeyCode() == KeyEvent.VK_S) {
+                    GameData.camera.setyOffset(GameData.camera.getyOffset() + 16);
+                }
+                if (e.getKeyCode() == KeyEvent.VK_A) {
+                    GameData.camera.setxOffset(GameData.camera.getxOffset() - 16);
+                }
+                if (e.getKeyCode() == KeyEvent.VK_D) {
+                    GameData.camera.setxOffset(GameData.camera.getxOffset() + 16);
+                }
+            }
+        });
     }
 
     /**

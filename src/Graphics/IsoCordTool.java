@@ -11,11 +11,11 @@ public class IsoCordTool {
 
     public int getXIso(int x, int y) {
         double isoX = x * xVector[0] + y * yVector[0];
-        return (int) isoX - width/2 + GameData.screenWidth/2;
+        return (int) isoX - width/2 + GameData.camera.getxOffset();
     }
 
     public int getYIso(int x, int y) {
         double isoY = x * xVector[1] + y * yVector[1];
-        return (int) isoY;
+        return (int) isoY + GameData.camera.getyOffset()/2;
     }
 }

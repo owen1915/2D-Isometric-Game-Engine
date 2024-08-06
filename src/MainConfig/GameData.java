@@ -20,8 +20,8 @@ public class GameData {
     public static int tileWidth = 64;
 
     // max rows and cols
-    public static World world = new World(15, 15);
-    public Camera camera = new Camera();
+    public static World world = new World(8, 8);
+    public static Camera camera = new Camera();
 
     /**
      * Game state indicates what we are drawing.
