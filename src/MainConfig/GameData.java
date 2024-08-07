@@ -3,6 +3,7 @@ package MainConfig;
 import Graphics.Camera.Camera;
 import Graphics.Panels.GamePanel;
 import World.World;
+import World.WorldTile;
 
 import java.awt.*;
 
@@ -24,6 +25,7 @@ public class GameData {
 
     // max rows and cols
     public World world = new World(8, 8);
+
     public Camera camera = new Camera(this);
 
     /**
@@ -37,6 +39,7 @@ public class GameData {
 
     public GameData(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
+
     }
 
 }

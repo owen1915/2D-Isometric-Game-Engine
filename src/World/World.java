@@ -26,8 +26,12 @@ public class World {
                 this.worldTiles[x][y] = new WorldTile(WorldTile.Tile.Grass);
             }
         }
-    }
 
+        //Set world variables
+        setWorldTile(2, 2, WorldTile.Tile.Wall);
+        setWorldTile(2, 3, WorldTile.Tile.Wall);
+        setWorldTile(2, 4, WorldTile.Tile.Wall);
+    }
 
     public int getWorldXSize() {
         return worldXSize;
@@ -43,6 +47,15 @@ public class World {
         if (x < worldXSize && y < worldYSize){
             //Used the tile setting function to update that tiles type
             this.worldTiles[x][y].setTileType(tileType);
+        }
+    }
+
+    public WorldTile.Tile getWorldTileType(int x, int y){
+        if (x < worldXSize && y < worldYSize){
+            return worldTiles[x][y].getTileType();
+        }
+        else {
+            return null;
         }
     }
 

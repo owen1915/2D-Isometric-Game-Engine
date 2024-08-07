@@ -15,7 +15,7 @@ public class WorldTile {
     private Image tileImage;
 
     public WorldTile(Tile tileType){
-        this.tileType = Tile.Grass;
+        this.tileType = tileType;
         this.tileImage = loadImage(tileType);
     }
 
@@ -25,6 +25,7 @@ public class WorldTile {
         switch (tileType) {
             case Tile.Grass:
                 return image;
+
         }
 
         return null;

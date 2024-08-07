@@ -20,10 +20,6 @@ public class Camera {
 
     float scale = 1;
 
-    public Camera(){
-
-    }
-
     public int getyOffset() {
         return yOffset;
     }
