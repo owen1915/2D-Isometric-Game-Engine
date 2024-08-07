@@ -4,6 +4,7 @@ import Graphics.Camera.Camera;
 import Graphics.Panels.GamePanel;
 import World.World;
 import World.WorldTile;
+import Graphics.IsoCordTool;
 
 import java.awt.*;
 
@@ -21,7 +22,7 @@ public class GameData {
 
     // default tile screenHeight and screenWidth
     public int tileHeight = 64;
-    public int tileWidth = 64;
+    public int tileWidth = 64;;
 
     // max rows and cols
     public World world = new World(8, 8);
@@ -39,7 +40,6 @@ public class GameData {
 
     public GameData(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-
     }
 
 }

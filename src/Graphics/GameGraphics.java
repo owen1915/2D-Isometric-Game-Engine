@@ -13,12 +13,10 @@ public class GameGraphics {
     private IsoCordTool isoCordTool;
     private ImageLoader imageLoader = new ImageLoader();
     private GameData gameData;
-    private Image[] textures;
 
     public GameGraphics(GameData gameData) {
         this.gameData = gameData;
-        isoCordTool = new IsoCordTool(gameData);
-        textures = imageLoader.getTextures();
+        isoCordTool = gameData.gamePanel.getIsoCordTool();
     }
 
     public void render(Graphics2D g2) {

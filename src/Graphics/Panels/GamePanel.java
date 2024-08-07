@@ -1,11 +1,14 @@
 package Graphics.Panels;
 
 import Graphics.Frame.GameFrame;
+import Listeners.MouseListener;
 import MainConfig.GameData;
 import Graphics.GameGraphics;
 
 import javax.swing.*;
 import java.awt.*;
+import Graphics.IsoCordTool;
+import World.WorldTile;
 
 public class GamePanel extends JPanel {
 
@@ -13,6 +16,8 @@ public class GamePanel extends JPanel {
     private GameData gameData;
     private MainMenu mainMenu;
     private GameGraphics gameGraphics;
+    private MouseListener mouseListener;
+    private IsoCordTool isoCordTool;
 
     public GamePanel(GameFrame gameFrame) {
         gameData = new GameData(this);
@@ -22,8 +27,12 @@ public class GamePanel extends JPanel {
         setFocusable(true);
         requestFocusInWindow();
 
+        mouseListener = new MouseListener();
+        isoCordTool = new IsoCordTool(gameData);
         mainMenu = new MainMenu(gameData);
-        gameGraphics = new GameGraphics(gameData);
+        gameGraphics = new GameGraphics(gameData);;
+
+        this.addMouseListener(mouseListener);
     }
 
     /**
@@ -32,6 +41,11 @@ public class GamePanel extends JPanel {
     public void update() {
         // repaints the panel
         repaint();
+
+        if (mouseListener.isLeftPressed()) {
+            int[] tileCords = isoCordTool.getTileFromIso(mouseListener.getX(), mouseListener.getY());
+            gameData.world.setWorldTile(tileCords[1], tileCords[0], WorldTile.Tile.Wall);
+        }
     }
 
     /**
@@ -57,6 +71,10 @@ public class GamePanel extends JPanel {
 
         // disposes graphics for garbage collection
         g2.dispose();
+    }
+
+    public IsoCordTool getIsoCordTool() {
+        return isoCordTool;
     }
 
     public GameData getGameData() {
