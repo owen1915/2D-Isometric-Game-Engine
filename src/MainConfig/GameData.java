@@ -1,33 +1,42 @@
 package MainConfig;
 
 import Graphics.Camera.Camera;
+import Graphics.Panels.GamePanel;
 import World.World;
+
+import java.awt.*;
 
 public class GameData {
 
     // fps
-    public static int FPS = 60;
+    public int FPS = 60;
 
     // when creating debug options like printing fps, always check if debug is true
-    public static boolean debug = true;
+    public boolean debug = true;
 
     // screenWidth and screenHeight
-    public static int screenWidth = 1280;
-    public static int screenHeight = 720;
+    public int screenWidth = 1280;
+    public int screenHeight = 720;
 
     // default tile screenHeight and screenWidth
-    public static int tileHeight = 64;
-    public static int tileWidth = 64;
+    public int tileHeight = 64;
+    public int tileWidth = 64;
 
     // max rows and cols
-    public static World world = new World(8, 8);
-    public static Camera camera = new Camera();
+    public World world = new World(8, 8);
+    public Camera camera = new Camera(this);
 
     /**
      * Game state indicates what we are drawing.
      * When GAMESTATE is 1 it will render the Menu, when GAMESTATE is 2 it can render the game, etc...
      */
-    public static int GAMESTATE = 1;
+    public int GAMESTATE = 1;
 
+    // game panel instance
+    public GamePanel gamePanel;
+
+    public GameData(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
+    }
 
 }

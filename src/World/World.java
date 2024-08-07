@@ -46,12 +46,12 @@ public class World {
         }
     }
 
-    public WorldTile.Tile getWorldTile(World world, int x, int y){
+    public WorldTile getWorldTile(int x, int y){
         if (x < worldXSize && y < worldYSize){
-            return world.worldTiles[x][y].getTileType();
+            return worldTiles[x][y];
         }
-        else{
-            return WorldTile.Tile.Empty;
+        else {
+            return null;
         }
     }
 

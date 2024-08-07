@@ -11,35 +11,20 @@ import java.awt.event.KeyEvent;
 public class GamePanel extends JPanel {
 
     // creating classes
+    private GameData gameData;
     private MainMenu mainMenu;
     private GameGraphics gameGraphics;
 
-    public GamePanel() {
-        setPreferredSize(new Dimension(GameData.screenWidth, GameData.screenHeight));
+    public GamePanel(GameFrame gameFrame) {
+        gameData = new GameData(this);
+
+        setPreferredSize(new Dimension(gameData.screenWidth, gameData.screenHeight));
         setVisible(true);
         setFocusable(true);
         requestFocusInWindow();
 
-        mainMenu = new MainMenu(this);
-        gameGraphics = new GameGraphics();
-
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_W) {
-                    GameData.camera.setyOffset(GameData.camera.getyOffset() - 16);
-                }
-                if (e.getKeyCode() == KeyEvent.VK_S) {
-                    GameData.camera.setyOffset(GameData.camera.getyOffset() + 16);
-                }
-                if (e.getKeyCode() == KeyEvent.VK_A) {
-                    GameData.camera.setxOffset(GameData.camera.getxOffset() - 16);
-                }
-                if (e.getKeyCode() == KeyEvent.VK_D) {
-                    GameData.camera.setxOffset(GameData.camera.getxOffset() + 16);
-                }
-            }
-        });
+        mainMenu = new MainMenu(gameData);
+        gameGraphics = new GameGraphics(gameData);
     }
 
     /**
@@ -58,7 +43,7 @@ public class GamePanel extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
 
         // switch statement to check what to render using GAMESTATE
-        switch (GameData.GAMESTATE) {
+        switch (gameData.GAMESTATE) {
             case 1:
                 mainMenu.render(g2);
                 break;
@@ -66,12 +51,16 @@ public class GamePanel extends JPanel {
                 gameGraphics.render(g2);
                 break;
             default:
-                if (GameData.debug) {
-                    System.out.println("NOT RENDERING NOTHING: GAMESTATE = " + GameData.GAMESTATE);
+                if (gameData.debug) {
+                    System.out.println("NOT RENDERING NOTHING: GAMESTATE = " + gameData.GAMESTATE);
                 }
         }
 
         // disposes graphics for garbage collection
         g2.dispose();
+    }
+
+    public GameData getGameData() {
+        return gameData;
     }
 }

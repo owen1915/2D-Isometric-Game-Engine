@@ -12,32 +12,33 @@ import java.awt.event.MouseMotionAdapter;
  * custom button class because JButtons are terrible
  */
 public class OButton {
-    //TO BE FINISHED LATER
-
+    private GameData gameData;
     private String str;
     private int x, y;
     private int buffer = 10;
     private Rectangle rect;
     private Color color = Color.black;
 
-    public OButton(GamePanel gamePanel, String str, int x, int y) {
+    public OButton(GameData gameData, String str, int x, int y) {
         this.str = str;
         this.x = x;
         this.y = y;
 
+        this.gameData = gameData;
+
         //add mouse listener to said button
-        gamePanel.addMouseListener(new MouseAdapter() {
+        gameData.gamePanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (rect != null && rect.contains(e.getX(), e.getY())) {
-                    GameData.GAMESTATE = 2;
-                    if (GameData.debug) {
+                    gameData.GAMESTATE = 2;
+                    if (gameData.debug) {
                         System.out.println("BUTTON CLICKED");
                     }
                 }
             }
         });
-        gamePanel.addMouseMotionListener(new MouseMotionAdapter() {
+        gameData.gamePanel.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
                 if (rect != null && rect.contains(e.getX(), e.getY())) {
@@ -57,7 +58,7 @@ public class OButton {
         int stringWidth = fm.stringWidth(str);
         int stringHeight = fm.getHeight() + buffer;
 
-        int middleX = (GameData.screenWidth / 2 - stringWidth / 2);
+        int middleX = (gameData.screenWidth / 2 - stringWidth / 2);
 
         int rectX = 0;
         int rectY = y;

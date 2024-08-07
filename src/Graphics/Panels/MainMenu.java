@@ -17,16 +17,16 @@ public class MainMenu {
     // OButton array to hold buttons to render
     private OButton[] buttons;
 
-    private GamePanel gamePanel;
+    private GameData gameData;
 
-    public MainMenu(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
+    public MainMenu(GameData gameData) {
+        this.gameData = gameData;
 
         strArr = new String[1];
         strArr[0] = "BOTANICAL BLITZ";
 
         buttons = new OButton[1];
-        buttons[0] = new OButton(gamePanel, "NEW GAME", 0, 200);
+        buttons[0] = new OButton(gameData, "NEW GAME", 0, 200);
     }
 
     /**
@@ -41,7 +41,7 @@ public class MainMenu {
 
         // title string
         int stringWidth = fm.stringWidth(strArr[0]);
-        g2.drawString(strArr[0], GameData.screenWidth /2 - stringWidth/2, 60);
+        g2.drawString(strArr[0], gameData.screenWidth /2 - stringWidth/2, 60);
 
         //draw buttons
         //change font for buttons

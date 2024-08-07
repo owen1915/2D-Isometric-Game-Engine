@@ -7,13 +7,16 @@ import MainConfig.GameData;
 import javax.swing.*;
 
 public class Camera {
-    private GamePanel gamePanel;
+    private GameData gameData;
+    private int xOffset;
+    private int yOffset;
 
-    private static int tileHeight = 64;
-    private static int tileWidth = 64;
+    public Camera(GameData gameData) {
+        this.gameData = gameData;
 
-    private int xOffset = GameData.screenWidth/2;
-    private int yOffset = GameData.screenHeight/2;
+        xOffset = gameData.screenWidth/2;
+        yOffset = gameData.screenHeight/2;
+    }
 
     float scale = 1;
 

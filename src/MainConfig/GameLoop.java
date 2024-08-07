@@ -5,16 +5,18 @@ import Graphics.Panels.GamePanel;
 public class GameLoop implements Runnable {
 
     private GamePanel gamePanel;
+    private GameData gameData;
 
-    public GameLoop(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
+    public GameLoop(GameData gameData) {
+        this.gameData = gameData;
+        this.gamePanel = gameData.gamePanel;
 
         new Thread(this).start();
     }
 
     @Override
     public void run() {
-        int runTime = 1000 / GameData.FPS;
+        int runTime = 1000 / gameData.FPS;
         int frameCounter = 0;
         long lastTime = System.currentTimeMillis();
 
@@ -37,7 +39,7 @@ public class GameLoop implements Runnable {
                 }
             }
             frameCounter++;
-            if (GameData.debug && System.currentTimeMillis() - lastTime > 1000) {
+            if (gameData.debug && System.currentTimeMillis() - lastTime > 1000) {
                 // debug for printing fps
                 System.out.println("FPS: " + frameCounter);
                 frameCounter = 0;

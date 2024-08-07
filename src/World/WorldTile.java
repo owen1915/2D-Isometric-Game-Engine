@@ -1,6 +1,10 @@
 package World;
 
+import javax.swing.*;
+import java.awt.*;
+
 public class WorldTile {
+
     public enum Tile {
         Empty,
         Grass,
@@ -8,19 +12,33 @@ public class WorldTile {
     }
 
     private Tile tileType;
+    private Image tileImage;
 
     public WorldTile(Tile tileType){
-        tileType = Tile.Grass;
+        this.tileType = Tile.Grass;
+        this.tileImage = loadImage(tileType);
     }
 
+    public Image loadImage(Tile tileType) {
+        Image image = new ImageIcon("res/grassIso.png").getImage();
 
-    void setTileType(Tile newTileType){
+        switch (tileType) {
+            case Tile.Grass:
+                return image;
+        }
+
+        return null;
+    }
+
+    public void setTileType(Tile newTileType){
         tileType = newTileType;
     }
 
-    Tile getTileType(){
+    public Tile getTileType(){
         return tileType;
     }
 
-
+    public Image getTileImage() {
+        return tileImage;
+    }
 }
