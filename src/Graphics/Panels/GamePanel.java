@@ -1,12 +1,11 @@
 package Graphics.Panels;
 
+import Graphics.Frame.GameFrame;
 import MainConfig.GameData;
 import Graphics.GameGraphics;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class GamePanel extends JPanel {
 

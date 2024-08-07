@@ -1,4 +1,4 @@
-package Graphics.Panels;
+package Graphics.Frame;
 
 import MainConfig.GameData;
 import MainConfig.GameLoop;
@@ -24,13 +24,5 @@ public class GameFrame extends JFrame {
         setVisible(true);
 
         new GameLoop(gameData);
-    }
-
-    public static void main(String[] args) {
-        new GameFrame();
-    }
-
-    public GameData getGameData() {
-        return gameData;
     }
 }
