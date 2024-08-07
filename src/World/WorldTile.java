@@ -21,4 +21,7 @@ public class WorldTile {
         tileType = newTileType;
     }
 
+    public Tile getTileType() {
+        return tileType;
+    }
 }
