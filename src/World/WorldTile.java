@@ -12,34 +12,13 @@ public class WorldTile {
     }
 
     private Tile tileType;
-    private Image tileImage;
 
     public WorldTile(Tile tileType){
         this.tileType = tileType;
-        this.tileImage = loadImage(tileType);
-    }
-
-    public Image loadImage(Tile tileType) {
-        Image image = new ImageIcon("res/grassIso.png").getImage();
-
-        switch (tileType) {
-            case Tile.Grass:
-                return image;
-
-        }
-
-        return null;
     }
 
     public void setTileType(Tile newTileType){
         tileType = newTileType;
     }
 
-    public Tile getTileType(){
-        return tileType;
-    }
-
-    public Image getTileImage() {
-        return tileImage;
-    }
 }
