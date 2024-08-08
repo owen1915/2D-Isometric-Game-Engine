@@ -30,7 +30,7 @@ public class OButton {
         gameData.gamePanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (rect != null && rect.contains(e.getX(), e.getY())) {
+                if (gameData.GAMESTATE == 1 && rect != null && rect.contains(e.getX(), e.getY())) {
                     gameData.GAMESTATE = 2;
                     if (gameData.debug) {
                         System.out.println("BUTTON CLICKED");

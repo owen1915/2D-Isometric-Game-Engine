@@ -19,7 +19,7 @@ public class GamePanel extends JPanel {
     private MouseListener mouseListener;
     private IsoCordTool isoCordTool;
 
-    public GamePanel(GameFrame gameFrame) {
+    public GamePanel() {
         gameData = new GameData(this);
 
         setPreferredSize(new Dimension(gameData.screenWidth, gameData.screenHeight));
@@ -31,21 +31,27 @@ public class GamePanel extends JPanel {
         isoCordTool = new IsoCordTool(gameData);
         mainMenu = new MainMenu(gameData);
         gameGraphics = new GameGraphics(gameData);;
-
-        this.addMouseListener(mouseListener);
     }
 
     /**
      * Update method
      */
     public void update() {
+        switch (gameData.GAMESTATE) {
+            case 1:
+                this.removeMouseListener(mouseListener);
+                break;
+            case 2:
+                if (mouseListener.isLeftPressed()) {
+                    int[] tileCords = isoCordTool.getTileFromIso(mouseListener.getX(), mouseListener.getY());
+                    gameData.world.setWorldTile(tileCords[1], tileCords[0], 3, WorldTile.Tile.Wall);
+                }
+                this.addMouseListener(mouseListener);
+                break;
+        }
+
         // repaints the panel
         repaint();
-
-        if (mouseListener.isLeftPressed()) {
-            int[] tileCords = isoCordTool.getTileFromIso(mouseListener.getX(), mouseListener.getY());
-            gameData.world.setWorldTile(tileCords[1], tileCords[0], WorldTile.Tile.Wall);
-        }
     }
 
     /**

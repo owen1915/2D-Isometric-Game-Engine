@@ -20,7 +20,7 @@ public class ImageLoader {
     public void loadImages() {
         try (InputStream spriteStream = getClass().getResourceAsStream("/SpriteSheet.png")) {
             if (spriteStream == null) {
-                throw new IOException("Resource not found: /res/SpriteSheet.png");
+                throw new IOException("Resource not found: /SpriteSheet.png");
             }
             BufferedImage spriteSheet = ImageIO.read(spriteStream);
             BufferedImage bufferedSpriteSheet = new BufferedImage(spriteSheet.getWidth(), spriteSheet.getHeight(), BufferedImage.TYPE_INT_ARGB);

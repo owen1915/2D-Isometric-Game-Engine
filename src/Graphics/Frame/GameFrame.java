@@ -11,7 +11,7 @@ public class GameFrame extends JFrame {
     private GameData gameData;
 
     public GameFrame() {
-        GamePanel gamePanel = new GamePanel(this);
+        GamePanel gamePanel = new GamePanel();
         this.gameData = gamePanel.getGameData();
 
         add(gamePanel);
