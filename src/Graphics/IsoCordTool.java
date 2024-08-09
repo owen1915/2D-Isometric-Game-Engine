@@ -25,7 +25,7 @@ public class IsoCordTool {
 
     public int getYIso(int x, int y) {
         double isoY = x * xVector[1] + y * yVector[1];
-        return (int) isoY + gameData.camera.getyOffset() / 2;
+        return (int) (isoY) - (height/2 * gameData.world.getWorldYSize()/2) + gameData.camera.getyOffset();
     }
 
     public int[] getTileFromIso(int isoX, int isoY) {
