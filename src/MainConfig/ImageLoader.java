@@ -18,6 +18,9 @@ public class ImageLoader {
         loadImages();
     }
 
+    /**
+     * TEXTURES FOR BLOCKS ARE ONLY THE FIRST 5 COLS AND ALL ROWS UNDER THOSE FOR NOW IN SPRITESHEET
+     */
     public void loadImages() {
         try (InputStream spriteStream = getClass().getResourceAsStream("/SpriteSheet.png")) {
             if (spriteStream == null) {
