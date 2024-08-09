@@ -3,10 +3,6 @@ package MainConfig;
 import Graphics.Camera.Camera;
 import Graphics.Panels.GamePanel;
 import World.World;
-import World.WorldTile;
-import Graphics.IsoCordTool;
-
-import java.awt.*;
 
 public class GameData {
 
@@ -28,6 +24,8 @@ public class GameData {
     public World world = new World(100, 100);
 
     public Camera camera = new Camera(this);
+
+    public ImageLoader imageLoader = new ImageLoader();
 
     /**
      * Game state indicates what we are drawing.

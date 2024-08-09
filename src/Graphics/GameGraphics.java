@@ -11,11 +11,12 @@ import java.awt.*;
 public class GameGraphics {
 
     private IsoCordTool isoCordTool;
-    private ImageLoader imageLoader = new ImageLoader();
     private GameData gameData;
+    private ImageLoader imageLoader;
 
     public GameGraphics(GameData gameData) {
         this.gameData = gameData;
+        imageLoader = gameData.imageLoader;
         isoCordTool = gameData.gamePanel.getIsoCordTool();
     }
 

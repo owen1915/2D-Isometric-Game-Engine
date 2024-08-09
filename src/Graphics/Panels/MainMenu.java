@@ -33,6 +33,10 @@ public class MainMenu {
      * Renders the main menu
      */
     public void render(Graphics2D g2) {
+        // draw background image
+        Image scaledImage = gameData.imageLoader.getMainMenu().getScaledInstance(gameData.screenWidth, gameData.screenHeight, Image.SCALE_SMOOTH);
+        g2.drawImage(scaledImage, 0, 0,null);
+
         //set color of text
         g2.setColor(Color.black);
         Font font = new Font("DIALOUGE", Font.BOLD, 60);
