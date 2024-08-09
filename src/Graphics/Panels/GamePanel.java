@@ -1,6 +1,5 @@
 package Graphics.Panels;
 
-import Graphics.Frame.GameFrame;
 import Listeners.MouseListener;
 import MainConfig.GameData;
 import Graphics.GameGraphics;
@@ -8,7 +7,6 @@ import Graphics.GameGraphics;
 import javax.swing.*;
 import java.awt.*;
 import Graphics.IsoCordTool;
-import World.WorldTile;
 
 public class GamePanel extends JPanel {
 
@@ -16,7 +14,6 @@ public class GamePanel extends JPanel {
     private GameData gameData;
     private MainMenu mainMenu;
     private GameGraphics gameGraphics;
-    private MouseListener mouseListener;
     private IsoCordTool isoCordTool;
 
     public GamePanel() {
@@ -27,7 +24,6 @@ public class GamePanel extends JPanel {
         setFocusable(true);
         requestFocusInWindow();
 
-        mouseListener = new MouseListener();
         isoCordTool = new IsoCordTool(gameData);
         mainMenu = new MainMenu(gameData);
         gameGraphics = new GameGraphics(gameData);;
@@ -37,19 +33,6 @@ public class GamePanel extends JPanel {
      * Update method
      */
     public void update() {
-        switch (gameData.GAMESTATE) {
-            case 1:
-                this.removeMouseListener(mouseListener);
-                break;
-            case 2:
-                if (mouseListener.isLeftPressed()) {
-                    int[] tileCords = isoCordTool.getTileFromIso(mouseListener.getX(), mouseListener.getY());
-                    gameData.world.setWorldTile(tileCords[1], tileCords[0], 3, WorldTile.Tile.Wall);
-                }
-                this.addMouseListener(mouseListener);
-                break;
-        }
-
         // repaints the panel
         repaint();
     }

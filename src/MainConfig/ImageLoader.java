@@ -53,6 +53,8 @@ public class ImageLoader {
         textures = new Image[WorldTile.Tile.values().length];
         textures[WorldTile.Tile.Grass.ordinal()] = sprites[0];
         textures[WorldTile.Tile.Wall.ordinal()] = sprites[1];
+        textures[WorldTile.Tile.FurnaceOff.ordinal()] = sprites[2];
+        textures[WorldTile.Tile.FurnaceOn.ordinal()] = sprites[3];
     }
 
     public Image[] getTextures() {

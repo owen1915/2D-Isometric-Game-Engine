@@ -21,14 +21,16 @@ public class GameGraphics {
 
     public void render(Graphics2D g2) {
         // iterate over the (current) world that holds the tiles
-        for (int z = 0; z < 4; z++) {
+        for (int z = 0; z < 3; z++) {
             for (int i = 0; i < gameData.world.getWorldYSize(); i++) {
                 for (int j = 0; j < gameData.world.getWorldXSize(); j++) {
                     // Get the world tile
 
-                    WorldTile.Tile tileType = gameData.world.getWorldTileType(i, j, z);
+                    WorldTile.Tile tileType = gameData.world.getWorldTileType(j, i, z);
 
-                    g2.drawImage(imageLoader.getTextures()[tileType.ordinal()], isoCordTool.getXIso(j, i), isoCordTool.getYIso(j, i) - (z * 32), null);
+                    if (tileType != WorldTile.Tile.Empty) {
+                        g2.drawImage(imageLoader.getTextures()[tileType.ordinal()], isoCordTool.getXIso(j, i), isoCordTool.getYIso(j, i) - (z * 32), null);
+                    }
                 }
             }
         }

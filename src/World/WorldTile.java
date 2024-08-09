@@ -8,7 +8,9 @@ public class WorldTile {
     public enum Tile {
         Empty,
         Grass,
-        Wall
+        Wall,
+        FurnaceOff,
+        FurnaceOn
     }
 
     private Tile tileType;

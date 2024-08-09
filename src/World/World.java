@@ -13,24 +13,50 @@ public class World {
 
 
     //World object;
-    private WorldTile[][][] worldTiles;
+    private WorldTile[][][] worldTiles = new WorldTile[3][0][0];
 
 
     public World(int xSize, int ySize){
         //Create a new array for the storage of the world tiles
         this.worldXSize = xSize;
         this.worldYSize = ySize;
-        defaultDepth = 4;
+        defaultDepth = 3;
 
-        this.worldTiles = new WorldTile[xSize][ySize][];
-        for (int x = 0; x < xSize; x++){
-            for (int y = 0; y < ySize; y++){
-                this.worldTiles[x][y] = new WorldTile[defaultDepth];
-                for (int z = 0; z < defaultDepth; z++){
-                    this.worldTiles[x][y][z] = new WorldTile(WorldTile.Tile.Grass);
+        WorldTile[][] bottomLayer = new WorldTile[worldXSize][worldYSize];
+        WorldTile[][] middleLayer = new WorldTile[worldXSize][worldYSize];
+        WorldTile[][] topLayer = new WorldTile[worldXSize][worldYSize];
+
+        for (int i = 0; i < defaultDepth; i++) {
+            for (int y = 0; y < xSize; y++) {
+                for (int x = 0; x < ySize; x++) {
+                    switch (i) {
+                        case 0:
+                            bottomLayer[x][y] = new WorldTile(WorldTile.Tile.Grass);
+                            break;
+                        case 1:
+                            middleLayer[x][y] = new WorldTile(WorldTile.Tile.Empty);
+                            break;
+                        case 2:
+                            topLayer[x][y] = new WorldTile(WorldTile.Tile.Empty);
+                            break;
+                    }
                 }
             }
         }
+
+        middleLayer[xSize/2 -2][ySize/2 -2] = new WorldTile(WorldTile.Tile.Wall);
+        topLayer[xSize/2 -2][ySize/2 -2] = new WorldTile(WorldTile.Tile.Wall);
+
+        middleLayer[xSize/2 - 1][ySize/2] = new WorldTile(WorldTile.Tile.FurnaceOn);
+        middleLayer[xSize/2][ySize/2 - 1] = new WorldTile(WorldTile.Tile.FurnaceOn);
+        middleLayer[xSize/2 - 1][ySize/2 - 1] = new WorldTile(WorldTile.Tile.FurnaceOn);
+        middleLayer[xSize/2][ySize/2] = new WorldTile(WorldTile.Tile.FurnaceOn);
+        middleLayer[xSize/2 + 2][ySize/2 - 2] = new WorldTile(WorldTile.Tile.FurnaceOff);
+        middleLayer[xSize/2 - 2][ySize/2 + 2] = new WorldTile(WorldTile.Tile.FurnaceOff);
+
+        worldTiles[0] = bottomLayer;
+        worldTiles[1] = middleLayer;
+        worldTiles[2] = topLayer;
     }
 
     public int getWorldXSize() {
@@ -46,13 +72,13 @@ public class World {
         //Check if in bounds of an array
         if (x < worldXSize && y < worldYSize && z < defaultDepth){
             //Used the tile setting function to update that tiles type
-            this.worldTiles[x][y][z].setTileType(tileType);
+            this.worldTiles[z][x][y].setTileType(tileType);
         }
     }
 
     public WorldTile.Tile getWorldTileType(int x, int y, int z){
         if (x < worldXSize && y < worldYSize && z < defaultDepth){
-            return worldTiles[x][y][z].getTileType();
+            return worldTiles[z][x][y].getTileType();
         }
         else {
             return null;
@@ -61,7 +87,7 @@ public class World {
 
     public WorldTile getWorldTile(int x, int y, int z){
         if (x < worldXSize && y < worldYSize && z < defaultDepth){
-            return worldTiles[x][y][z];
+            return worldTiles[z][x][y];
         }
         else {
             return null;
