@@ -54,5 +54,21 @@ public class Camera {
         yOffset -= ySpeed;
     }
 
+    public void zoomIn() {
+        if (!(gameData.tileSize + 16 > gameData.maxTileSize)) {
+            gameData.tileSize += 16;
+            gameData.imageLoader.createTextures();
+            gameData.gamePanel.getIsoCordTool().updateIso();
+        }
+    }
+
+    public void zoomOut() {
+        if (!(gameData.tileSize - 16 < gameData.minTileSize)) {
+            gameData.tileSize -= 16;
+            gameData.imageLoader.createTextures();
+            gameData.gamePanel.getIsoCordTool().updateIso();
+        }
+    }
+
 
 }

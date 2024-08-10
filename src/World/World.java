@@ -31,10 +31,10 @@ public class World {
                 for (int x = 0; x < ySize; x++) {
                     switch (i) {
                         case 0:
-                            bottomLayer[x][y] = new WorldTile(WorldTile.Tile.Grass);
+                            bottomLayer[x][y] = new WorldTile(WorldTile.Tile.Dirt);
                             break;
                         case 1:
-                            middleLayer[x][y] = new WorldTile(WorldTile.Tile.Empty);
+                            middleLayer[x][y] = new WorldTile(WorldTile.Tile.Grass);
                             break;
                         case 2:
                             topLayer[x][y] = new WorldTile(WorldTile.Tile.Empty);
@@ -44,15 +44,14 @@ public class World {
             }
         }
 
-        middleLayer[xSize/2 -2][ySize/2 -2] = new WorldTile(WorldTile.Tile.Wall);
         topLayer[xSize/2 -2][ySize/2 -2] = new WorldTile(WorldTile.Tile.Wall);
 
-        middleLayer[xSize/2 - 1][ySize/2] = new WorldTile(WorldTile.Tile.FurnaceOn);
-        middleLayer[xSize/2][ySize/2 - 1] = new WorldTile(WorldTile.Tile.FurnaceOn);
-        middleLayer[xSize/2 - 1][ySize/2 - 1] = new WorldTile(WorldTile.Tile.FurnaceOn);
-        middleLayer[xSize/2][ySize/2] = new WorldTile(WorldTile.Tile.FurnaceOn);
-        middleLayer[xSize/2 + 2][ySize/2 - 2] = new WorldTile(WorldTile.Tile.FurnaceOff);
-        middleLayer[xSize/2 - 2][ySize/2 + 2] = new WorldTile(WorldTile.Tile.FurnaceOff);
+        topLayer[xSize/2 - 1][ySize/2] = new WorldTile(WorldTile.Tile.FurnaceOn);
+        topLayer[xSize/2][ySize/2 - 1] = new WorldTile(WorldTile.Tile.FurnaceOn);
+        topLayer[xSize/2 - 1][ySize/2 - 1] = new WorldTile(WorldTile.Tile.FurnaceOn);
+        topLayer[xSize/2][ySize/2] = new WorldTile(WorldTile.Tile.FurnaceOn);
+        topLayer[xSize/2 + 2][ySize/2 - 2] = new WorldTile(WorldTile.Tile.FurnaceOff);
+        topLayer[xSize/2 - 2][ySize/2 + 2] = new WorldTile(WorldTile.Tile.FurnaceOff);
 
         worldTiles[0] = bottomLayer;
         worldTiles[1] = middleLayer;

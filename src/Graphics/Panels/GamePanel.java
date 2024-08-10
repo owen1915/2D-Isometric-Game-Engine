@@ -3,6 +3,7 @@ package Graphics.Panels;
 import Listeners.KeyListener;
 import Listeners.MouseListener;
 import Listeners.MouseMotionListener;
+import Listeners.MouseWheelListener;
 import MainConfig.GameData;
 import Graphics.GameGraphics;
 
@@ -21,6 +22,10 @@ public class GamePanel extends JPanel {
     private MouseListener mouseListener;
 
     private MouseMotionListener mouseMotionListener;
+    private MouseWheelListener mouseWheelListener;
+
+    // bool for adding listeners once graphics is loaded (so when the main menu button is hit, it doesnt instantly draw a block)
+    private boolean listenersAdded = false;
 
     public GamePanel() {
         gameData = new GameData(this);
@@ -33,14 +38,19 @@ public class GamePanel extends JPanel {
         this.keyListener = new KeyListener(gameData);
         this.mouseListener = new MouseListener(gameData);
         this.mouseMotionListener = new MouseMotionListener(gameData);
-
-        addKeyListener(keyListener);
-        addMouseListener(mouseListener);
-        addMouseMotionListener(mouseMotionListener);
+        this.mouseWheelListener = new MouseWheelListener(gameData);
 
         isoCordTool = new IsoCordTool(gameData);
         mainMenu = new MainMenu(gameData);
         gameGraphics = new GameGraphics(gameData);;
+    }
+
+    private void addListeners() {
+        addMouseWheelListener(mouseWheelListener);
+        addKeyListener(keyListener);
+        addMouseListener(mouseListener);
+        addMouseMotionListener(mouseMotionListener);
+        listenersAdded = true;
     }
 
     /**
@@ -51,6 +61,9 @@ public class GamePanel extends JPanel {
             case 1:
                 break;
             case 2:
+                if (!listenersAdded) {
+                    addListeners();
+                }
                 keyListener.update();
                 break;
         }

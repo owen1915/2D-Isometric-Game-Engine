@@ -11,6 +11,7 @@ public class WorldTile {
         Wall,
         FurnaceOff,
         FurnaceOn,
+        Dirt,
 
         Selection
     }

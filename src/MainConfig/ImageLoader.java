@@ -36,7 +36,7 @@ public class ImageLoader {
 
             int spriteWidth = 64;
             int spriteHeight = 64;
-            int spritesCols = 10;
+            int spritesCols = 11;
             int spritesRows = bufferedSpriteSheet.getHeight() / spriteHeight;
 
             sprites = new Image[spritesCols * spritesRows];
@@ -63,16 +63,12 @@ public class ImageLoader {
         textures[WorldTile.Tile.Wall.ordinal()] = sprites[1].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
         textures[WorldTile.Tile.FurnaceOff.ordinal()] = sprites[2].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
         textures[WorldTile.Tile.FurnaceOn.ordinal()] = sprites[3].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
+        textures[WorldTile.Tile.Dirt.ordinal()] = sprites[11].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
         textures[WorldTile.Tile.Selection.ordinal()] = sprites[9].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
-
     }
 
     public Image[] getTextures() {
         return textures;
-    }
-
-    public Image[] getSprites() {
-        return sprites;
     }
 
     public Image getMainMenu() {

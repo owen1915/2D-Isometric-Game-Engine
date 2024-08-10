@@ -80,11 +80,11 @@ public class KeyListener implements java.awt.event.KeyListener {
             gameData.camera.ifRightPressed();
         }
         if (plusPressed) {
-            gameData.zoomIn();
+            gameData.camera.zoomIn();
             plusPressed = false;
         }
         if (minusPressed) {
-            gameData.zoomOut();
+            gameData.camera.zoomOut();
             minusPressed = false;
         }
     }
