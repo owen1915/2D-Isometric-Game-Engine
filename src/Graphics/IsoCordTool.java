@@ -35,6 +35,25 @@ public class IsoCordTool {
         return (int) (isoY) - (height/2 * gameData.world.getWorldYSize()/2) + gameData.camera.getyOffset();
     }
 
+    public int[] screenToIso(int xCor, int yCor){
+        int[] cordArray = new int[2];
+
+        float isoX = (float) (xCor + 2 * yCor) / (gameData.tileSize);
+        float isoY = (float) (2 * yCor - xCor) / (gameData.tileSize);
+
+        if (isoX < 0){
+            isoX--;
+        }
+        if (isoY < 0){
+            isoY--;
+        }
+
+        cordArray[0] = (int) isoX;
+        cordArray[1] = (int) isoY;
+
+        return cordArray;
+    }
+
     public int[] getTileFromIso(int isoX, int isoY) {
         double adjustedIsoX = isoX - gameData.camera.getxOffset();
         double adjustedIsoY = isoY - gameData.camera.getyOffset() / 2;

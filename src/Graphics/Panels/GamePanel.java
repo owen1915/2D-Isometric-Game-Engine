@@ -2,6 +2,7 @@ package Graphics.Panels;
 
 import Listeners.KeyListener;
 import Listeners.MouseListener;
+import Listeners.MouseMotionListener;
 import MainConfig.GameData;
 import Graphics.GameGraphics;
 
@@ -17,6 +18,9 @@ public class GamePanel extends JPanel {
     private GameGraphics gameGraphics;
     private IsoCordTool isoCordTool;
     private KeyListener keyListener;
+    private MouseListener mouseListener;
+
+    private MouseMotionListener mouseMotionListener;
 
     public GamePanel() {
         gameData = new GameData(this);
@@ -27,8 +31,13 @@ public class GamePanel extends JPanel {
         requestFocusInWindow();
 
         this.keyListener = new KeyListener(gameData);
+        this.mouseListener = new MouseListener(gameData);
+        this.mouseMotionListener = new MouseMotionListener(gameData);
 
         addKeyListener(keyListener);
+        addMouseListener(mouseListener);
+        addMouseMotionListener(mouseMotionListener);
+
         isoCordTool = new IsoCordTool(gameData);
         mainMenu = new MainMenu(gameData);
         gameGraphics = new GameGraphics(gameData);;
@@ -81,5 +90,13 @@ public class GamePanel extends JPanel {
 
     public GameData getGameData() {
         return gameData;
+    }
+
+    public MouseListener getMouseListener(){
+        return this.mouseListener;
+    }
+
+    public MouseMotionListener getMouseMotionListener(){
+        return this.mouseMotionListener;
     }
 }

@@ -1,6 +1,7 @@
 package Graphics;
 
 import Graphics.Panels.GamePanel;
+import Listeners.MouseListener;
 import MainConfig.GameData;
 import MainConfig.ImageLoader;
 import World.WorldTile;
@@ -39,6 +40,13 @@ public class GameGraphics {
                 }
             }
         }
+
+        //Get the mouse world cords from mouse motion listener
+        int[] mouseWorldCor = gameData.gamePanel.getMouseMotionListener().getMouseWorldCords();
+
+
+        //Draw the selection tile
+        bufferdGraphics.drawImage(imageLoader.getTextures()[WorldTile.Tile.Selection.ordinal()], isoCordTool.getXIso(mouseWorldCor[0] - 1, mouseWorldCor[1] - 1), isoCordTool.getYIso(mouseWorldCor[0] - 1, mouseWorldCor[1] - 1), null);
 
         g2.drawImage(bufferedImage, 0, 0, null);
     }

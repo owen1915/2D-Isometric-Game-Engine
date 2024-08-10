@@ -10,7 +10,9 @@ public class WorldTile {
         Grass,
         Wall,
         FurnaceOff,
-        FurnaceOn
+        FurnaceOn,
+
+        Selection
     }
 
     private Tile tileType;
