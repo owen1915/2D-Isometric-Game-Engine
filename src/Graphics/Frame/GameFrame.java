@@ -14,6 +14,11 @@ public class GameFrame extends JFrame {
         GamePanel gamePanel = new GamePanel();
         this.gameData = gamePanel.getGameData();
 
+        if (gameData.fullscreen) {
+            setExtendedState(JFrame.MAXIMIZED_BOTH);
+            setUndecorated(true);
+        }
+
         add(gamePanel);
         pack();
         setLocationRelativeTo(null);

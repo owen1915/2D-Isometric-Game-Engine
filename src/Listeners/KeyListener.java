@@ -63,6 +63,9 @@ public class KeyListener implements java.awt.event.KeyListener {
             case KeyEvent.VK_MINUS:
                 minusPressed = false;
                 break;
+            case KeyEvent.VK_X:
+                System.exit(0);
+                break;
         }
     }
 

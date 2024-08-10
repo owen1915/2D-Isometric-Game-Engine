@@ -17,6 +17,9 @@ public class GameData {
     public int screenWidth = 1280;
     public int screenHeight = 720;
 
+    // fullscreen
+    public boolean fullscreen = false;
+
     // default tile screenHeight and screenWidth
     public int tileSize = 128;
 
@@ -24,7 +27,7 @@ public class GameData {
     public final int minTileSize = 16;
 
     // max rows and cols
-    public World world = new World(20, 20);
+    public World world = new World(100, 100);
 
     public Camera camera = new Camera(this);
 
