@@ -7,6 +7,7 @@ import World.WorldTile;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class GameGraphics {
 
@@ -21,6 +22,8 @@ public class GameGraphics {
     }
 
     public void render(Graphics2D g2) {
+        BufferedImage bufferedImage = new BufferedImage(gameData.screenWidth, gameData.screenHeight, BufferedImage.TYPE_INT_ARGB);
+        Graphics bufferdGraphics = bufferedImage.getGraphics();
         // iterate over the (current) world that holds the tiles
         for (int z = 0; z < 3; z++) {
             for (int i = 0; i < gameData.world.getWorldYSize(); i++) {
@@ -30,10 +33,12 @@ public class GameGraphics {
                     WorldTile.Tile tileType = gameData.world.getWorldTileType(j, i, z);
 
                     if (tileType != WorldTile.Tile.Empty) {
-                        g2.drawImage(imageLoader.getTextures()[tileType.ordinal()], isoCordTool.getXIso(j, i), isoCordTool.getYIso(j, i) - (z * 32), null);
+                        bufferdGraphics.drawImage(imageLoader.getTextures()[tileType.ordinal()], isoCordTool.getXIso(j, i), isoCordTool.getYIso(j, i) - (z * 32), null);
                     }
                 }
             }
         }
+
+        g2.drawImage(bufferedImage, 0, 0, null);
     }
 }
