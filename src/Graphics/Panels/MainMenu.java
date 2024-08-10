@@ -4,6 +4,7 @@ import Graphics.UI.OButton;
 import MainConfig.GameData;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * MainMenu class that is drawn ONTO the GamePanel based on if the GAMESTATE = 1,
@@ -32,7 +33,9 @@ public class MainMenu {
     /**
      * Renders the main menu
      */
-    public void render(Graphics2D g2) {
+    public void render(Graphics2D panelGraphics) {
+        BufferedImage bufferedImage = new BufferedImage(gameData.screenWidth, gameData.screenHeight, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = bufferedImage.createGraphics();
         // draw background image
         Image scaledImage = gameData.imageLoader.getMainMenu().getScaledInstance(gameData.screenWidth, gameData.screenHeight, Image.SCALE_SMOOTH);
         g2.drawImage(scaledImage, 0, 0,null);
@@ -54,5 +57,7 @@ public class MainMenu {
         for (OButton button : buttons) {
             button.render(g2);
         }
+
+        panelGraphics.drawImage(bufferedImage, 0, 0, null);
     }
 }
