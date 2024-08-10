@@ -1,6 +1,7 @@
 package MainConfig;
 
 import Graphics.Camera.Camera;
+import Graphics.IsoCordTool;
 import Graphics.Panels.GamePanel;
 import World.World;
 
@@ -17,7 +18,10 @@ public class GameData {
     public int screenHeight = 720;
 
     // default tile screenHeight and screenWidth
-    public int tileSize = 64;
+    public int tileSize = 128;
+
+    private final int maxTileSize = 256;
+    private final int minTileSize = 16;
 
     // max rows and cols
     public World world = new World(20, 20);
@@ -35,8 +39,25 @@ public class GameData {
     // game panel instance
     public GamePanel gamePanel;
 
+
     public GameData(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
+    }
+
+    public void zoomIn() {
+        if (!(tileSize + tileSize/2 > maxTileSize)) {
+            tileSize += tileSize/2;
+            imageLoader.createTextures();
+            gamePanel.getIsoCordTool().updateIso();
+        }
+    }
+
+    public void zoomOut() {
+        if (!(tileSize - tileSize/2 < minTileSize)) {
+            tileSize -= tileSize/2;
+            imageLoader.createTextures();
+            gamePanel.getIsoCordTool().updateIso();
+        }
     }
 
 }

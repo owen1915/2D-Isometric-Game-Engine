@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 
 public class KeyListener implements java.awt.event.KeyListener {
 
-    public boolean upPressed = false, downPressed = false, leftPressed = false, rightPressed = false;
+    public boolean upPressed = false, downPressed = false, leftPressed = false, rightPressed = false, plusPressed = false, minusPressed = false;
     private GameData gameData;
 
     public KeyListener(GameData gameData) {
@@ -33,6 +33,12 @@ public class KeyListener implements java.awt.event.KeyListener {
             case KeyEvent.VK_D:
                 rightPressed = true;
                 break;
+            case 61:
+                plusPressed = true;
+                break;
+            case KeyEvent.VK_MINUS:
+                minusPressed = true;
+                break;
         }
     }
 
@@ -51,6 +57,12 @@ public class KeyListener implements java.awt.event.KeyListener {
             case KeyEvent.VK_D:
                 rightPressed = false;
                 break;
+            case 61:
+                plusPressed = false;
+                break;
+            case KeyEvent.VK_MINUS:
+                minusPressed = false;
+                break;
         }
     }
 
@@ -66,6 +78,14 @@ public class KeyListener implements java.awt.event.KeyListener {
         }
         if (rightPressed) {
             gameData.camera.ifRightPressed();
+        }
+        if (plusPressed) {
+            gameData.zoomIn();
+            plusPressed = false;
+        }
+        if (minusPressed) {
+            gameData.zoomOut();
+            minusPressed = false;
         }
     }
 }
