@@ -21,7 +21,7 @@ public class GameData {
     public int tileWidth = 64;;
 
     // max rows and cols
-    public World world = new World(100, 100);
+    public World world = new World(20, 20);
 
     public Camera camera = new Camera(this);
 

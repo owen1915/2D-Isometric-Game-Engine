@@ -1,5 +1,6 @@
 package Graphics.Panels;
 
+import Listeners.KeyListener;
 import Listeners.MouseListener;
 import MainConfig.GameData;
 import Graphics.GameGraphics;
@@ -15,6 +16,7 @@ public class GamePanel extends JPanel {
     private MainMenu mainMenu;
     private GameGraphics gameGraphics;
     private IsoCordTool isoCordTool;
+    private KeyListener keyListener;
 
     public GamePanel() {
         gameData = new GameData(this);
@@ -24,6 +26,9 @@ public class GamePanel extends JPanel {
         setFocusable(true);
         requestFocusInWindow();
 
+        this.keyListener = new KeyListener(gameData);
+
+        addKeyListener(keyListener);
         isoCordTool = new IsoCordTool(gameData);
         mainMenu = new MainMenu(gameData);
         gameGraphics = new GameGraphics(gameData);;
@@ -33,6 +38,14 @@ public class GamePanel extends JPanel {
      * Update method
      */
     public void update() {
+        switch(gameData.GAMESTATE) {
+            case 1:
+                break;
+            case 2:
+                keyListener.update();
+                break;
+        }
+
         // repaints the panel
         repaint();
     }
