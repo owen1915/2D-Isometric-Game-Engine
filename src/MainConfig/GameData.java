@@ -17,15 +17,14 @@ public class GameData {
     public int screenHeight = 720;
 
     // default tile screenHeight and screenWidth
-    public int tileHeight = 64;
-    public int tileWidth = 64;;
+    public int tileSize = 64;
 
     // max rows and cols
     public World world = new World(20, 20);
 
     public Camera camera = new Camera(this);
 
-    public ImageLoader imageLoader = new ImageLoader();
+    public ImageLoader imageLoader = new ImageLoader(this);
 
     /**
      * Game state indicates what we are drawing.

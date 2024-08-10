@@ -13,8 +13,10 @@ public class ImageLoader {
     private Image[] sprites;
     private Image[] textures;
     private Image mainMenu;
+    private GameData gameData;
 
-    public ImageLoader() {
+    public ImageLoader(GameData gameData) {
+        this.gameData = gameData;
         loadImages();
     }
 
@@ -57,10 +59,10 @@ public class ImageLoader {
 
     public void createTextures() {
         textures = new Image[WorldTile.Tile.values().length];
-        textures[WorldTile.Tile.Grass.ordinal()] = sprites[0];
-        textures[WorldTile.Tile.Wall.ordinal()] = sprites[1];
-        textures[WorldTile.Tile.FurnaceOff.ordinal()] = sprites[2];
-        textures[WorldTile.Tile.FurnaceOn.ordinal()] = sprites[3];
+        textures[WorldTile.Tile.Grass.ordinal()] = sprites[0].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
+        textures[WorldTile.Tile.Wall.ordinal()] = sprites[1].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
+        textures[WorldTile.Tile.FurnaceOff.ordinal()] = sprites[2].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
+        textures[WorldTile.Tile.FurnaceOn.ordinal()] = sprites[3].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
     }
 
     public Image[] getTextures() {

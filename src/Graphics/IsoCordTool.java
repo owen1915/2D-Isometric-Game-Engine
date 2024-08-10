@@ -12,8 +12,8 @@ public class IsoCordTool {
 
     public IsoCordTool(GameData gameData) {
         this.gameData = gameData;
-        width = gameData.tileWidth;
-        height = gameData.tileHeight;
+        width = gameData.tileSize;
+        height = gameData.tileSize;
         xVector = new double[]{0.5 * width, 0.25 * height};
         yVector = new double[]{-0.5 * width, 0.25 * height};
     }
