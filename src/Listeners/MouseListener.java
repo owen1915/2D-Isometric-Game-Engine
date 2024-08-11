@@ -29,6 +29,21 @@ public class MouseListener implements java.awt.event.MouseListener {
 
     }
 
+
+
+
+    //get an array off possible Tiles mouse could be hitting
+    public  WorldTile.Tile[] getTilesOfMouse(int xIsoCor, int yIsoCor){
+        WorldTile.Tile[] tilesOfMouseArray = new WorldTile.Tile[3];
+        //Loop through each lair to construct array
+        for (int lair = 0; lair < 3; lair++){
+            tilesOfMouseArray[lair] = gameData.world.getWorldTileType(xIsoCor + lair, yIsoCor + lair, lair);
+        }
+        return tilesOfMouseArray;
+
+    }
+
+
     @Override
     public void mousePressed(MouseEvent e) {
         x = e.getX();
@@ -44,40 +59,27 @@ public class MouseListener implements java.awt.event.MouseListener {
         this.mouseIsoY = cords[1];
         leftPressed = true;
 
+        WorldTile.Tile[] worldTilesOfMouseArray = getTilesOfMouse(cords[0], cords[1]);
 
-        //If right remove block
+
         if (e.getButton() == MouseEvent.BUTTON3){
-            //Check if calculate isometric cords are in the worlds bounds
-            if (cords[0] >= 0 && cords[0] < gameData.world.getWorldXSize()){
-                if (cords[1] >= 0 && cords[1] < gameData.world.getWorldYSize()) {
-                    //Check if there is a block at each depth in the desired cords
-
-                    if (gameData.world.getWorldTileType(cords[0] + 2, cords[1] + 2, 2) != WorldTile.Tile.Empty){
-                        gameData.world.setWorldTile(cords[0] + 2, cords[1] + 2, 2, WorldTile.Tile.Empty);
-                    }
-                    else if (gameData.world.getWorldTileType(cords[0] + 1, cords[1] + 1, 1) != WorldTile.Tile.Empty){
-                        gameData.world.setWorldTile(cords[0] + 1, cords[1] + 1, 1, WorldTile.Tile.Empty);
-                    }
-                    System.out.println("MouseToIsoWorldCords = (" + (cords[0]) +", " + (cords[1]) +")");
+            for (int lair = 2; lair >= 0; lair--){
+                WorldTile.Tile tile = worldTilesOfMouseArray[lair];
+                if (tile != WorldTile.Tile.Empty){
+                    System.out.println(worldTilesOfMouseArray[lair] + " | " + lair);
+                    gameData.world.setWorldTile(cords[0] + lair, cords[1] + lair, lair, WorldTile.Tile.Empty);
+                    break;
                 }
             }
         }
-        //If left | place block
-        else if (e.getButton() == MouseEvent.BUTTON1){
-            //Check if calculate isometric cords are in the worlds bounds
-            if (cords[0] >= 0 && cords[0] < gameData.world.getWorldXSize()){
-                if (cords[1] >= 0 && cords[1] < gameData.world.getWorldYSize()) {
-                    //Check if there is a block at each depth in the desired cords
 
-                    if (gameData.world.getWorldTileType(cords[0] + 1, cords[1] + 1, 1) != WorldTile.Tile.Empty){
-                        gameData.world.setWorldTile(cords[0] + 1, cords[1] + 1, 2, WorldTile.Tile.Wall);
-
-                    }
-                    else if (gameData.world.getWorldTileType(cords[0], cords[1], 1) == WorldTile.Tile.Empty){
-                        gameData.world.setWorldTile(cords[0], cords[1], 1, WorldTile.Tile.Wall);
-
-                    }
-                    System.out.println("MouseToIsoWorldCords = (" + (cords[0]) +", " + (cords[1]) +")");
+        if (e.getButton() == MouseEvent.BUTTON1){
+            for (int lair = 2; lair >= 0; lair--){
+                WorldTile.Tile tile = worldTilesOfMouseArray[lair];
+                if (tile != WorldTile.Tile.Empty){
+                    System.out.println(worldTilesOfMouseArray[lair] + " | " + lair);
+                    gameData.world.setWorldTile(cords[0] + lair, cords[1] + lair, lair + 1, WorldTile.Tile.Wall);
+                    break;
                 }
             }
         }
