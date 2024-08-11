@@ -24,6 +24,7 @@ public class GameLoop implements Runnable {
             long startTime = System.currentTimeMillis();
 
             //render and update game here
+            gamePanel.repaint();
             gamePanel.update();
 
 

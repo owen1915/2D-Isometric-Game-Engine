@@ -16,11 +16,11 @@ public class GameData {
     public boolean debug = true;
 
     // screenWidth and screenHeight
-    public int screenWidth = 1920;
-    public int screenHeight = 1080;
+    public int screenWidth = 1280;
+    public int screenHeight = 720;
 
     // fullscreen
-    public boolean fullscreen = true;
+    public boolean fullscreen = false;
 
     // random
     public Random random = new Random();

@@ -67,9 +67,6 @@ public class GamePanel extends JPanel {
                 keyListener.update();
                 break;
         }
-
-        // repaints the panel
-        repaint();
     }
 
     /**

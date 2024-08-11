@@ -33,14 +33,14 @@ public class GameGraphics {
         for (int z = 0; z < 3; z++) {
             for (int x = 0; x < gameData.world.getWorldYSize(); x++) {
                 for (int y = 0; y < gameData.world.getWorldXSize(); y++) {
-                    boolean draw = false;
-
                     //Get the world tile
                     WorldTile.Tile tileType = gameData.world.getWorldTileType(x, y, z);
 
                     //conditions to be met for it to be rendered
-                    //checks if tile is empty
+                    //checks if tile is empty or null
                     if (tileType != null && tileType != WorldTile.Tile.Empty) {
+                        boolean draw = false;
+
                         //if it is the top layer
                         if (z == 2) {
                             draw = true;
