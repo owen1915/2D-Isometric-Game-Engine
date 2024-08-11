@@ -5,6 +5,8 @@ import Graphics.IsoCordTool;
 import Graphics.Panels.GamePanel;
 import World.World;
 
+import java.util.Random;
+
 public class GameData {
 
     // fps
@@ -19,6 +21,9 @@ public class GameData {
 
     // fullscreen
     public boolean fullscreen = false;
+
+    // random
+    public Random random = new Random();
 
     // default tile screenHeight and screenWidth
     public int tileSize = 128;

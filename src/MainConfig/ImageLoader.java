@@ -12,7 +12,7 @@ public class ImageLoader {
 
     private Image[] sprites;
     private Image[] textures;
-    private Image mainMenu;
+    private Image[] background;
     private GameData gameData;
 
     public ImageLoader(GameData gameData) {
@@ -40,6 +40,7 @@ public class ImageLoader {
             int spritesRows = bufferedSpriteSheet.getHeight() / spriteHeight;
 
             sprites = new Image[spritesCols * spritesRows];
+            background = new Image[5];
 
             int index = 0;
             for (int y = 0; y < spritesRows; y++) {
@@ -49,7 +50,11 @@ public class ImageLoader {
                 }
             }
 
-            mainMenu = bufferedSpriteSheet.getSubimage(spriteWidth * 11, 0, spriteWidth * 4, spriteHeight * 3);
+            index = 0;
+            for (int y = 0; y < bufferedSpriteSheet.getHeight(); y += spriteHeight * 3) {
+                background[index] = bufferedSpriteSheet.getSubimage(spriteWidth * 11, y, spriteWidth * 4, spriteHeight * 3);
+                index++;
+            }
 
             createTextures();
         } catch (IOException e) {
@@ -71,7 +76,7 @@ public class ImageLoader {
         return textures;
     }
 
-    public Image getMainMenu() {
-        return mainMenu;
+    public Image[] getBackground() {
+        return background;
     }
 }

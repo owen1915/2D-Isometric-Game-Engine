@@ -20,6 +20,9 @@ public class MainMenu {
 
     private GameData gameData;
 
+    // number for random background img
+    private int randomIndex;
+
     public MainMenu(GameData gameData) {
         this.gameData = gameData;
 
@@ -28,6 +31,8 @@ public class MainMenu {
 
         buttons = new OButton[1];
         buttons[0] = new OButton(gameData, "NEW GAME", 0, 200);
+
+        randomIndex = gameData.random.nextInt(1);
     }
 
     /**
@@ -36,8 +41,9 @@ public class MainMenu {
     public void render(Graphics2D panelGraphics) {
         BufferedImage bufferedImage = new BufferedImage(gameData.screenWidth, gameData.screenHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = bufferedImage.createGraphics();
+
         // draw background image
-        Image scaledImage = gameData.imageLoader.getMainMenu().getScaledInstance(gameData.screenWidth, gameData.screenHeight, Image.SCALE_SMOOTH);
+        Image scaledImage = gameData.imageLoader.getBackground()[randomIndex].getScaledInstance(gameData.screenWidth, gameData.screenHeight, Image.SCALE_DEFAULT);
         g2.drawImage(scaledImage, 0, 0,null);
 
         //set color of text
