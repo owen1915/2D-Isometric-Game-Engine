@@ -12,8 +12,9 @@ public class WorldTile {
         FurnaceOff,
         FurnaceOn,
         Dirt,
-
-        Selection
+        Selection,
+        turret,
+        Belt,
     }
 
     private Tile tileType;

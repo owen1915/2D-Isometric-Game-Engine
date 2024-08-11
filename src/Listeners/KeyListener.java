@@ -1,6 +1,7 @@
 package Listeners;
 
 import MainConfig.GameData;
+import World.WorldTile;
 
 import java.awt.event.KeyEvent;
 
@@ -59,6 +60,15 @@ public class KeyListener implements java.awt.event.KeyListener {
                 break;
             case KeyEvent.VK_D:
                 rightPressed = false;
+                break;
+            case KeyEvent.VK_V:
+                WorldTile.Tile[] tiles = WorldTile.Tile.values();
+                if (gameData.selectedTile < tiles.length - 1){
+                    gameData.selectedTile++;
+                }
+                else{
+                    gameData.selectedTile = 1;
+                }
                 break;
             case 61:
                 plusPressed = false;

@@ -70,6 +70,7 @@ public class ImageLoader {
         textures[WorldTile.Tile.FurnaceOn.ordinal()] = sprites[3].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
         textures[WorldTile.Tile.Dirt.ordinal()] = sprites[11].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
         textures[WorldTile.Tile.Selection.ordinal()] = sprites[9].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
+        textures[WorldTile.Tile.turret.ordinal()] = sprites[10].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
     }
 
     public Image[] getTextures() {

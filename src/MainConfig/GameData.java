@@ -4,6 +4,7 @@ import Graphics.Camera.Camera;
 import Graphics.IsoCordTool;
 import Graphics.Panels.GamePanel;
 import World.World;
+import World.WorldTile.Tile;
 
 import java.util.Random;
 
@@ -29,6 +30,7 @@ public class GameData {
     public int tileSize = 64;
 
     public final int maxTileSize = 256;
+
     public final int minTileSize = 32;
 
     // max rows and cols
@@ -43,6 +45,9 @@ public class GameData {
      * When GAMESTATE is 1 it will render the Menu, when GAMESTATE is 2 it can render the game, etc...
      */
     public int GAMESTATE = 1;
+
+    public int selectedTile = 0;
+
 
     // game panel instance
     public GamePanel gamePanel;

@@ -16,6 +16,8 @@ public class MouseListener implements java.awt.event.MouseListener {
     private int mouseIsoX;
     private int mouseIsoY;
 
+    public WorldTile.Tile selectedTile = WorldTile.Tile.Wall;
+
     private boolean leftPressed = false;
 
     private GameData gameData;
@@ -61,13 +63,15 @@ public class MouseListener implements java.awt.event.MouseListener {
 
         WorldTile.Tile[] worldTilesOfMouseArray = getTilesOfMouse(cords[0], cords[1]);
 
+        WorldTile.Tile[] tiles = WorldTile.Tile.values();
+        WorldTile.Tile selectedTile = tiles[gameData.selectedTile];
 
         if (e.getButton() == MouseEvent.BUTTON3){
             for (int lair = 2; lair >= 0; lair--){
                 WorldTile.Tile tile = worldTilesOfMouseArray[lair];
                 if (tile != WorldTile.Tile.Empty){
                     System.out.println(worldTilesOfMouseArray[lair] + " | " + lair);
-                    gameData.world.setWorldTile(cords[0] + lair, cords[1] + lair, lair, WorldTile.Tile.Empty);
+                    gameData.world.setWorldTile(cords[0] + lair, cords[1] + lair, lair, selectedTile);
                     break;
                 }
             }
@@ -78,7 +82,7 @@ public class MouseListener implements java.awt.event.MouseListener {
                 WorldTile.Tile tile = worldTilesOfMouseArray[lair];
                 if (tile != WorldTile.Tile.Empty){
                     System.out.println(worldTilesOfMouseArray[lair] + " | " + lair);
-                    gameData.world.setWorldTile(cords[0] + lair, cords[1] + lair, lair + 1, WorldTile.Tile.Wall);
+                    gameData.world.setWorldTile(cords[0] + lair, cords[1] + lair, lair + 1, selectedTile);
                     break;
                 }
             }
