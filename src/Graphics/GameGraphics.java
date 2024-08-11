@@ -94,6 +94,6 @@ public class GameGraphics {
         int screenX = isoCordTool.getXIso(x, y);
         int screenY = isoCordTool.getYIso(x, y);
 
-        return screenX <= gameData.screenWidth - gameData.tileSize && screenX >= 0 + gameData.tileSize && screenY <= gameData.screenHeight - gameData.tileSize && screenY >= 0 + gameData.tileSize;
+        return screenX <= gameData.screenWidth + gameData.tileSize && screenX >= -gameData.tileSize && screenY <= gameData.screenHeight + gameData.tileSize && screenY >= -gameData.tileSize;
     }
 }
