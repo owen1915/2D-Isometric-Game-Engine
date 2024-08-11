@@ -16,23 +16,23 @@ public class GameData {
     public boolean debug = true;
 
     // screenWidth and screenHeight
-    public int screenWidth = 1280;
-    public int screenHeight = 720;
+    public int screenWidth = 1920;
+    public int screenHeight = 1080;
 
     // fullscreen
-    public boolean fullscreen = false;
+    public boolean fullscreen = true;
 
     // random
     public Random random = new Random();
 
     // default tile screenHeight and screenWidth
-    public int tileSize = 128;
+    public int tileSize = 64;
 
     public final int maxTileSize = 256;
     public final int minTileSize = 16;
 
     // max rows and cols
-    public World world = new World(100, 100);
+    public World world = new World(50, 50);
 
     public Camera camera = new Camera(this);
 
