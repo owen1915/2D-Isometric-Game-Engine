@@ -39,6 +39,9 @@ public class KeyListener implements java.awt.event.KeyListener {
             case KeyEvent.VK_MINUS:
                 minusPressed = true;
                 break;
+            case KeyEvent.VK_R:
+                gameData.world.rotate();
+                break;
         }
     }
 

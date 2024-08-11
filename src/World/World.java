@@ -11,6 +11,9 @@ public class World {
     private int worldYSize;
     private int defaultDepth;
 
+    private WorldTile[][] bottomLayer;
+    private WorldTile[][] topLayer;
+    private WorldTile[][] middleLayer;
 
     //World object;
     private WorldTile[][][] worldTiles = new WorldTile[3][0][0];
@@ -22,9 +25,9 @@ public class World {
         this.worldYSize = ySize;
         defaultDepth = 3;
 
-        WorldTile[][] bottomLayer = new WorldTile[worldXSize][worldYSize];
-        WorldTile[][] middleLayer = new WorldTile[worldXSize][worldYSize];
-        WorldTile[][] topLayer = new WorldTile[worldXSize][worldYSize];
+        bottomLayer = new WorldTile[worldXSize][worldYSize];
+        middleLayer = new WorldTile[worldXSize][worldYSize];
+        topLayer = new WorldTile[worldXSize][worldYSize];
 
         for (int i = 0; i < defaultDepth; i++) {
             for (int y = 0; y < xSize; y++) {
@@ -56,6 +59,26 @@ public class World {
         worldTiles[0] = bottomLayer;
         worldTiles[1] = middleLayer;
         worldTiles[2] = topLayer;
+    }
+
+    public void rotate() {
+        worldTiles[0] = rotate90Degrees(worldTiles[0]);
+        worldTiles[1] = rotate90Degrees(worldTiles[1]);
+        worldTiles[2] = rotate90Degrees(worldTiles[2]);
+    }
+
+    public WorldTile[][] rotate90Degrees(WorldTile[][] arr) {
+        int rows = arr.length;
+        int cols = arr[0].length;
+        WorldTile[][] rotated = new WorldTile[cols][rows];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                rotated[j][rows - 1 - i] = arr[i][j];
+            }
+        }
+
+        return rotated;
     }
 
     public int getWorldXSize() {

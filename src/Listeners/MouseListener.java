@@ -81,10 +81,6 @@ public class MouseListener implements java.awt.event.MouseListener {
                 }
             }
         }
-
-
-
-
     }
 
     @Override

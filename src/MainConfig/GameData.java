@@ -29,10 +29,10 @@ public class GameData {
     public int tileSize = 64;
 
     public final int maxTileSize = 256;
-    public final int minTileSize = 16;
+    public final int minTileSize = 32;
 
     // max rows and cols
-    public World world = new World(50, 50);
+    public World world = new World(64, 64);
 
     public Camera camera = new Camera(this);
 
