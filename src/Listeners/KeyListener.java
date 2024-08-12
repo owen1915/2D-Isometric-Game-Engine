@@ -84,7 +84,7 @@ public class KeyListener implements java.awt.event.KeyListener {
                 minusPressed = false;
                 break;
             case KeyEvent.VK_X:
-                System.exit(0);
+                gameData.GAMESTATE = 0;
                 break;
         }
     }

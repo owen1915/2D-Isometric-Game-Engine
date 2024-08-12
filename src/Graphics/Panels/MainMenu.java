@@ -26,11 +26,17 @@ public class MainMenu {
     public MainMenu(GameData gameData) {
         this.gameData = gameData;
 
-        strArr = new String[1];
-        strArr[0] = "BOTANICAL BLITZ";
+        Runnable newGame = () -> {
+            gameData.GAMESTATE = 2;
+        };
 
-        buttons = new OButton[1];
-        buttons[0] = new OButton(gameData, "NEW GAME", 0, 200);
+        Runnable exitGame = () -> {
+            gameData.GAMESTATE = 0;
+        };
+
+        buttons = new OButton[2];
+        buttons[0] = new OButton(gameData, "NEW GAME", 0, 0, newGame);
+        buttons[1] = new OButton(gameData, "QUIT", 0, 1, exitGame);
 
         randomIndex = gameData.random.nextInt(1);
     }
@@ -51,10 +57,6 @@ public class MainMenu {
         Font font = new Font("DIALOUGE", Font.BOLD, 60);
         g2.setFont(font);
         FontMetrics fm = g2.getFontMetrics();
-
-        // title string
-        //int stringWidth = fm.stringWidth(strArr[0]);
-        //g2.drawString(strArr[0], gameData.screenWidth /2 - stringWidth/2, 60);
 
         //draw buttons
         //change font for buttons

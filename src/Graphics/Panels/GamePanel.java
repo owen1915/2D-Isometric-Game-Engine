@@ -53,12 +53,26 @@ public class GamePanel extends JPanel {
         listenersAdded = true;
     }
 
+    private void removeListeners() {
+        removeMouseWheelListener(mouseWheelListener);
+        removeKeyListener(keyListener);
+        removeMouseListener(mouseListener);
+        removeMouseMotionListener(mouseMotionListener);
+        listenersAdded = false;
+    }
+
     /**
      * Update method
      */
     public void update() {
         switch(gameData.GAMESTATE) {
+            case 0:
+                System.exit(0);
+                break;
             case 1:
+                if (listenersAdded) {
+                    removeListeners();
+                }
                 break;
             case 2:
                 if (!listenersAdded) {
@@ -86,10 +100,6 @@ public class GamePanel extends JPanel {
             case 2:
                 gameGraphics.render(g2);
                 break;
-            default:
-                if (gameData.debug) {
-                    System.out.println("NOT RENDERING NOTHING: GAMESTATE = " + gameData.GAMESTATE);
-                }
         }
 
         // disposes graphics for garbage collection

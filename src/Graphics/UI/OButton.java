@@ -18,11 +18,13 @@ public class OButton {
     private int buffer = 10;
     private Rectangle rect;
     private Color color = Color.black;
+    private Runnable onClick;
 
-    public OButton(GameData gameData, String str, int x, int y) {
+    public OButton(GameData gameData, String str, int x, int y, Runnable onClick) {
         this.str = str;
         this.x = x;
         this.y = y;
+        this.onClick = onClick;
 
         this.gameData = gameData;
 
@@ -31,7 +33,9 @@ public class OButton {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (gameData.GAMESTATE == 1 && rect != null && rect.contains(e.getX(), e.getY())) {
-                    gameData.GAMESTATE = 2;
+                    if (onClick != null) {
+                        onClick.run();
+                    }
                     if (gameData.debug) {
                         System.out.println("BUTTON CLICKED");
                     }
@@ -42,7 +46,7 @@ public class OButton {
             @Override
             public void mouseMoved(MouseEvent e) {
                 if (rect != null && rect.contains(e.getX(), e.getY())) {
-                    // color text is gonna change to when mouse is hovering
+                    //color text is gonna change to when mouse is hovering
                     color = Color.gray;
                 } else {
                     color = Color.black;
@@ -61,7 +65,12 @@ public class OButton {
         int middleX = (gameData.screenWidth / 2 - stringWidth / 2);
 
         int rectX = 0;
-        int rectY = y;
+        int rectY = 0;
+        if (y == 0) {
+            rectY = gameData.screenHeight/4;
+        } else if (y == 1) {
+            rectY = gameData.screenHeight - gameData.screenHeight/4;
+        }
         if (x == 0) {
             rectX = middleX - buffer/2;
         }
@@ -71,6 +80,8 @@ public class OButton {
         g2.setColor(Color.LIGHT_GRAY);
         g2.fillRect(rect.x + 1, rect.y + 1, rect.width - 1, rect.height - 1);
         g2.setColor(color);
-        g2.drawString(str, middleX, y + (stringHeight/2 + stringHeight/3) - buffer/2);
+        g2.drawString(str, middleX, rectY + (stringHeight/2 + stringHeight/3) - buffer/2);
+
+        g2.setColor(Color.BLACK);
     }
 }
