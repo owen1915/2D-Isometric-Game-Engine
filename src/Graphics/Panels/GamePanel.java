@@ -64,6 +64,8 @@ public class GamePanel extends JPanel {
                 if (!listenersAdded) {
                     addListeners();
                 }
+                System.out.println("OFFSET: " + (gameData.camera.getxOffset()));
+                System.out.println(gameData.world.getWorldXSize() * gameData.tileSize/2);
                 keyListener.update();
                 break;
         }

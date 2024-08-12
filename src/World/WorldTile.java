@@ -15,6 +15,7 @@ public class WorldTile {
         Selection,
         turret,
         Belt,
+        RedSelection,
     }
 
     private Tile tileType;

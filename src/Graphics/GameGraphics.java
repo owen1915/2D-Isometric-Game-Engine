@@ -80,7 +80,13 @@ public class GameGraphics {
         int[] mouseWorldCor = gameData.gamePanel.getMouseMotionListener().getMouseWorldCords();
 
         //Draw the selection tile
-        bufferedGraphics.drawImage(imageLoader.getTextures()[WorldTile.Tile.Selection.ordinal()], isoCordTool.getXIso(mouseWorldCor[0] - 1, mouseWorldCor[1] - 1), isoCordTool.getYIso(mouseWorldCor[0] - 1, mouseWorldCor[1] - 1), null);
+        if (mouseWorldCor[0] - 1 < 0 || mouseWorldCor[1] - 1  < 0 || mouseWorldCor[0] - 1 > gameData.world.getWorldXSize()
+                || mouseWorldCor[1] - 1  > gameData.world.getWorldYSize()) {
+            bufferedGraphics.drawImage(imageLoader.getTextures()[WorldTile.Tile.RedSelection.ordinal()], isoCordTool.getXIso(mouseWorldCor[0] - 1, mouseWorldCor[1] - 1), isoCordTool.getYIso(mouseWorldCor[0] - 1, mouseWorldCor[1] - 1), null);
+        } else {
+            bufferedGraphics.drawImage(imageLoader.getTextures()[WorldTile.Tile.Selection.ordinal()], isoCordTool.getXIso(mouseWorldCor[0] - 1, mouseWorldCor[1] - 1), isoCordTool.getYIso(mouseWorldCor[0] - 1, mouseWorldCor[1] - 1), null);
+        }
+
 
         //dispose graphics
         bufferedGraphics.dispose();

@@ -3,8 +3,6 @@ package World;
 
 import MainConfig.GameData;
 
-import javax.lang.model.type.NullType;
-
 
 public class World {
 
@@ -77,6 +75,9 @@ public class World {
         }
     }
 
+    /**
+     * rotates array 90 degrees
+     */
     public WorldTile[][] rotate90Degrees(WorldTile[][] arr) {
         int rows = arr.length;
         int cols = arr[0].length;
@@ -115,6 +116,21 @@ public class World {
         else {
             return null;
         }
+    }
+
+    /**
+     * gets max depth at x and y
+     */
+    public int getMaxDepthAtTile(int x, int y){
+        if (worldTiles[2][x][y].getTileType() != WorldTile.Tile.Empty) {
+            return 2;
+        }
+
+        if (worldTiles[1][x][y].getTileType() != WorldTile.Tile.Empty) {
+            return 1;
+        }
+
+        return 0;
     }
 
     public WorldTile getWorldTile(int x, int y, int z){

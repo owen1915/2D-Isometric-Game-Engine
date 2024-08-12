@@ -47,6 +47,9 @@ public class KeyListener implements java.awt.event.KeyListener {
                 gameData.world.rotate(cameraCount);
                 cameraCount++;
                 break;
+            case KeyEvent.VK_M:
+                gameData.GAMESTATE = 1;
+                break;
         }
     }
 
