@@ -91,13 +91,22 @@ public class GamePanel extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
 
         // switch statement to check what to render using GAMESTATE
+
+        long currentTime = System.currentTimeMillis();
+        long timeTook = 0;
         switch (gameData.GAMESTATE) {
             case 1:
                 mainMenu.render(g2);
+                timeTook = System.currentTimeMillis() - currentTime;
                 break;
             case 2:
                 gameGraphics.render(g2);
+                timeTook = System.currentTimeMillis() - currentTime;
                 break;
+        }
+
+        if (gameData.debug) {
+            System.out.println("Took " + timeTook + "ms to render");
         }
 
         // disposes graphics for garbage collection

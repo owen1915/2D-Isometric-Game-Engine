@@ -8,6 +8,7 @@ public class Camera {
     private int yOffset;
     private int xSpeed = 16;
     private int ySpeed = 16;
+    private int zoomAmnt = 8;
 
     public Camera(GameData gameData) {
         this.gameData = gameData;
@@ -125,16 +126,16 @@ public class Camera {
     }
 
     public void zoomIn() {
-        if (!(gameData.tileSize + 16 > gameData.maxTileSize)) {
-            gameData.tileSize += 16;
+        if (!(gameData.tileSize + zoomAmnt > gameData.maxTileSize)) {
+            gameData.tileSize += zoomAmnt;
             gameData.imageLoader.createTextures();
             gameData.gamePanel.getIsoCordTool().updateIso();
         }
     }
 
     public void zoomOut() {
-        if (!(gameData.tileSize - 16 < gameData.minTileSize)) {
-            gameData.tileSize -= 16;
+        if (!(gameData.tileSize - zoomAmnt < gameData.minTileSize)) {
+            gameData.tileSize -= zoomAmnt;
             gameData.imageLoader.createTextures();
             gameData.gamePanel.getIsoCordTool().updateIso();
         }
