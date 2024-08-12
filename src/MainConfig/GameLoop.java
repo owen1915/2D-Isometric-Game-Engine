@@ -39,6 +39,7 @@ public class GameLoop implements Runnable {
                     throw new RuntimeException(e);
                 }
             }
+            gameData.frameCounter++;
             frameCounter++;
             if (gameData.debug && System.currentTimeMillis() - lastTime > 1000) {
                 // debug for printing fps

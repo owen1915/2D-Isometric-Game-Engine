@@ -15,17 +15,20 @@ public class GameGraphics {
     private IsoCordTool isoCordTool;
     private GameData gameData;
     private ImageLoader imageLoader;
+    private BufferedImage bufferedImage;
+    private Graphics2D bufferedGraphics;
 
     public GameGraphics(GameData gameData) {
         this.gameData = gameData;
         imageLoader = gameData.imageLoader;
         isoCordTool = gameData.gamePanel.getIsoCordTool();
+
+        bufferedImage = new BufferedImage(gameData.screenWidth, gameData.screenHeight, BufferedImage.TYPE_INT_ARGB);
+        bufferedGraphics = (Graphics2D) bufferedImage.getGraphics();
     }
 
     public void render(Graphics2D g2) {
-        BufferedImage bufferedImage = new BufferedImage(gameData.screenWidth, gameData.screenHeight, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D bufferedGraphics = (Graphics2D) bufferedImage.getGraphics();
-
+        bufferedGraphics.clearRect(0, 0, gameData.screenWidth, gameData.screenHeight);
         bufferedGraphics.drawImage(imageLoader.getBackground()[0], 0, 0, gameData.screenWidth, gameData.screenHeight, null);
 
         int tileSize = gameData.tileSize;
@@ -69,7 +72,6 @@ public class GameGraphics {
 
                         if (draw && withinBounds(x, y)) {
                             bufferedGraphics.drawImage(imageLoader.getTextures()[tileType.ordinal()], isoCordTool.getXIso(x, y), isoCordTool.getYIso(x, y) - (z * tileSize/2), null);
-                            withinBounds(x, y);
                         }
                     }
                 }
@@ -86,9 +88,6 @@ public class GameGraphics {
         } else {
             bufferedGraphics.drawImage(imageLoader.getTextures()[WorldTile.Tile.Selection.ordinal()], isoCordTool.getXIso(mouseWorldCor[0] - 1, mouseWorldCor[1] - 1), isoCordTool.getYIso(mouseWorldCor[0] - 1, mouseWorldCor[1] - 1), null);
         }
-
-        //dispose graphics
-        bufferedGraphics.dispose();
 
         //draw to panel
         g2.drawImage(bufferedImage, 0, 0, null);

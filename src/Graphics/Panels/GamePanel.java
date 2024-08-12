@@ -9,6 +9,8 @@ import Graphics.GameGraphics;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+
 import Graphics.IsoCordTool;
 
 public class GamePanel extends JPanel {
@@ -26,6 +28,8 @@ public class GamePanel extends JPanel {
 
     // bool for adding listeners once graphics is loaded (so when the main menu button is hit, it doesnt instantly draw a block)
     private boolean listenersAdded = false;
+
+    private ArrayList<Long> renderTime = new ArrayList<>();
 
     public GamePanel() {
         gameData = new GameData(this);
@@ -106,7 +110,28 @@ public class GamePanel extends JPanel {
         }
 
         if (gameData.debug) {
-            System.out.println("Took " + timeTook + "ms to render");
+            if (gameData.frameCounter % 60 != 0) {
+                renderTime.add(timeTook);
+            } else {
+                if (!renderTime.isEmpty()) {
+                    long average = 0;
+                    long max = renderTime.getFirst();;
+                    long min = renderTime.getFirst();
+                    for (Long l : renderTime) {
+                        if (l > max) max = l;
+                        if (l < min) min = l;
+                        average += l;
+                    }
+
+                    average /= renderTime.size();
+                    System.out.println("-------------------------------------------");
+                    System.out.println("Min Render Time " + min + "ms\nMax Render Time " + max + "ms");
+                    System.out.println("Average render time " + average + "ms");
+                    System.out.println("-------------------------------------------");
+                    renderTime.clear();
+                    gameData.frameCounter = 0;
+                }
+            }
         }
 
         // disposes graphics for garbage collection

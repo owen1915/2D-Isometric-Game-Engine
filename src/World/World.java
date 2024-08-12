@@ -20,11 +20,11 @@ public class World {
 
     private GameData gameData;
 
-    public World(int xSize, int ySize, GameData gameData){
+    public World(int worldSize, GameData gameData){
         this.gameData = gameData;
         //Create a new array for the storage of the world tiles
-        this.worldXSize = xSize;
-        this.worldYSize = ySize;
+        this.worldXSize = worldSize;
+        this.worldYSize = worldSize;
         defaultDepth = 3;
 
         bottomLayer = new WorldTile[worldXSize][worldYSize];
@@ -32,8 +32,8 @@ public class World {
         topLayer = new WorldTile[worldXSize][worldYSize];
 
         for (int i = 0; i < defaultDepth; i++) {
-            for (int y = 0; y < xSize; y++) {
-                for (int x = 0; x < ySize; x++) {
+            for (int y = 0; y < worldSize; y++) {
+                for (int x = 0; x < worldSize; x++) {
                     switch (i) {
                         case 0:
                             bottomLayer[x][y] = new WorldTile(WorldTile.Tile.Dirt);
@@ -49,14 +49,14 @@ public class World {
             }
         }
 
-        topLayer[xSize/2 -2][ySize/2 -2] = new WorldTile(WorldTile.Tile.Wall);
+        topLayer[worldSize/2 -2][worldSize/2 -2] = new WorldTile(WorldTile.Tile.Wall);
 
-        topLayer[xSize/2 - 1][ySize/2] = new WorldTile(WorldTile.Tile.FurnaceOn);
-        topLayer[xSize/2][ySize/2 - 1] = new WorldTile(WorldTile.Tile.FurnaceOn);
-        topLayer[xSize/2 - 1][ySize/2 - 1] = new WorldTile(WorldTile.Tile.FurnaceOn);
-        topLayer[xSize/2][ySize/2] = new WorldTile(WorldTile.Tile.FurnaceOn);
-        topLayer[xSize/2 + 2][ySize/2 - 2] = new WorldTile(WorldTile.Tile.FurnaceOff);
-        topLayer[xSize/2 - 2][ySize/2 + 2] = new WorldTile(WorldTile.Tile.FurnaceOff);
+        topLayer[worldSize/2 - 1][worldSize/2] = new WorldTile(WorldTile.Tile.FurnaceOn);
+        topLayer[worldSize/2][worldSize/2 - 1] = new WorldTile(WorldTile.Tile.FurnaceOn);
+        topLayer[worldSize/2 - 1][worldSize/2 - 1] = new WorldTile(WorldTile.Tile.FurnaceOn);
+        topLayer[worldSize/2][worldSize/2] = new WorldTile(WorldTile.Tile.FurnaceOn);
+        topLayer[worldSize/2 + 2][worldSize/2 - 2] = new WorldTile(WorldTile.Tile.FurnaceOff);
+        topLayer[worldSize/2 - 2][worldSize/2 + 2] = new WorldTile(WorldTile.Tile.FurnaceOff);
 
         worldTiles[0] = bottomLayer;
         worldTiles[1] = middleLayer;

@@ -34,15 +34,17 @@ public class GameData {
 
     public final int maxTileSize = 512;
 
-    public final int minTileSize = 8;
+    public final int minTileSize = 16;
 
     // max rows and cols
-    public World world = new World(16, 16, this);
+    public World world = new World(128, this);
 
     public Camera camera = new Camera(this);
 
     public ImageLoader imageLoader = new ImageLoader(this);
     public TextureManager textureManager = new TextureManager(imageLoader);
+
+    public int frameCounter = 0;
 
     /**
      * Game state indicates what we are drawing.
