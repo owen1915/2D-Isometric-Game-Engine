@@ -87,7 +87,6 @@ public class GameGraphics {
             bufferedGraphics.drawImage(imageLoader.getTextures()[WorldTile.Tile.Selection.ordinal()], isoCordTool.getXIso(mouseWorldCor[0] - 1, mouseWorldCor[1] - 1), isoCordTool.getYIso(mouseWorldCor[0] - 1, mouseWorldCor[1] - 1), null);
         }
 
-
         //dispose graphics
         bufferedGraphics.dispose();
 

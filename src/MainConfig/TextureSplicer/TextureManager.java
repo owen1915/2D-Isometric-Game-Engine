@@ -66,6 +66,10 @@ public class TextureManager {
 
 
     Image[] spliceTileIntoFaces(BufferedImage tileSprite){
+        if (tileSprite == null){
+            return null;
+        }
+
         Image[] splicedTiles = new Image[Texture.values().length];
         Texture[] textures = Texture.values();
         for (int i = 0; i < Texture.values().length; i++){
@@ -74,7 +78,7 @@ public class TextureManager {
             for (int y = 0; y < 64; y++){
                 for (int x = 0; x < 64; x++){
                     if((masks.getRGB(x, y) == textures[i].maskRGB)){
-                        image.setRGB(x, y, tileSprite.getRGB(x, y + (64)));
+                        image.setRGB(x, y, tileSprite.getRGB(x, y));
                     }
 
                 }
