@@ -71,7 +71,7 @@ public class MouseListener implements java.awt.event.MouseListener {
                 WorldTile.Tile tile = worldTilesOfMouseArray[lair];
                 if (tile != WorldTile.Tile.Empty){
                     System.out.println(worldTilesOfMouseArray[lair] + " | " + lair);
-                    gameData.world.setWorldTile(cords[0] + lair, cords[1] + lair, lair, selectedTile);
+                    gameData.world.setWorldTile(cords[0] + lair, cords[1] + lair, lair, WorldTile.Tile.Empty);
                     break;
                 }
             }

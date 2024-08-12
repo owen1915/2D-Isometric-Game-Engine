@@ -1,6 +1,8 @@
 package World;
 
 
+import MainConfig.GameData;
+
 import javax.lang.model.type.NullType;
 
 
@@ -18,8 +20,10 @@ public class World {
     //World object;
     private WorldTile[][][] worldTiles = new WorldTile[3][0][0];
 
+    private GameData gameData;
 
-    public World(int xSize, int ySize){
+    public World(int xSize, int ySize, GameData gameData){
+        this.gameData = gameData;
         //Create a new array for the storage of the world tiles
         this.worldXSize = xSize;
         this.worldYSize = ySize;
@@ -61,10 +65,16 @@ public class World {
         worldTiles[2] = topLayer;
     }
 
-    public void rotate() {
+    public void rotate(int count) {
         worldTiles[0] = rotate90Degrees(worldTiles[0]);
         worldTiles[1] = rotate90Degrees(worldTiles[1]);
         worldTiles[2] = rotate90Degrees(worldTiles[2]);
+
+        if (count % 2 != 0) {
+            gameData.camera.setxOffset(-gameData.camera.getxOffset() + gameData.screenWidth);
+        } else {
+            gameData.camera.setyOffset(-gameData.camera.getyOffset() + gameData.screenHeight);
+        }
     }
 
     public WorldTile[][] rotate90Degrees(WorldTile[][] arr) {

@@ -9,9 +9,12 @@ public class KeyListener implements java.awt.event.KeyListener {
 
     public boolean upPressed = false, downPressed = false, leftPressed = false, rightPressed = false, plusPressed = false, minusPressed = false;
     private GameData gameData;
+    private int cameraCount;
 
     public KeyListener(GameData gameData) {
         this.gameData = gameData;
+
+        cameraCount = 1;
     }
 
     @Override
@@ -41,7 +44,8 @@ public class KeyListener implements java.awt.event.KeyListener {
                 minusPressed = true;
                 break;
             case KeyEvent.VK_R:
-                gameData.world.rotate();
+                gameData.world.rotate(cameraCount);
+                cameraCount++;
                 break;
         }
     }
