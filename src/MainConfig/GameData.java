@@ -3,8 +3,11 @@ package MainConfig;
 import Graphics.Camera.Camera;
 import Graphics.IsoCordTool;
 import Graphics.Panels.GamePanel;
+import MainConfig.TextureSplicer.GridManager;
+import MainConfig.TextureSplicer.TextureManager;
 import World.World;
 import World.WorldTile.Tile;
+import org.w3c.dom.Text;
 
 import java.util.Random;
 
@@ -39,6 +42,7 @@ public class GameData {
     public Camera camera = new Camera(this);
 
     public ImageLoader imageLoader = new ImageLoader(this);
+    public TextureManager textureManager = new TextureManager(imageLoader);
 
     /**
      * Game state indicates what we are drawing.
