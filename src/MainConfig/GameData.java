@@ -20,11 +20,13 @@ public class GameData {
     public boolean debug = true;
 
     // screenWidth and screenHeight
-    public int screenWidth = 1920;
-    public int screenHeight = 1080;
+    public int screenWidth = 1200;
+    public int screenHeight = 800;
 
     // fullscreen
     public boolean fullscreen = false;
+
+    public int chunkSize = 4;
 
     // random
     public Random random = new Random();
@@ -37,12 +39,12 @@ public class GameData {
     public final int minTileSize = 16;
 
     // max rows and cols
-    public World world = new World(256, this);
+    public World world = new World(4, this);
+
+    public Camera camera = new Camera(this);
 
     public ImageLoader imageLoader = new ImageLoader(this);
     public TextureManager textureManager = new TextureManager(this);
-
-    public Camera camera = new Camera(this);
 
     public int frameCounter = 0;
 

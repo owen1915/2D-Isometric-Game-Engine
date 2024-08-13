@@ -17,6 +17,7 @@ public class GameGraphics {
     private ImageLoader imageLoader;
     private BufferedImage bufferedImage;
     private Graphics2D bufferedGraphics;
+    private Chunk[] chunks;
 
     public GameGraphics(GameData gameData) {
         this.gameData = gameData;
@@ -25,33 +26,39 @@ public class GameGraphics {
 
         bufferedImage = new BufferedImage(gameData.screenWidth, gameData.screenHeight, BufferedImage.TYPE_INT_ARGB);
         bufferedGraphics = (Graphics2D) bufferedImage.getGraphics();
+
+        createChunks();
+    }
+
+    public void createChunks() {
+        int amntOfChunks = (gameData.world.getWorldXSize() * gameData.world.getWorldYSize())/gameData.chunkSize;
+        chunks = new Chunk[amntOfChunks];
+        System.out.println("Creating " + amntOfChunks + " chunks");
+        int i = 0;
+        for (int x = 0; x < gameData.world.getWorldXSize(); x += gameData.chunkSize/2) {
+            for (int y = 0; y < gameData.world.getWorldYSize(); y += gameData.chunkSize/2) {
+                chunks[i++] = new Chunk(x, y, gameData);
+                System.out.println("Creating chunk " + i + " of " + amntOfChunks);
+            }
+        }
     }
 
     public void render(Graphics2D g2) {
         bufferedGraphics.clearRect(0, 0, gameData.screenWidth, gameData.screenHeight);
-        //bufferedGraphics.drawImage(imageLoader.getBackground()[0], 0, 0, gameData.screenWidth, gameData.screenHeight, null);
+        //.bufferedGraphics.drawImage(imageLoader.getBackground()[0], 0, 0, gameData.screenWidth, gameData.screenHeight, null);
 
-        int tileSize = gameData.tileSize;
-        // iterate over the (current) world that holds the tiles
-        for (int z = 0; z < 3; z++) {
-            for (int x = 0; x < gameData.world.getWorldYSize(); x++) {
-                for (int y = 0; y < gameData.world.getWorldXSize(); y++) {
-                    //Get the world tile
-                    WorldTile.Tile tileType = gameData.world.getWorldTileType(x, y, z);
+        // iterate over the (current) chunks that holds the tiles
+        /*for (int i = 0; i < chunks.length; i++) {
+            bufferedGraphics.drawImage(chunks[i].getChunkImage(), i * (gameData.chunkSize/2 * gameData.tileSize/2), i * (gameData.chunkSize/2 * gameData.tileSize/4), null);
+        }*/
 
-                    //conditions to be met for it to be rendered
-                    //checks if tile is empty or null
-                    if (tileType != null && tileType != WorldTile.Tile.Empty) {
-                        if (withinBounds(x, y)) {
-                            //bufferedGraphics.drawImage(imageLoader.getTextures()[tileType.ordinal()], isoCordTool.getXIso(x, y), isoCordTool.getYIso(x, y) - (z * tileSize/2), null);
-                            drawFace(tileType, x, y, z, tileSize, "top");
-                            drawFace(tileType, x, y, z, tileSize, "right");
-                            drawFace(tileType, x, y, z, tileSize, "left");
-                        }
-                    }
-                }
-            }
-        }
+        int baseX = gameData.camera.getxOffset();
+        int baseY = gameData.camera.getyOffset();
+
+        bufferedGraphics.drawImage(chunks[0].getChunkImage(), baseX, baseY, null);
+        bufferedGraphics.drawImage(chunks[1].getChunkImage(), baseX - 64, baseY + 32, null);
+        bufferedGraphics.drawImage(chunks[2].getChunkImage(), baseX + 64, baseY + 32, null);
+        bufferedGraphics.drawImage(chunks[3].getChunkImage(), baseX, baseY + 64, null);
 
         //Get the mouse world cords from mouse motion listener
         int[] mouseWorldCor = gameData.gamePanel.getMouseMotionListener().getMouseWorldCords();
@@ -66,75 +73,6 @@ public class GameGraphics {
 
         //draw to panel
         g2.drawImage(bufferedImage, 0, 0, null);
-    }
-
-    private void drawFace(WorldTile.Tile tileType, int x, int y, int z, int tileSize, String face) {
-        int isoX = isoCordTool.getXIso(x, y);
-        int isoY = isoCordTool.getYIso(x, y) - (z * tileSize / 2);
-
-        switch (face) {
-            case "top":
-                if (checkFaceVisible(x, y, z, face)) {
-                    bufferedGraphics.drawImage(gameData.textureManager.getFaceTextures()[tileType.ordinal()][2], isoX, isoY, null);
-                    bufferedGraphics.drawImage(gameData.textureManager.getFaceTextures()[tileType.ordinal()][3], isoX, isoY, null);
-                }
-                break;
-            case "right":
-                if (checkFaceVisible(x, y, z, face)) {
-                    bufferedGraphics.drawImage(gameData.textureManager.getFaceTextures()[tileType.ordinal()][4], isoX, isoY, null);
-                    bufferedGraphics.drawImage(gameData.textureManager.getFaceTextures()[tileType.ordinal()][5], isoX, isoY, null);
-                }
-                break;
-            case "left":
-                if (checkFaceVisible(x, y, z, face)) {
-                    bufferedGraphics.drawImage(gameData.textureManager.getFaceTextures()[tileType.ordinal()][0], isoX, isoY, null);
-                    bufferedGraphics.drawImage(gameData.textureManager.getFaceTextures()[tileType.ordinal()][1], isoX, isoY, null);
-                }
-                break;
-        }
-
-
-    }
-
-    private boolean checkFaceVisible(int x, int y, int z, String face) {
-        switch (face) {
-            case "top":
-                //check if its the top of depth
-                if (z == 2) {
-                    return true;
-                }
-                if (gameData.world.getWorldTileType(x, y, z + 1) == WorldTile.Tile.Empty) {
-                    return true;
-                }
-                break;
-            case "left":
-                if (gameData.world.getWorldTileType(x, y + 1, z) == WorldTile.Tile.Empty) {
-                    return true;
-                }
-                if (y == gameData.world.getWorldYSize() - 1) {
-                    return true;
-                }
-                //check if tile next to it isnt full
-                if (gameData.world.getWorldTileType(x, y + 1, z) == WorldTile.Tile.FurnaceOn
-                        || gameData.world.getWorldTileType(x, y + 1, z) == WorldTile.Tile.FurnaceOff) {
-                    return true;
-                }
-                break;
-            case "right":
-                if (gameData.world.getWorldTileType(x + 1, y, z) == WorldTile.Tile.Empty) {
-                    return true;
-                }
-                if (x == gameData.world.getWorldXSize() - 1) {
-                    return true;
-                }
-                //check if tile next to it isnt full
-                if (gameData.world.getWorldTileType(x + 1, y, z) == WorldTile.Tile.FurnaceOn
-                        || gameData.world.getWorldTileType(x + 1, y, z) == WorldTile.Tile.FurnaceOff) {
-                    return true;
-                }
-                break;
-        }
-        return false;
     }
 
     private boolean withinBounds(int x, int y) {
