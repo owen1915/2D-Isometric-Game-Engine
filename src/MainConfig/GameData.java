@@ -37,7 +37,7 @@ public class GameData {
     public final int minTileSize = 16;
 
     // max rows and cols
-    public World world = new World(8, this);
+    public World world = new World(256, this);
 
     public ImageLoader imageLoader = new ImageLoader(this);
     public TextureManager textureManager = new TextureManager(this);
