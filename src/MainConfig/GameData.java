@@ -37,12 +37,12 @@ public class GameData {
     public final int minTileSize = 16;
 
     // max rows and cols
-    public World world = new World(128, this);
-
-    public Camera camera = new Camera(this);
+    public World world = new World(8, this);
 
     public ImageLoader imageLoader = new ImageLoader(this);
-    public TextureManager textureManager = new TextureManager(imageLoader);
+    public TextureManager textureManager = new TextureManager(this);
+
+    public Camera camera = new Camera(this);
 
     public int frameCounter = 0;
 

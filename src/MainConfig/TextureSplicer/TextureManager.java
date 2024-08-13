@@ -14,12 +14,14 @@ public class TextureManager {
     private Image spriteSheet;
     private GridManager gridManager;
     private BufferedImage masks;
-
+    private GameData gameData;
     private Image[][] faceTextures;
 
-    public TextureManager(ImageLoader imageLoader){
+    public TextureManager(GameData gameData){
         //Load all the required sprite sheets
+        ImageLoader imageLoader = gameData.imageLoader;
 
+        this.gameData = gameData;
         this.gridManager = new GridManager();
 
         //Get the masking sprite
@@ -34,10 +36,8 @@ public class TextureManager {
         //Create face textures array based of number of textures and faces
         faceTextures = new Image[tileTextures.length][Texture.values().length];
 
-
-
         //Loop through all tiles
-        for (WorldTile.Tile tile : WorldTile.Tile.values()){
+        for (WorldTile.Tile tile : WorldTile.Tile.values()) {
             faceTextures[tile.ordinal()] = spliceTileIntoFaces(toBufferedImage(tileTextures[tile.ordinal()]));
         }
     }
@@ -66,6 +66,7 @@ public class TextureManager {
 
 
     Image[] spliceTileIntoFaces(BufferedImage tileSprite){
+
         if (tileSprite == null){
             return null;
         }
@@ -75,20 +76,21 @@ public class TextureManager {
         for (int i = 0; i < Texture.values().length; i++){
 
             BufferedImage image = new BufferedImage(64, 64, BufferedImage.TYPE_4BYTE_ABGR);
-            for (int y = 0; y < 64; y++){
-                for (int x = 0; x < 64; x++){
-                    if((masks.getRGB(x, y) == textures[i].maskRGB)){
+            for (int y = 0; y < 64; y++) {
+                for (int x = 0; x < 64; x++) {
+                    if ((masks.getRGB(x, y) == textures[i].maskRGB)) {
                         image.setRGB(x, y, tileSprite.getRGB(x, y));
                     }
 
                 }
             }
+
+            splicedTiles[i] = image.getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
         }
         return splicedTiles;
     }
 
-
-
-
-
+    public Image[][] getFaceTextures() {
+        return faceTextures;
+    }
 }

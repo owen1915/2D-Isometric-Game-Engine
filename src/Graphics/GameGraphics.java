@@ -29,7 +29,7 @@ public class GameGraphics {
 
     public void render(Graphics2D g2) {
         bufferedGraphics.clearRect(0, 0, gameData.screenWidth, gameData.screenHeight);
-        bufferedGraphics.drawImage(imageLoader.getBackground()[0], 0, 0, gameData.screenWidth, gameData.screenHeight, null);
+        //bufferedGraphics.drawImage(imageLoader.getBackground()[0], 0, 0, gameData.screenWidth, gameData.screenHeight, null);
 
         int tileSize = gameData.tileSize;
         // iterate over the (current) world that holds the tiles
@@ -42,36 +42,11 @@ public class GameGraphics {
                     //conditions to be met for it to be rendered
                     //checks if tile is empty or null
                     if (tileType != null && tileType != WorldTile.Tile.Empty) {
-                        boolean draw = false;
-
-                        //if it is the top layer
-                        if (z == 2) {
-                            draw = true;
-                        }
-
-                        //checks tiles next to it
-                        if (gameData.world.getWorldTileType(x + 1, y, z) == WorldTile.Tile.Empty ||
-                                gameData.world.getWorldTileType(x, y + 1, z) == WorldTile.Tile.Empty) {
-                            draw = true;
-                        }
-
-                        //if it has a tile above it that is empty
-                        if ((z == 0 || z == 1) && gameData.world.getWorldTileType(x, y, z + 1) == WorldTile.Tile.Empty) {
-                            draw = true;
-                        }
-
-                        //if the tile isnt visible because a tile is blocking it
-                        if ((z == 0 || z == 1) && gameData.world.getWorldTileType(x + 1, y + 1, z + 1) != WorldTile.Tile.Empty) {
-                            draw = false;
-                        }
-
-                        //checks if tile is on the world boundary
-                        if (x == gameData.world.getWorldXSize() - 1 || y == gameData.world.getWorldYSize() - 1) {
-                            draw = true;
-                        }
-
-                        if (draw && withinBounds(x, y)) {
-                            bufferedGraphics.drawImage(imageLoader.getTextures()[tileType.ordinal()], isoCordTool.getXIso(x, y), isoCordTool.getYIso(x, y) - (z * tileSize/2), null);
+                        if (withinBounds(x, y)) {
+                            //bufferedGraphics.drawImage(imageLoader.getTextures()[tileType.ordinal()], isoCordTool.getXIso(x, y), isoCordTool.getYIso(x, y) - (z * tileSize/2), null);
+                            drawFace(tileType, x, y, z, tileSize, "top");
+                            drawFace(tileType, x, y, z, tileSize, "right");
+                            drawFace(tileType, x, y, z, tileSize, "left");
                         }
                     }
                 }
@@ -91,6 +66,75 @@ public class GameGraphics {
 
         //draw to panel
         g2.drawImage(bufferedImage, 0, 0, null);
+    }
+
+    private void drawFace(WorldTile.Tile tileType, int x, int y, int z, int tileSize, String face) {
+        int isoX = isoCordTool.getXIso(x, y);
+        int isoY = isoCordTool.getYIso(x, y) - (z * tileSize / 2);
+
+        switch (face) {
+            case "top":
+                if (checkFaceVisible(x, y, z, face)) {
+                    bufferedGraphics.drawImage(gameData.textureManager.getFaceTextures()[tileType.ordinal()][2], isoX, isoY, null);
+                    bufferedGraphics.drawImage(gameData.textureManager.getFaceTextures()[tileType.ordinal()][3], isoX, isoY, null);
+                }
+                break;
+            case "right":
+                if (checkFaceVisible(x, y, z, face)) {
+                    bufferedGraphics.drawImage(gameData.textureManager.getFaceTextures()[tileType.ordinal()][4], isoX, isoY, null);
+                    bufferedGraphics.drawImage(gameData.textureManager.getFaceTextures()[tileType.ordinal()][5], isoX, isoY, null);
+                }
+                break;
+            case "left":
+                if (checkFaceVisible(x, y, z, face)) {
+                    bufferedGraphics.drawImage(gameData.textureManager.getFaceTextures()[tileType.ordinal()][0], isoX, isoY, null);
+                    bufferedGraphics.drawImage(gameData.textureManager.getFaceTextures()[tileType.ordinal()][1], isoX, isoY, null);
+                }
+                break;
+        }
+
+
+    }
+
+    private boolean checkFaceVisible(int x, int y, int z, String face) {
+        switch (face) {
+            case "top":
+                //check if its the top of depth
+                if (z == 2) {
+                    return true;
+                }
+                if (gameData.world.getWorldTileType(x, y, z + 1) == WorldTile.Tile.Empty) {
+                    return true;
+                }
+                break;
+            case "left":
+                if (gameData.world.getWorldTileType(x, y + 1, z) == WorldTile.Tile.Empty) {
+                    return true;
+                }
+                if (y == gameData.world.getWorldYSize() - 1) {
+                    return true;
+                }
+                //check if tile next to it isnt full
+                if (gameData.world.getWorldTileType(x, y + 1, z) == WorldTile.Tile.FurnaceOn
+                        || gameData.world.getWorldTileType(x, y + 1, z) == WorldTile.Tile.FurnaceOff) {
+                    return true;
+                }
+                break;
+            case "right":
+                if (gameData.world.getWorldTileType(x + 1, y, z) == WorldTile.Tile.Empty) {
+                    return true;
+                }
+                if (x == gameData.world.getWorldXSize() - 1) {
+                    return true;
+                }
+                //check if tile next to it isnt full
+                if (gameData.world.getWorldTileType(x + 1, y, z) == WorldTile.Tile.FurnaceOn
+                        || gameData.world.getWorldTileType(x + 1, y, z) == WorldTile.Tile.FurnaceOff) {
+                    return true;
+                }
+                break;
+        }
+        return false;
     }
 
     private boolean withinBounds(int x, int y) {

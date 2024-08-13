@@ -50,7 +50,6 @@ public class World {
         }
 
         topLayer[worldSize/2 -2][worldSize/2 -2] = new WorldTile(WorldTile.Tile.Wall);
-
         topLayer[worldSize/2 - 1][worldSize/2] = new WorldTile(WorldTile.Tile.FurnaceOn);
         topLayer[worldSize/2][worldSize/2 - 1] = new WorldTile(WorldTile.Tile.FurnaceOn);
         topLayer[worldSize/2 - 1][worldSize/2 - 1] = new WorldTile(WorldTile.Tile.FurnaceOn);
