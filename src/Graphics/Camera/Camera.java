@@ -130,7 +130,6 @@ public class Camera {
             gameData.tileSize += zoomAmnt;
             gameData.imageLoader.createTextures();
             gameData.gamePanel.getIsoCordTool().updateIso();
-            gameData.textureManager.createFaceTextures();
         }
     }
 
@@ -139,7 +138,6 @@ public class Camera {
             gameData.tileSize -= zoomAmnt;
             gameData.imageLoader.createTextures();
             gameData.gamePanel.getIsoCordTool().updateIso();
-            gameData.textureManager.createFaceTextures();
         }
     }
 

@@ -91,22 +91,6 @@ public class TextureManager {
         return splicedTiles;
     }
 
-    public void createFaceTextures() {
-        Image[] tileTextures = imageLoader.getTextures();
-
-        //Get the masking sprite
-        Image loadedMaskingTile = imageLoader.getTextures()[WorldTile.Tile.MaskingTile.ordinal()];
-        // Copy image to buffered image
-        this.masks = toBufferedImage(loadedMaskingTile);
-
-        //Create face textures array based of number of textures and faces
-        faceTextures = new Image[tileTextures.length][Texture.values().length];
-
-        //Loop through all tiles
-        for (WorldTile.Tile tile : WorldTile.Tile.values()) {
-            faceTextures[tile.ordinal()] = spliceTileIntoFaces(toBufferedImage(tileTextures[tile.ordinal()]));
-        }
-    }
     public Image[][] getFaceTextures() {
         return faceTextures;
     }
