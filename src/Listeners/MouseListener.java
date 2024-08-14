@@ -74,11 +74,10 @@ public class MouseListener implements java.awt.event.MouseListener {
                     if (slot != -1) {
                         inventory.getInventory()[slot].setAmntOf(inventory.getInventory()[slot].getAmntOf() + 1);
                     } else if (inventory.size < gameData.hotbarSize){
-                        inventory.getInventory()[inventory.size] = new Item(tile, 1, gameData);
+                        inventory.getInventory()[inventory.firstOpenSpace()] = new Item(tile, 1, gameData);
                         inventory.size++;
                     }
 
-                    System.out.println(worldTilesOfMouseArray[lair] + " | " + lair);
                     gameData.world.setWorldTile(cords[0] + lair, cords[1] + lair, lair, WorldTile.Tile.Empty);
                     break;
                 }
@@ -99,7 +98,6 @@ public class MouseListener implements java.awt.event.MouseListener {
             for (int lair = 2; lair >= 0; lair--){
                 WorldTile.Tile tile = worldTilesOfMouseArray[lair];
                 if (tile != WorldTile.Tile.Empty){
-                    System.out.println(worldTilesOfMouseArray[lair] + " | " + lair);
                     gameData.world.setWorldTile(cords[0] + lair, cords[1] + lair, lair + 1, selectedTile);
                     break;
                 }

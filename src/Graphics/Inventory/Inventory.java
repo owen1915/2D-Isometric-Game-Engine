@@ -21,6 +21,16 @@ public class Inventory {
         size = 5;
     }
 
+    public int firstOpenSpace() {
+        for (int i = 0; i < inventory.length; i++) {
+            if (inventory[i] == null) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     public void checkEmpty() {
         for (int i = 0; i < inventory.length; i++) {
             if (inventory[i] != null) {

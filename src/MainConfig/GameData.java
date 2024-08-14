@@ -38,7 +38,7 @@ public class GameData {
     public final int minTileSize = 32;
 
     // max rows and cols
-    public World world = new World(32, this);
+    public World world = new World(256, this);
 
     public Camera camera = new Camera(this);
 
