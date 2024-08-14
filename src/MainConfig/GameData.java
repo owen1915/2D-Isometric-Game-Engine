@@ -35,7 +35,7 @@ public class GameData {
 
     public final int maxTileSize = 512;
 
-    public final int minTileSize = 32;
+    public final int minTileSize = 48;
 
     // max rows and cols
     public World world = new World(256, this);
