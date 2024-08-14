@@ -21,7 +21,7 @@ public class ImageLoader {
     }
 
     /**
-     * TEXTURES FOR BLOCKS ARE ONLY THE FIRST 5 COLS AND ALL ROWS UNDER THOSE FOR NOW IN SPRITESHEET
+     * TEXTURES FOR BLOCKS ARE ONLY THE FIRST 11 COLS AND ALL ROWS UNDER THOSE FOR NOW IN SPRITESHEET
      */
     public void loadImages() {
         try (InputStream spriteStream = getClass().getResourceAsStream("/SpriteSheet.png")) {
@@ -73,6 +73,7 @@ public class ImageLoader {
         textures[WorldTile.Tile.turret.ordinal()] = sprites[10].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
         textures[WorldTile.Tile.RedSelection.ordinal()] = sprites[20].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
         textures[WorldTile.Tile.MaskingTile.ordinal()] = sprites[26].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
+        textures[WorldTile.Tile.Belt.ordinal()] = sprites[12].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
     }
 
     public Image[] getTextures() {

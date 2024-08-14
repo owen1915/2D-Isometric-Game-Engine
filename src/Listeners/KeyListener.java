@@ -50,6 +50,33 @@ public class KeyListener implements java.awt.event.KeyListener {
             case KeyEvent.VK_M:
                 gameData.GAMESTATE = 1;
                 break;
+            case KeyEvent.VK_1:
+                gameData.gamePanel.getInventoryGraphics().createHotbarImage(0);
+                break;
+            case KeyEvent.VK_2:
+                gameData.gamePanel.getInventoryGraphics().createHotbarImage(1);
+                break;
+            case KeyEvent.VK_3:
+                gameData.gamePanel.getInventoryGraphics().createHotbarImage(2);
+                break;
+            case KeyEvent.VK_4:
+                gameData.gamePanel.getInventoryGraphics().createHotbarImage(3);
+                break;
+            case KeyEvent.VK_5:
+                gameData.gamePanel.getInventoryGraphics().createHotbarImage(4);
+                break;
+            case KeyEvent.VK_6:
+                gameData.gamePanel.getInventoryGraphics().createHotbarImage(5);
+                break;
+            case KeyEvent.VK_7:
+                gameData.gamePanel.getInventoryGraphics().createHotbarImage(6);
+                break;
+            case KeyEvent.VK_8:
+                gameData.gamePanel.getInventoryGraphics().createHotbarImage(7);
+                break;
+            case KeyEvent.VK_9:
+                gameData.gamePanel.getInventoryGraphics().createHotbarImage(8);
+                break;
         }
     }
 
@@ -67,15 +94,6 @@ public class KeyListener implements java.awt.event.KeyListener {
                 break;
             case KeyEvent.VK_D:
                 rightPressed = false;
-                break;
-            case KeyEvent.VK_V:
-                WorldTile.Tile[] tiles = WorldTile.Tile.values();
-                if (gameData.selectedTile < tiles.length - 1){
-                    gameData.selectedTile++;
-                }
-                else{
-                    gameData.selectedTile = 1;
-                }
                 break;
             case 61:
                 plusPressed = false;

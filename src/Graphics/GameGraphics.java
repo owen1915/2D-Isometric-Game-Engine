@@ -36,42 +36,46 @@ public class GameGraphics {
         for (int z = 0; z < 3; z++) {
             for (int x = 0; x < gameData.world.getWorldYSize(); x++) {
                 for (int y = 0; y < gameData.world.getWorldXSize(); y++) {
-                    //Get the world tile
-                    WorldTile.Tile tileType = gameData.world.getWorldTileType(x, y, z);
+                    if (withinBounds(x, y)) {
+                        //Get the world tile
+                        WorldTile.Tile tileType = gameData.world.getWorldTileType(x, y, z);
 
-                    //conditions to be met for it to be rendered
-                    //checks if tile is empty or null
-                    if (tileType != null && tileType != WorldTile.Tile.Empty) {
-                        boolean draw = false;
+                        //conditions to be met for it to be rendered
+                        //checks if tile is empty or null
+                        if (tileType != null && tileType != WorldTile.Tile.Empty) {
+                            boolean draw = false;
 
-                        //if it is the top layer
-                        if (z == 2) {
-                            draw = true;
-                        }
+                            //if it is the top layer
+                            if (z == 2) {
+                                draw = true;
+                            }
 
-                        //checks tiles next to it
-                        if (gameData.world.getWorldTileType(x + 1, y, z) == WorldTile.Tile.Empty ||
-                                gameData.world.getWorldTileType(x, y + 1, z) == WorldTile.Tile.Empty) {
-                            draw = true;
-                        }
+                            //checks tiles next to it
+                            if (gameData.world.getWorldTileType(x + 1, y, z) == WorldTile.Tile.Empty ||
+                                    gameData.world.getWorldTileType(x, y + 1, z) == WorldTile.Tile.Empty) {
+                                draw = true;
+                            }
 
-                        //if it has a tile above it that is empty
-                        if ((z == 0 || z == 1) && gameData.world.getWorldTileType(x, y, z + 1) == WorldTile.Tile.Empty) {
-                            draw = true;
-                        }
+                            //if it has a tile above it that is empty
+                            if ((z == 0 || z == 1) && (gameData.world.getWorldTileType(x, y, z + 1) == WorldTile.Tile.Empty ||
+                                    gameData.world.getWorldTileType(x, y, z + 1) == WorldTile.Tile.turret ||
+                                    gameData.world.getWorldTileType(x, y, z + 1) == WorldTile.Tile.Belt)) {
+                                draw = true;
+                            }
 
-                        //if the tile isnt visible because a tile is blocking it
-                        if ((z == 0 || z == 1) && gameData.world.getWorldTileType(x + 1, y + 1, z + 1) != WorldTile.Tile.Empty) {
+                            //if the tile isnt visible because a tile is blocking it
+                        /*if ((z == 0 || z == 1) && gameData.world.getWorldTileType(x + 1, y + 1, z + 1) != WorldTile.Tile.Empty) {
                             draw = false;
-                        }
+                        }*/
 
-                        //checks if tile is on the world boundary
-                        if (x == gameData.world.getWorldXSize() - 1 || y == gameData.world.getWorldYSize() - 1) {
-                            draw = true;
-                        }
+                            //checks if tile is on the world boundary
+                            if (x == gameData.world.getWorldXSize() - 1 || y == gameData.world.getWorldYSize() - 1) {
+                                draw = true;
+                            }
 
-                        if (draw && withinBounds(x, y)) {
-                            bufferedGraphics.drawImage(imageLoader.getTextures()[tileType.ordinal()], isoCordTool.getXIso(x, y), isoCordTool.getYIso(x, y) - (z * tileSize/2), null);
+                            if (draw) {
+                                bufferedGraphics.drawImage(imageLoader.getTextures()[tileType.ordinal()], isoCordTool.getXIso(x, y), isoCordTool.getYIso(x, y) - (z * tileSize/2), null);
+                            }
                         }
                     }
                 }

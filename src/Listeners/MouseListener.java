@@ -1,5 +1,6 @@
 package Listeners;
 
+import Graphics.Inventory.Item;
 import Graphics.IsoCordTool;
 import MainConfig.GameData;
 import World.WorldTile;
@@ -15,8 +16,6 @@ public class MouseListener implements java.awt.event.MouseListener {
 
     private int mouseIsoX;
     private int mouseIsoY;
-
-    public WorldTile.Tile selectedTile = WorldTile.Tile.Wall;
 
     private boolean leftPressed = false;
 
@@ -62,9 +61,19 @@ public class MouseListener implements java.awt.event.MouseListener {
         leftPressed = true;
 
         WorldTile.Tile[] worldTilesOfMouseArray = getTilesOfMouse(cords[0], cords[1]);
+        WorldTile.Tile selectedTile;
 
-        WorldTile.Tile[] tiles = WorldTile.Tile.values();
-        WorldTile.Tile selectedTile = tiles[gameData.selectedTile];
+        int selectedSlot = gameData.selectedSlot;
+        if (selectedSlot >= 0 && selectedSlot < gameData.hotbarSize && gameData.inventory.getInventory()[selectedSlot] != null) {
+            Item item = gameData.inventory.getInventory()[selectedSlot];
+            selectedTile = item.getBlock();
+            item.setAmntOf(item.getAmntOf() - 1);
+            gameData.inventory.checkEmpty();
+            gameData.gamePanel.getInventoryGraphics().createHotbarImage(selectedSlot);
+        } else {
+            selectedTile = WorldTile.Tile.Empty;
+        }
+
 
         if (e.getButton() == MouseEvent.BUTTON3){
             for (int lair = 2; lair >= 0; lair--){

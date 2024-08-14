@@ -1,6 +1,7 @@
 package MainConfig;
 
 import Graphics.Camera.Camera;
+import Graphics.Inventory.Inventory;
 import Graphics.IsoCordTool;
 import Graphics.Panels.GamePanel;
 import MainConfig.TextureSplicer.GridManager;
@@ -34,10 +35,10 @@ public class GameData {
 
     public final int maxTileSize = 512;
 
-    public final int minTileSize = 64;
+    public final int minTileSize = 32;
 
     // max rows and cols
-    public World world = new World(128, this);
+    public World world = new World(32, this);
 
     public Camera camera = new Camera(this);
 
@@ -46,13 +47,15 @@ public class GameData {
 
     public int frameCounter = 0;
 
+    public int hotbarSize = 9;
+    public int selectedSlot = -1;
+    public Inventory inventory = new Inventory(this);
+
     /**
      * Game state indicates what we are drawing.
      * When GAMESTATE is 1 it will render the Menu, when GAMESTATE is 2 it can render the game, etc...
      */
     public int GAMESTATE = 1;
-
-    public int selectedTile = 0;
 
 
     // game panel instance

@@ -36,10 +36,10 @@ public class World {
                 for (int x = 0; x < worldSize; x++) {
                     switch (i) {
                         case 0:
-                            bottomLayer[x][y] = new WorldTile(WorldTile.Tile.Dirt);
+                            bottomLayer[x][y] = new WorldTile(WorldTile.Tile.Grass);
                             break;
                         case 1:
-                            middleLayer[x][y] = new WorldTile(WorldTile.Tile.Grass);
+                            middleLayer[x][y] = new WorldTile(WorldTile.Tile.Empty);
                             break;
                         case 2:
                             topLayer[x][y] = new WorldTile(WorldTile.Tile.Empty);
@@ -48,15 +48,6 @@ public class World {
                 }
             }
         }
-
-        topLayer[worldSize/2 -2][worldSize/2 -2] = new WorldTile(WorldTile.Tile.Wall);
-
-        topLayer[worldSize/2 - 1][worldSize/2] = new WorldTile(WorldTile.Tile.FurnaceOn);
-        topLayer[worldSize/2][worldSize/2 - 1] = new WorldTile(WorldTile.Tile.FurnaceOn);
-        topLayer[worldSize/2 - 1][worldSize/2 - 1] = new WorldTile(WorldTile.Tile.FurnaceOn);
-        topLayer[worldSize/2][worldSize/2] = new WorldTile(WorldTile.Tile.FurnaceOn);
-        topLayer[worldSize/2 + 2][worldSize/2 - 2] = new WorldTile(WorldTile.Tile.FurnaceOff);
-        topLayer[worldSize/2 - 2][worldSize/2 + 2] = new WorldTile(WorldTile.Tile.FurnaceOff);
 
         worldTiles[0] = bottomLayer;
         worldTiles[1] = middleLayer;
