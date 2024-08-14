@@ -34,11 +34,11 @@ public class InventoryGraphics {
             g.setColor(Color.black);
             g.drawRect(rectSize * i, 0, rectSize, rectSize);
             if (i == selectedSlot) {
-                g.setColor(new Color(60, 60, 60, 100));
-                g.fillRect(rectSize * i, 0, rectSize, rectSize);
+                g.setColor(new Color(140, 140, 140, 200));
+                g.fillRect(rectSize * i + 1, 1, rectSize - 1, rectSize - 1);
             } else {
-                g.setColor(new Color(60, 60, 60, 150));
-                g.fillRect(rectSize * i, 0, rectSize, rectSize);
+                g.setColor(new Color(60, 60, 60, 200));
+                g.fillRect(rectSize * i + 1, 1, rectSize - 1, rectSize - 1);
             }
             if (inventory.getInventory()[i] != null) {
                 Item item = inventory.getInventory()[i];

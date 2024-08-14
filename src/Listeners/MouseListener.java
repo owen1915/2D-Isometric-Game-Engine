@@ -61,19 +61,6 @@ public class MouseListener implements java.awt.event.MouseListener {
         leftPressed = true;
 
         WorldTile.Tile[] worldTilesOfMouseArray = getTilesOfMouse(cords[0], cords[1]);
-        WorldTile.Tile selectedTile;
-
-        int selectedSlot = gameData.selectedSlot;
-        if (selectedSlot >= 0 && selectedSlot < gameData.hotbarSize && gameData.inventory.getInventory()[selectedSlot] != null) {
-            Item item = gameData.inventory.getInventory()[selectedSlot];
-            selectedTile = item.getBlock();
-            item.setAmntOf(item.getAmntOf() - 1);
-            gameData.inventory.checkEmpty();
-            gameData.gamePanel.getInventoryGraphics().createHotbarImage(selectedSlot);
-        } else {
-            selectedTile = WorldTile.Tile.Empty;
-        }
-
 
         if (e.getButton() == MouseEvent.BUTTON3){
             for (int lair = 2; lair >= 0; lair--){
@@ -87,6 +74,18 @@ public class MouseListener implements java.awt.event.MouseListener {
         }
 
         if (e.getButton() == MouseEvent.BUTTON1){
+            WorldTile.Tile selectedTile;
+            int selectedSlot = gameData.selectedSlot;
+            if (selectedSlot >= 0 && selectedSlot < gameData.hotbarSize && gameData.inventory.getInventory()[selectedSlot] != null) {
+                Item item = gameData.inventory.getInventory()[selectedSlot];
+                selectedTile = item.getBlock();
+                item.setAmntOf(item.getAmntOf() - 1);
+                gameData.inventory.checkEmpty();
+                gameData.gamePanel.getInventoryGraphics().createHotbarImage(selectedSlot);
+            } else {
+                selectedTile = WorldTile.Tile.Empty;
+            }
+
             for (int lair = 2; lair >= 0; lair--){
                 WorldTile.Tile tile = worldTilesOfMouseArray[lair];
                 if (tile != WorldTile.Tile.Empty){
