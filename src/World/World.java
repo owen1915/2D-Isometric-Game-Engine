@@ -42,21 +42,21 @@ public class World {
                             middleLayer[x][y] = new WorldTile(WorldTile.Tile.Grass);
                             break;
                         case 2:
-                            topLayer[x][y] = new WorldTile(WorldTile.Tile.Grass);
+                            topLayer[x][y] = new WorldTile(WorldTile.Tile.Empty);
                             break;
                     }
                 }
             }
         }
 
-        /*topLayer[worldSize/2 -2][worldSize/2 -2] = new WorldTile(WorldTile.Tile.Wall);
+        topLayer[worldSize/2 -2][worldSize/2 -2] = new WorldTile(WorldTile.Tile.Wall);
 
         topLayer[worldSize/2 - 1][worldSize/2] = new WorldTile(WorldTile.Tile.FurnaceOn);
         topLayer[worldSize/2][worldSize/2 - 1] = new WorldTile(WorldTile.Tile.FurnaceOn);
         topLayer[worldSize/2 - 1][worldSize/2 - 1] = new WorldTile(WorldTile.Tile.FurnaceOn);
         topLayer[worldSize/2][worldSize/2] = new WorldTile(WorldTile.Tile.FurnaceOn);
         topLayer[worldSize/2 + 2][worldSize/2 - 2] = new WorldTile(WorldTile.Tile.FurnaceOff);
-        topLayer[worldSize/2 - 2][worldSize/2 + 2] = new WorldTile(WorldTile.Tile.FurnaceOff);*/
+        topLayer[worldSize/2 - 2][worldSize/2 + 2] = new WorldTile(WorldTile.Tile.FurnaceOff);
 
         worldTiles[0] = bottomLayer;
         worldTiles[1] = middleLayer;

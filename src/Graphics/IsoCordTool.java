@@ -27,14 +27,12 @@ public class IsoCordTool {
 
     public int getXIso(int x, int y) {
         double isoX = x * xVector[0] + y * yVector[0];
-        //return (int) isoX - width / 2 + gameData.camera.getxOffset();
-        return (int) isoX + width/2;
+        return (int) isoX - width / 2 + gameData.camera.getxOffset();
     }
 
     public int getYIso(int x, int y) {
         double isoY = x * xVector[1] + y * yVector[1];
-        //return (int) (isoY) - (height/2 * gameData.world.getWorldYSize()/2) + gameData.camera.getyOffset();
-        return (int) (isoY) + (height);
+        return (int) (isoY) - (height/2 * gameData.world.getWorldYSize()/2) + gameData.camera.getyOffset();
     }
 
     public int[] screenToIso(int xCor, int yCor){

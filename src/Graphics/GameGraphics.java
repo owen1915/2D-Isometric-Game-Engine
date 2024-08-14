@@ -17,7 +17,6 @@ public class GameGraphics {
     private ImageLoader imageLoader;
     private BufferedImage bufferedImage;
     private Graphics2D bufferedGraphics;
-    private Chunk[] chunks;
 
     public GameGraphics(GameData gameData) {
         this.gameData = gameData;
@@ -26,39 +25,58 @@ public class GameGraphics {
 
         bufferedImage = new BufferedImage(gameData.screenWidth, gameData.screenHeight, BufferedImage.TYPE_INT_ARGB);
         bufferedGraphics = (Graphics2D) bufferedImage.getGraphics();
-
-        createChunks();
-    }
-
-    public void createChunks() {
-        int amntOfChunks = (gameData.world.getWorldXSize() * gameData.world.getWorldYSize())/gameData.chunkSize;
-        chunks = new Chunk[amntOfChunks];
-        System.out.println("Creating " + amntOfChunks + " chunks");
-        int i = 0;
-        for (int x = 0; x < gameData.world.getWorldXSize(); x += gameData.chunkSize/2) {
-            for (int y = 0; y < gameData.world.getWorldYSize(); y += gameData.chunkSize/2) {
-                chunks[i++] = new Chunk(x, y, gameData);
-                System.out.println("Creating chunk " + i + " of " + amntOfChunks);
-            }
-        }
     }
 
     public void render(Graphics2D g2) {
         bufferedGraphics.clearRect(0, 0, gameData.screenWidth, gameData.screenHeight);
-        //.bufferedGraphics.drawImage(imageLoader.getBackground()[0], 0, 0, gameData.screenWidth, gameData.screenHeight, null);
+        //bufferedGraphics.drawImage(imageLoader.getBackground()[0], 0, 0, gameData.screenWidth, gameData.screenHeight, null);
 
-        // iterate over the (current) chunks that holds the tiles
-        /*for (int i = 0; i < chunks.length; i++) {
-            bufferedGraphics.drawImage(chunks[i].getChunkImage(), i * (gameData.chunkSize/2 * gameData.tileSize/2), i * (gameData.chunkSize/2 * gameData.tileSize/4), null);
-        }*/
+        int tileSize = gameData.tileSize;
+        // iterate over the (current) world that holds the tiles
+        for (int z = 0; z < 3; z++) {
+            for (int x = 0; x < gameData.world.getWorldYSize(); x++) {
+                for (int y = 0; y < gameData.world.getWorldXSize(); y++) {
+                    //Get the world tile
+                    WorldTile.Tile tileType = gameData.world.getWorldTileType(x, y, z);
 
-        int baseX = gameData.camera.getxOffset();
-        int baseY = gameData.camera.getyOffset();
+                    //conditions to be met for it to be rendered
+                    //checks if tile is empty or null
+                    if (tileType != null && tileType != WorldTile.Tile.Empty) {
+                        boolean draw = false;
 
-        bufferedGraphics.drawImage(chunks[0].getChunkImage(), baseX, baseY, null);
-        bufferedGraphics.drawImage(chunks[1].getChunkImage(), baseX - 64, baseY + 32, null);
-        bufferedGraphics.drawImage(chunks[2].getChunkImage(), baseX + 64, baseY + 32, null);
-        bufferedGraphics.drawImage(chunks[3].getChunkImage(), baseX, baseY + 64, null);
+                        //if it is the top layer
+                        if (z == 2) {
+                            draw = true;
+                        }
+
+                        //checks tiles next to it
+                        if (gameData.world.getWorldTileType(x + 1, y, z) == WorldTile.Tile.Empty ||
+                                gameData.world.getWorldTileType(x, y + 1, z) == WorldTile.Tile.Empty) {
+                            draw = true;
+                        }
+
+                        //if it has a tile above it that is empty
+                        if ((z == 0 || z == 1) && gameData.world.getWorldTileType(x, y, z + 1) == WorldTile.Tile.Empty) {
+                            draw = true;
+                        }
+
+                        //if the tile isnt visible because a tile is blocking it
+                        if ((z == 0 || z == 1) && gameData.world.getWorldTileType(x + 1, y + 1, z + 1) != WorldTile.Tile.Empty) {
+                            draw = false;
+                        }
+
+                        //checks if tile is on the world boundary
+                        if (x == gameData.world.getWorldXSize() - 1 || y == gameData.world.getWorldYSize() - 1) {
+                            draw = true;
+                        }
+
+                        if (draw && withinBounds(x, y)) {
+                            bufferedGraphics.drawImage(imageLoader.getTextures()[tileType.ordinal()], isoCordTool.getXIso(x, y), isoCordTool.getYIso(x, y) - (z * tileSize/2), null);
+                        }
+                    }
+                }
+            }
+        }
 
         //Get the mouse world cords from mouse motion listener
         int[] mouseWorldCor = gameData.gamePanel.getMouseMotionListener().getMouseWorldCords();
