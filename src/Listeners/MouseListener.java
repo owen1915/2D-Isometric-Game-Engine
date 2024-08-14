@@ -1,5 +1,6 @@
 package Listeners;
 
+import Graphics.Inventory.Inventory;
 import Graphics.Inventory.Item;
 import Graphics.IsoCordTool;
 import MainConfig.GameData;
@@ -61,11 +62,22 @@ public class MouseListener implements java.awt.event.MouseListener {
         leftPressed = true;
 
         WorldTile.Tile[] worldTilesOfMouseArray = getTilesOfMouse(cords[0], cords[1]);
+        int selectedSlot = gameData.selectedSlot;
 
         if (e.getButton() == MouseEvent.BUTTON3){
             for (int lair = 2; lair >= 0; lair--){
                 WorldTile.Tile tile = worldTilesOfMouseArray[lair];
                 if (tile != WorldTile.Tile.Empty){
+                    //add to inventory
+                    Inventory inventory = gameData.inventory;
+                    int slot = inventory.getSlot(tile);
+                    if (slot != -1) {
+                        inventory.getInventory()[slot].setAmntOf(inventory.getInventory()[slot].getAmntOf() + 1);
+                    } else if (inventory.size < gameData.hotbarSize){
+                        inventory.getInventory()[inventory.size] = new Item(tile, 1, gameData);
+                        inventory.size++;
+                    }
+
                     System.out.println(worldTilesOfMouseArray[lair] + " | " + lair);
                     gameData.world.setWorldTile(cords[0] + lair, cords[1] + lair, lair, WorldTile.Tile.Empty);
                     break;
@@ -75,13 +87,11 @@ public class MouseListener implements java.awt.event.MouseListener {
 
         if (e.getButton() == MouseEvent.BUTTON1){
             WorldTile.Tile selectedTile;
-            int selectedSlot = gameData.selectedSlot;
             if (selectedSlot >= 0 && selectedSlot < gameData.hotbarSize && gameData.inventory.getInventory()[selectedSlot] != null) {
                 Item item = gameData.inventory.getInventory()[selectedSlot];
                 selectedTile = item.getBlock();
                 item.setAmntOf(item.getAmntOf() - 1);
                 gameData.inventory.checkEmpty();
-                gameData.gamePanel.getInventoryGraphics().createHotbarImage(selectedSlot);
             } else {
                 selectedTile = WorldTile.Tile.Empty;
             }
@@ -95,6 +105,8 @@ public class MouseListener implements java.awt.event.MouseListener {
                 }
             }
         }
+
+        gameData.gamePanel.getInventoryGraphics().createHotbarImage(selectedSlot);
     }
 
     @Override
@@ -116,26 +128,6 @@ public class MouseListener implements java.awt.event.MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getIsoY() {
-        return mouseIsoY;
-    }
-
-    public int getIsoX() {
-        return mouseIsoX;
-    }
-
-    public boolean isLeftPressed() {
-        return leftPressed;
     }
 
 }
