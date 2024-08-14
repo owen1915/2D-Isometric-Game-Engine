@@ -20,7 +20,6 @@ public class GamePanel extends JPanel {
     private GameData gameData;
     private MainMenu mainMenu;
     private GameGraphics gameGraphics;
-    private InventoryGraphics inventoryGraphics;
     private IsoCordTool isoCordTool;
     private KeyListener keyListener;
     private MouseListener mouseListener;
@@ -48,8 +47,7 @@ public class GamePanel extends JPanel {
 
         isoCordTool = new IsoCordTool(gameData);
         mainMenu = new MainMenu(gameData);
-        gameGraphics = new GameGraphics(gameData);;
-        inventoryGraphics = new InventoryGraphics(gameData);
+        gameGraphics = new GameGraphics(gameData);
     }
 
     private void addListeners() {
@@ -108,7 +106,6 @@ public class GamePanel extends JPanel {
                 break;
             case 2:
                 gameGraphics.render(g2);
-                inventoryGraphics.render(g2);
                 timeTook = System.currentTimeMillis() - currentTime;
                 break;
         }
@@ -140,10 +137,6 @@ public class GamePanel extends JPanel {
 
         // disposes graphics for garbage collection
         g2.dispose();
-    }
-
-    public InventoryGraphics getInventoryGraphics() {
-        return inventoryGraphics;
     }
 
     public IsoCordTool getIsoCordTool() {

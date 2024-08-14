@@ -1,5 +1,6 @@
 package Graphics;
 
+import Graphics.Inventory.InventoryGraphics;
 import Graphics.Panels.GamePanel;
 import Listeners.MouseListener;
 import MainConfig.GameData;
@@ -17,9 +18,11 @@ public class GameGraphics {
     private ImageLoader imageLoader;
     private BufferedImage bufferedImage;
     private Graphics2D bufferedGraphics;
+    private InventoryGraphics inventoryGraphics;
 
     public GameGraphics(GameData gameData) {
         this.gameData = gameData;
+        inventoryGraphics = gameData.inventory.getInventoryGraphics();
         imageLoader = gameData.imageLoader;
         isoCordTool = gameData.gamePanel.getIsoCordTool();
 
@@ -92,6 +95,9 @@ public class GameGraphics {
         } else {
             bufferedGraphics.drawImage(imageLoader.getTextures()[WorldTile.Tile.Selection.ordinal()], isoCordTool.getXIso(mouseWorldCor[0] - 1, mouseWorldCor[1] - 1), isoCordTool.getYIso(mouseWorldCor[0] - 1, mouseWorldCor[1] - 1), null);
         }
+
+        //draw inventory
+        inventoryGraphics.render(bufferedGraphics);
 
         //draw to panel
         g2.drawImage(bufferedImage, 0, 0, null);

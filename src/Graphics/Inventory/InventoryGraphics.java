@@ -11,20 +11,20 @@ public class InventoryGraphics {
     private int hotbarSize;
     private int startX, startY;
     private GameData gameData;
-
+    private Inventory inventory;
     private BufferedImage hotbar;
 
-    public InventoryGraphics(GameData gameData) {
+    public InventoryGraphics(GameData gameData, Inventory inventory) {
         this.gameData = gameData;
         this.hotbarSize = gameData.hotbarSize;
         this.startX = gameData.screenWidth/2 - (rectSize * hotbarSize/2);
         this.startY = gameData.screenHeight - gameData.screenHeight/4;
+        this.inventory = inventory;
 
         createHotbarImage(gameData.selectedSlot);
     }
 
     public void createHotbarImage(int selectedSlot) {
-        Inventory inventory = gameData.inventory;
         gameData.selectedSlot = selectedSlot;
         hotbar = new BufferedImage((rectSize * hotbarSize + (hotbarSize - 1) * 3), rectSize + 1, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = (Graphics2D) hotbar.getGraphics();

@@ -1,5 +1,7 @@
 package Listeners;
 
+import Graphics.Inventory.Inventory;
+import Graphics.Inventory.InventoryGraphics;
 import MainConfig.GameData;
 import World.WorldTile;
 
@@ -10,10 +12,11 @@ public class KeyListener implements java.awt.event.KeyListener {
     public boolean upPressed = false, downPressed = false, leftPressed = false, rightPressed = false, plusPressed = false, minusPressed = false;
     private GameData gameData;
     private int cameraCount;
+    private InventoryGraphics inventoryGraphics;
 
     public KeyListener(GameData gameData) {
         this.gameData = gameData;
-
+        this.inventoryGraphics = gameData.inventory.getInventoryGraphics();
         cameraCount = 1;
     }
 
@@ -51,31 +54,31 @@ public class KeyListener implements java.awt.event.KeyListener {
                 gameData.GAMESTATE = 1;
                 break;
             case KeyEvent.VK_1:
-                gameData.gamePanel.getInventoryGraphics().createHotbarImage(0);
+                inventoryGraphics.createHotbarImage(0);
                 break;
             case KeyEvent.VK_2:
-                gameData.gamePanel.getInventoryGraphics().createHotbarImage(1);
+                inventoryGraphics.createHotbarImage(1);
                 break;
             case KeyEvent.VK_3:
-                gameData.gamePanel.getInventoryGraphics().createHotbarImage(2);
+                inventoryGraphics.createHotbarImage(2);
                 break;
             case KeyEvent.VK_4:
-                gameData.gamePanel.getInventoryGraphics().createHotbarImage(3);
+                inventoryGraphics.createHotbarImage(3);
                 break;
             case KeyEvent.VK_5:
-                gameData.gamePanel.getInventoryGraphics().createHotbarImage(4);
+                inventoryGraphics.createHotbarImage(4);
                 break;
             case KeyEvent.VK_6:
-                gameData.gamePanel.getInventoryGraphics().createHotbarImage(5);
+                inventoryGraphics.createHotbarImage(5);
                 break;
             case KeyEvent.VK_7:
-                gameData.gamePanel.getInventoryGraphics().createHotbarImage(6);
+                inventoryGraphics.createHotbarImage(6);
                 break;
             case KeyEvent.VK_8:
-                gameData.gamePanel.getInventoryGraphics().createHotbarImage(7);
+                inventoryGraphics.createHotbarImage(7);
                 break;
             case KeyEvent.VK_9:
-                gameData.gamePanel.getInventoryGraphics().createHotbarImage(8);
+                inventoryGraphics.createHotbarImage(8);
                 break;
         }
     }

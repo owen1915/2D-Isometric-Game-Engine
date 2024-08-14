@@ -62,22 +62,14 @@ public class MouseListener implements java.awt.event.MouseListener {
         leftPressed = true;
 
         WorldTile.Tile[] worldTilesOfMouseArray = getTilesOfMouse(cords[0], cords[1]);
-        int selectedSlot = gameData.selectedSlot;
+        Inventory inventory = gameData.inventory;
 
         if (e.getButton() == MouseEvent.BUTTON3){
             for (int lair = 2; lair >= 0; lair--){
                 WorldTile.Tile tile = worldTilesOfMouseArray[lair];
                 if (tile != WorldTile.Tile.Empty){
-                    //add to inventory
-                    Inventory inventory = gameData.inventory;
-                    int slot = inventory.getSlot(tile);
-                    if (slot != -1) {
-                        inventory.getInventory()[slot].setAmntOf(inventory.getInventory()[slot].getAmntOf() + 1);
-                    } else if (inventory.size < gameData.hotbarSize){
-                        inventory.getInventory()[inventory.firstOpenSpace()] = new Item(tile, 1, gameData);
-                        inventory.size++;
-                    }
-
+                    //remove block from inventory
+                    inventory.removeItem(tile);
                     gameData.world.setWorldTile(cords[0] + lair, cords[1] + lair, lair, WorldTile.Tile.Empty);
                     break;
                 }
@@ -85,26 +77,25 @@ public class MouseListener implements java.awt.event.MouseListener {
         }
 
         if (e.getButton() == MouseEvent.BUTTON1){
-            WorldTile.Tile selectedTile;
-            if (selectedSlot >= 0 && selectedSlot < gameData.hotbarSize && gameData.inventory.getInventory()[selectedSlot] != null) {
-                Item item = gameData.inventory.getInventory()[selectedSlot];
-                selectedTile = item.getBlock();
-                item.setAmntOf(item.getAmntOf() - 1);
-                gameData.inventory.checkEmpty();
-            } else {
-                selectedTile = WorldTile.Tile.Empty;
-            }
-
+            //get block from inventory
+            WorldTile.Tile selectedTile = inventory.getItem();
             for (int lair = 2; lair >= 0; lair--){
                 WorldTile.Tile tile = worldTilesOfMouseArray[lair];
                 if (tile != WorldTile.Tile.Empty){
-                    gameData.world.setWorldTile(cords[0] + lair, cords[1] + lair, lair + 1, selectedTile);
+                    //checks if the same block is already there
+                    WorldTile location = gameData.world.getWorldTile(cords[0] + lair, cords[1] + lair, lair + 1);
+                    if (location != null ) {
+                        if (location.getTileType() == selectedTile) {
+                            break;
+                        } else {
+                            gameData.world.setWorldTile(cords[0] + lair, cords[1] + lair, lair + 1, selectedTile);
+                            inventory.placeItem();
+                        }
+                    }
                     break;
                 }
             }
         }
-
-        gameData.gamePanel.getInventoryGraphics().createHotbarImage(selectedSlot);
     }
 
     @Override
