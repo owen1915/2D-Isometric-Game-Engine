@@ -60,17 +60,25 @@ public class GameGraphics {
             }
         }
 
-        //Get the mouse world cords from mouse motion listener
         int[] mouseWorldCor = gameData.gamePanel.getMouseMotionListener().getMouseWorldCords();
+        Block block = gameData.blockManipulator.getBlock(mouseWorldCor[0], mouseWorldCor[1], false);
 
         //Draw the selection tile
-        if (mouseWorldCor[0] - 1 < 0 || mouseWorldCor[1] - 1  < 0 || mouseWorldCor[0] - 1 > gameData.world.getWorldXSize()
-                || mouseWorldCor[1] - 1  > gameData.world.getWorldYSize()) {
-            bufferedGraphics.drawImage(imageLoader.getTextures()[WorldTile.Tile.RedSelection.ordinal()], isoCordTool.getXIso(mouseWorldCor[0] - 1, mouseWorldCor[1] - 1), isoCordTool.getYIso(mouseWorldCor[0] - 1, mouseWorldCor[1] - 1), null);
+        if (block != null) {
+            int x = isoCordTool.getXIso(block.getGridX(), block.getGridY()) + gameData.camera.getxOffset();
+            int y = isoCordTool.getYIso(block.getGridX(), block.getGridY()) + gameData.camera.getyOffset() - (block.getGridZ() * tileSize/2);
+            if (gameData.blockManipulator.checkBoundary(block.getGridX(), block.getGridY())) {
+                bufferedGraphics.drawImage(imageLoader.getTextures()[WorldTile.Tile.Selection.ordinal()], x, y, null);
+            }
         } else {
-            bufferedGraphics.drawImage(imageLoader.getTextures()[WorldTile.Tile.Selection.ordinal()], isoCordTool.getXIso(mouseWorldCor[0] - 1, mouseWorldCor[1] - 1), isoCordTool.getYIso(mouseWorldCor[0] - 1, mouseWorldCor[1] - 1), null);
+            int x = isoCordTool.getXFromIso(mouseWorldCor[0] - gameData.camera.getxOffset(), mouseWorldCor[1] - gameData.camera.getyOffset());
+            int y = isoCordTool.getYFromIso(mouseWorldCor[0] - gameData.camera.getxOffset(), mouseWorldCor[1] - gameData.camera.getyOffset());
+            int drawX = isoCordTool.getXIso(x, y) + gameData.camera.getxOffset();
+            int drawY = isoCordTool.getYIso(x, y) + gameData.camera.getyOffset() - gameData.tileSize/2;
+            if (gameData.blockManipulator.checkBoundary(x, y)) {
+                bufferedGraphics.drawImage(imageLoader.getTextures()[WorldTile.Tile.Selection.ordinal()], drawX, drawY, null);
+            }
         }
-
         //draw inventory
         inventoryGraphics.render(bufferedGraphics);
 

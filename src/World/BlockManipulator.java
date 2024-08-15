@@ -25,13 +25,17 @@ public class BlockManipulator {
             block = gameData.world.findBlockByRayCasting(gridX, gridY);
             count++;
         }
-        Block[] blocks = world.getBlocksAround(block);
 
+        if (block == null) {
+            return null;
+        }
+
+        Block[] blocks = world.getBlocksAround(block);
         return world.checkPolygonHitting(blocks, mouseX, mouseY, remove);
     }
 
-    private boolean checkBoundary(Block block) {
-        return block.getGridX() > 0 && block.getGridX() <= gameData.worldSize - 2 && block.getGridY() > 0 && block.getGridY() <= gameData.worldSize - 2;
+    public boolean checkBoundary(int x, int y) {
+        return x > 0 && x <= gameData.worldSize - 2 && y > 0 && y <= gameData.worldSize - 2;
     }
 
     public void placeBlock(int mouseX, int mouseY) {
@@ -46,10 +50,10 @@ public class BlockManipulator {
 
         Block targetBlock = getBlock(mouseX, mouseY, false);
         World world = gameData.world;
-        if (targetBlock != null && targetBlock.isEmpty() && checkBoundary(targetBlock)) {
+        if (targetBlock != null && targetBlock.isEmpty() && checkBoundary(targetBlock.getGridX(), targetBlock.getGridY())) {
             world.setBlockOnGrid(targetBlock.getGridX(), targetBlock.getGridY(), targetBlock.getGridZ(), blockType);
             gameData.inventory.placeItem();
-        } else if (block.isEmpty() && checkBoundary(block)) {
+        } else if (block.isEmpty() && checkBoundary(block.getGridX(), block.getGridY())) {
             block.setBlockType(blockType);
             gameData.inventory.placeItem();
         }
@@ -61,7 +65,7 @@ public class BlockManipulator {
 
         WorldTile.Tile blockType = block.getBlockType();
 
-        if (checkBoundary(block)) {
+        if (checkBoundary(block.getGridX(), block.getGridY())) {
             world.setBlockOnGrid(block.getGridX(), block.getGridY(), block.getGridZ(), WorldTile.Tile.Empty);
             gameData.inventory.removeItem(blockType);
         }
