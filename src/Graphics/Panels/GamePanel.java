@@ -20,7 +20,6 @@ public class GamePanel extends JPanel {
     private GameData gameData;
     private MainMenu mainMenu;
     private GameGraphics gameGraphics;
-    private IsoCordTool isoCordTool;
     private KeyListener keyListener;
     private MouseListener mouseListener;
 
@@ -45,7 +44,6 @@ public class GamePanel extends JPanel {
         this.mouseMotionListener = new MouseMotionListener(gameData);
         this.mouseWheelListener = new MouseWheelListener(gameData);
 
-        isoCordTool = new IsoCordTool(gameData);
         mainMenu = new MainMenu(gameData);
         gameGraphics = new GameGraphics(gameData);
     }
@@ -137,10 +135,6 @@ public class GamePanel extends JPanel {
 
         // disposes graphics for garbage collection
         g2.dispose();
-    }
-
-    public IsoCordTool getIsoCordTool() {
-        return isoCordTool;
     }
 
     public GameData getGameData() {

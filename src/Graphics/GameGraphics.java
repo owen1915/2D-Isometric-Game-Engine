@@ -5,6 +5,7 @@ import Graphics.Panels.GamePanel;
 import Listeners.MouseListener;
 import MainConfig.GameData;
 import MainConfig.ImageLoader;
+import World.Block;
 import World.WorldTile;
 
 import javax.swing.*;
@@ -24,7 +25,7 @@ public class GameGraphics {
         this.gameData = gameData;
         inventoryGraphics = gameData.inventory.getInventoryGraphics();
         imageLoader = gameData.imageLoader;
-        isoCordTool = gameData.gamePanel.getIsoCordTool();
+        isoCordTool = gameData.isoCordTool;
 
         bufferedImage = new BufferedImage(gameData.screenWidth, gameData.screenHeight, BufferedImage.TYPE_INT_ARGB);
         bufferedGraphics = (Graphics2D) bufferedImage.getGraphics();
@@ -41,44 +42,18 @@ public class GameGraphics {
                 for (int y = 0; y < gameData.world.getWorldXSize(); y++) {
                     if (withinBounds(x, y)) {
                         //Get the world tile
-                        WorldTile.Tile tileType = gameData.world.getWorldTileType(x, y, z);
+                        Block block = gameData.world.getBlockOnGrid(x, y, z);
 
                         //conditions to be met for it to be rendered
                         //checks if tile is empty or null
-                        if (tileType != null && tileType != WorldTile.Tile.Empty) {
-                            boolean draw = false;
-
-                            //if it is the top layer
-                            if (z == 2) {
-                                draw = true;
-                            }
-
-                            //checks tiles next to it
-                            if (gameData.world.getWorldTileType(x + 1, y, z) == WorldTile.Tile.Empty ||
-                                    gameData.world.getWorldTileType(x, y + 1, z) == WorldTile.Tile.Empty) {
-                                draw = true;
-                            }
-
-                            //if it has a tile above it that is empty
-                            if ((z == 0 || z == 1) && (gameData.world.getWorldTileType(x, y, z + 1) == WorldTile.Tile.Empty ||
-                                    gameData.world.getWorldTileType(x, y, z + 1) == WorldTile.Tile.turret ||
-                                    gameData.world.getWorldTileType(x, y, z + 1) == WorldTile.Tile.Belt)) {
-                                draw = true;
-                            }
-
-                            //if the tile isnt visible because a tile is blocking it
-                        /*if ((z == 0 || z == 1) && gameData.world.getWorldTileType(x + 1, y + 1, z + 1) != WorldTile.Tile.Empty) {
-                            draw = false;
-                        }*/
-
-                            //checks if tile is on the world boundary
-                            if (x == gameData.world.getWorldXSize() - 1 || y == gameData.world.getWorldYSize() - 1) {
-                                draw = true;
-                            }
-
-                            if (draw) {
-                                bufferedGraphics.drawImage(imageLoader.getTextures()[tileType.ordinal()], isoCordTool.getXIso(x, y), isoCordTool.getYIso(x, y) - (z * tileSize/2), null);
-                            }
+                        if (block != null && !block.isEmpty()) {
+                            bufferedGraphics.drawImage(imageLoader.getTextures()[block.getBlockType().ordinal()], isoCordTool.getXIso(x, y) + gameData.camera.getxOffset(), isoCordTool.getYIso(x, y) + (gameData.camera.getyOffset() - (z * tileSize/2)), null);
+                            //draw hitbox
+                            /*bufferedGraphics.setColor(Color.red);
+                            Polygon[] polygons = block.getPolygons();
+                            for (Polygon polygon : polygons) {
+                                bufferedGraphics.drawPolygon(polygon);
+                            }*/
                         }
                     }
                 }
@@ -105,8 +80,8 @@ public class GameGraphics {
 
     private boolean withinBounds(int x, int y) {
         // Convert isometric coordinates to screen coordinates
-        int screenX = isoCordTool.getXIso(x, y);
-        int screenY = isoCordTool.getYIso(x, y);
+        int screenX = isoCordTool.getXIso(x, y) + gameData.camera.getxOffset();
+        int screenY = isoCordTool.getYIso(x, y) + gameData.camera.getyOffset();
 
         return screenX <= gameData.screenWidth + gameData.tileSize && screenX >= -gameData.tileSize && screenY <= gameData.screenHeight + gameData.tileSize && screenY >= -gameData.tileSize;
     }

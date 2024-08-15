@@ -4,6 +4,7 @@ import Graphics.Camera.Camera;
 import Graphics.Inventory.Inventory;
 import Graphics.IsoCordTool;
 import Graphics.Panels.GamePanel;
+import World.BlockManipulator;
 import MainConfig.TextureSplicer.GridManager;
 import MainConfig.TextureSplicer.TextureManager;
 import World.World;
@@ -30,17 +31,22 @@ public class GameData {
     // random
     public Random random = new Random();
 
+    public int worldSize = 8;
+
     // default tile screenHeight and screenWidth
     public int tileSize = 64;
+    public IsoCordTool isoCordTool = new IsoCordTool(this);
+    public Camera camera = new Camera(this);
 
     public final int maxTileSize = 512;
 
     public final int minTileSize = 48;
 
     // max rows and cols
-    public World world = new World(256, this);
+    public World world = new World(worldSize, this);
 
-    public Camera camera = new Camera(this);
+    // block manipulator
+    public BlockManipulator blockManipulator = new BlockManipulator(this);
 
     public ImageLoader imageLoader = new ImageLoader(this);
     public TextureManager textureManager = new TextureManager(imageLoader);
@@ -55,7 +61,7 @@ public class GameData {
      * Game state indicates what we are drawing.
      * When GAMESTATE is 1 it will render the Menu, when GAMESTATE is 2 it can render the game, etc...
      */
-    public int GAMESTATE = 1;
+    public int GAMESTATE = 2;
 
 
     // game panel instance

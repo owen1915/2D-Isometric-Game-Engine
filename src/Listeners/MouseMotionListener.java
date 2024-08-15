@@ -22,7 +22,7 @@ public class MouseMotionListener implements java.awt.event.MouseMotionListener {
     public void mouseMoved(MouseEvent e) {
         int x = e.getX();
         int y = e.getY();
-        IsoCordTool isoCordTool = gameData.gamePanel.getIsoCordTool();
+        IsoCordTool isoCordTool = gameData.isoCordTool;
         int[] cords = isoCordTool.screenToIso(x - gameData.camera.getxOffset(), y - gameData.camera.getyOffset());
         cords[0] += gameData.world.getWorldXSize()/2;
         cords[1] += gameData.world.getWorldYSize()/2;

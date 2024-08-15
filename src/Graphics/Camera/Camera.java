@@ -14,7 +14,7 @@ public class Camera {
         this.gameData = gameData;
 
         xOffset = gameData.screenWidth/2;
-        yOffset = gameData.screenHeight/2;
+        yOffset = gameData.screenHeight/2 - (gameData.tileSize / 2 * gameData.worldSize/2);
     }
 
     float scale = 1;
@@ -36,100 +36,26 @@ public class Camera {
     }
 
     public void ifLeftPressed() {
-        int tileWidth = gameData.tileSize/2;
-        if ((gameData.world.getWorldXSize() * tileWidth) * 2 > gameData.screenWidth) {
-            if (xOffset < gameData.world.getWorldXSize() * tileWidth) {
-                xOffset += xSpeed;
-            } else {
-                while (xOffset > gameData.world.getWorldXSize() * tileWidth) {
-                    xOffset--;
-                }
-            }
-        } else {
-            if (xOffset - gameData.screenWidth < -gameData.world.getWorldXSize() * tileWidth) {
-                xOffset += xSpeed;
-            } else {
-                while (xOffset - gameData.screenWidth > gameData.world.getWorldXSize() * tileWidth) {
-                    xOffset--;
-                }
-            }
-        }
+        xOffset += xSpeed;
     }
 
     public void ifRightPressed() {
-        int tileWidth = gameData.tileSize/2;
-        if ((gameData.world.getWorldXSize() * tileWidth) * 2 > gameData.screenWidth) {
-            if (xOffset - gameData.screenWidth > -gameData.world.getWorldXSize() * gameData.tileSize/2) {
-                xOffset -= xSpeed;
-            } else {
-                while (xOffset - gameData.screenWidth < -gameData.world.getWorldXSize() * gameData.tileSize/2) {
-                    xOffset++;
-                }
-            }
-        } else {
-            if (xOffset > gameData.world.getWorldXSize() * tileWidth) {
-                xOffset -= xSpeed;
-            } else {
-                while (xOffset < gameData.world.getWorldXSize() * tileWidth) {
-                    xOffset++;
-                }
-            }
-        }
+        xOffset -= xSpeed;
     }
 
     public void ifUpPressed() {
-        int tileHeight = gameData.tileSize/4;
-        int tileDepthHeight = gameData.tileSize/2;
-
-        if ((gameData.world.getWorldYSize() * tileHeight) * 2 > gameData.screenHeight) {
-            int z = gameData.world.getMaxDepthAtTile(0, 0);
-            if (yOffset < gameData.world.getWorldYSize() * tileHeight + tileDepthHeight * z) {
-                yOffset += ySpeed;
-            } else {
-                while (yOffset > gameData.world.getWorldYSize() * tileHeight + tileDepthHeight * z) {
-                    yOffset--;
-                }
-            }
-        } else {
-            if (gameData.camera.getyOffset() + tileDepthHeight - gameData.screenHeight < -gameData.world.getWorldYSize() * tileHeight) {
-                yOffset += ySpeed;
-            } else {
-                while (gameData.camera.getyOffset() + tileDepthHeight - gameData.screenHeight > -gameData.world.getWorldYSize()  * tileHeight) {
-                    yOffset--;
-                }
-            }
-        }
+        yOffset += ySpeed;
     }
 
     public void ifDownPressed() {
-        int tileHeight = gameData.tileSize/4;
-        int tileDepthHeight = gameData.tileSize/2;
-
-        if ((gameData.world.getWorldYSize() * tileHeight) * 2 > gameData.screenHeight) {
-            if (gameData.camera.getyOffset() + tileDepthHeight - gameData.screenHeight > -gameData.world.getWorldYSize() * tileHeight) {
-                yOffset -= ySpeed;
-            } else {
-                while (gameData.camera.getyOffset() + tileDepthHeight - gameData.screenHeight < -gameData.world.getWorldYSize() * tileHeight)    {
-                    yOffset++;
-                }
-            }
-        } else {
-            int z = gameData.world.getMaxDepthAtTile(0, 0);
-            if (gameData.camera.getyOffset() > gameData.world.getWorldYSize()  * tileHeight + (tileDepthHeight * z)) {
-                yOffset -= ySpeed;
-            } else {
-                while (gameData.camera.getyOffset() < gameData.world.getWorldYSize()  * tileHeight + (tileDepthHeight * z)) {
-                    yOffset++;
-                }
-            }
-        }
+        yOffset -= ySpeed;
     }
 
     public void zoomIn() {
         if (!(gameData.tileSize + zoomAmnt > gameData.maxTileSize)) {
             gameData.tileSize += zoomAmnt;
             gameData.imageLoader.createTextures();
-            gameData.gamePanel.getIsoCordTool().updateIso();
+            gameData.isoCordTool.updateIso();
         }
     }
 
@@ -137,7 +63,7 @@ public class Camera {
         if (!(gameData.tileSize - zoomAmnt < gameData.minTileSize)) {
             gameData.tileSize -= zoomAmnt;
             gameData.imageLoader.createTextures();
-            gameData.gamePanel.getIsoCordTool().updateIso();
+            gameData.isoCordTool.updateIso();
         }
     }
 

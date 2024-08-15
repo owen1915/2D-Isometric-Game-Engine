@@ -27,12 +27,44 @@ public class IsoCordTool {
 
     public int getXIso(int x, int y) {
         double isoX = x * xVector[0] + y * yVector[0];
-        return (int) isoX - width / 2 + gameData.camera.getxOffset();
+        return (int) isoX;
     }
 
     public int getYIso(int x, int y) {
         double isoY = x * xVector[1] + y * yVector[1];
-        return (int) (isoY) - (height/2 * gameData.world.getWorldYSize()/2) + gameData.camera.getyOffset();
+        return (int) (isoY);
+    }
+
+    public int getXFromIso(int isoX, int isoY) {
+        double a = xVector[0];
+        double b = yVector[0];
+        double c = xVector[1];
+        double d = yVector[1];
+
+        double denominator = a * d - b * c;
+
+        if (denominator == 0) {
+            throw new ArithmeticException("Matrix is singular and cannot be inverted");
+        }
+
+        double x = (isoX * d - isoY * b) / denominator;
+        return (int) Math.round(x) - 1;
+    }
+
+    public int getYFromIso(int isoX, int isoY) {
+        double a = xVector[0];
+        double b = yVector[0];
+        double c = xVector[1];
+        double d = yVector[1];
+
+        double denominator = a * d - b * c;
+
+        if (denominator == 0) {
+            throw new ArithmeticException("Matrix is singular and cannot be inverted");
+        }
+
+        double y = (isoY * a - isoX * c) / denominator;
+        return (int) Math.round(y);
     }
 
     public int[] screenToIso(int xCor, int yCor){
@@ -52,5 +84,11 @@ public class IsoCordTool {
         cordArray[1] = (int) isoY;
 
         return cordArray;
+    }
+
+    public int[] isometricToGrid(int isoX, int isoY) {
+        int gridX =  isoX / gameData.tileSize;
+        int gridY =  isoY / gameData.tileSize;
+        return new int[] {gridX, gridY};
     }
 }

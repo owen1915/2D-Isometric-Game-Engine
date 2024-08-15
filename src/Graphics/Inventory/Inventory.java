@@ -16,9 +16,9 @@ public class Inventory {
 
         inventory[0] = new Item(WorldTile.Tile.Wall, 64, gameData);
         inventory[1] = new Item(WorldTile.Tile.turret, 10, gameData);
-        inventory[2] = new Item(WorldTile.Tile.Dirt, 64, gameData);
-        inventory[3] = new Item(WorldTile.Tile.FurnaceOff, 64, gameData);
-        inventory[4] = new Item(WorldTile.Tile.FurnaceOn, 64, gameData);
+        inventory[2] = new Item(WorldTile.Tile.FurnaceOff, 64, gameData);
+        inventory[3] = new Item(WorldTile.Tile.FurnaceOn, 64, gameData);
+        inventory[4] = new Item(WorldTile.Tile.Dirt, 64, gameData);
         inventory[5] = new Item(WorldTile.Tile.Belt, 64, gameData);
         size = 5;
 
@@ -40,18 +40,18 @@ public class Inventory {
         int selectedSlot = gameData.selectedSlot;
         if (selectedSlot >= 0 && selectedSlot < gameData.hotbarSize && inventory[selectedSlot] != null) {
             Item item = inventory[selectedSlot];
-            return item.getBlock();
+            return item.getTileType();
         } else {
             return WorldTile.Tile.Empty;
         }
     }
 
-    public void removeItem(WorldTile.Tile tile) {
-        int slot = getSlot(tile);
+    public void removeItem(WorldTile.Tile tileType) {
+        int slot = getSlot(tileType);
         if (slot != -1) {
             inventory[slot].setAmntOf(inventory[slot].getAmntOf() + 1);
         } else if (size < gameData.hotbarSize){
-            inventory[firstOpenSpace()] = new Item(tile, 1, gameData);
+            inventory[firstOpenSpace()] = new Item(tileType, 1, gameData);
             size++;
         }
 
@@ -85,7 +85,7 @@ public class Inventory {
 
     public int getSlot(WorldTile.Tile tile) {
         for (int i = 0; i < inventory.length; i++) {
-            if (inventory[i] != null && inventory[i].getBlock() == tile) {
+            if (inventory[i] != null && inventory[i].getTileType() == tile) {
                 return i;
             }
         }
