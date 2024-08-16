@@ -20,6 +20,7 @@ public class GameGraphics {
     private BufferedImage bufferedImage;
     private Graphics2D bufferedGraphics;
     private InventoryGraphics inventoryGraphics;
+    private BufferedImage background;
 
     public GameGraphics(GameData gameData) {
         this.gameData = gameData;
@@ -28,12 +29,15 @@ public class GameGraphics {
         isoCordTool = gameData.isoCordTool;
 
         bufferedImage = new BufferedImage(gameData.screenWidth, gameData.screenHeight, BufferedImage.TYPE_INT_ARGB);
+        background = new BufferedImage(gameData.screenWidth, gameData.screenHeight, BufferedImage.TYPE_INT_ARGB);
+        Graphics graphics = background.getGraphics();
+        graphics.drawImage(gameData.imageLoader.getBackground()[0].getScaledInstance(gameData.screenWidth, gameData.screenHeight, Image.SCALE_SMOOTH), 0, 0, null);
         bufferedGraphics = (Graphics2D) bufferedImage.getGraphics();
     }
 
     public void render(Graphics2D g2) {
-        bufferedGraphics.clearRect(0, 0, gameData.screenWidth, gameData.screenHeight);
-        //bufferedGraphics.drawImage(imageLoader.getBackground()[0], 0, 0, gameData.screenWidth, gameData.screenHeight, null);
+        bufferedGraphics.clearRect(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight());
+        //bufferedGraphics.drawImage(background, 0, 0, null);
 
         int tileSize = gameData.tileSize;
         // iterate over the (current) world that holds the tiles
@@ -44,16 +48,9 @@ public class GameGraphics {
                         //Get the world tile
                         Block block = gameData.world.getBlockOnGrid(x, y, z);
 
-                        //conditions to be met for it to be rendered
-                        //checks if tile is empty or null
                         if (block != null && !block.isEmpty()) {
                             bufferedGraphics.drawImage(imageLoader.getTextures()[block.getBlockType().ordinal()], isoCordTool.getXIso(x, y) + gameData.camera.getxOffset(), isoCordTool.getYIso(x, y) + (gameData.camera.getyOffset() - (z * tileSize/2)), null);
-                            //draw hitbox
-                            /*bufferedGraphics.setColor(Color.red);
-                            Polygon[] polygons = block.getPolygons();
-                            for (Polygon polygon : polygons) {
-                                bufferedGraphics.drawPolygon(polygon);
-                            }*/
+                            block.setDirty(false);
                         }
                     }
                 }
@@ -83,6 +80,7 @@ public class GameGraphics {
         inventoryGraphics.render(bufferedGraphics);
 
         //draw to panel
+        g2.drawImage(background, 0, 0, null);
         g2.drawImage(bufferedImage, 0, 0, null);
     }
 

@@ -38,20 +38,20 @@ public class World {
                 for (int x = 0; x < worldSize; x++) {
                     switch (z) {
                         case 0:
-                            bottomLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Grass);
+                            bottomLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Grass, true);
                             break;
                         case 1:
-                            middleLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Empty);
+                            middleLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Empty, true);
                             break;
                         case 2:
-                            topLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Empty);
+                            topLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Empty, true);
                             break;
                     }
                 }
             }
         }
 
-        middleLayer[3][3] = new Block(gameData, 3, 3, 1, WorldTile.Tile.Dirt);
+        middleLayer[3][3] = new Block(gameData, 3, 3, 1, WorldTile.Tile.Dirt, true);
 
         worldTiles[0] = bottomLayer;
         worldTiles[1] = middleLayer;

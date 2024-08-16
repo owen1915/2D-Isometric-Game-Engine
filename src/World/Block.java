@@ -8,13 +8,23 @@ public class Block {
     private int gridX, gridY, gridZ; // Grid coordinates
     private WorldTile.Tile block;
     private GameData gameData;
+    private boolean dirty;
 
-    public Block(GameData gameData, int gridX, int gridY, int gridZ, WorldTile.Tile block) {
+    public Block(GameData gameData, int gridX, int gridY, int gridZ, WorldTile.Tile block, boolean dirty) {
         this.gridX = gridX;
         this.gridY = gridY;
+        this.dirty = dirty;
         this.gridZ = gridZ;
         this.block = block;
         this.gameData = gameData;
+    }
+
+    public void setDirty(boolean dirty) {
+        this.dirty = dirty;
+    }
+
+    public boolean isDirty() {
+        return dirty;
     }
 
     public boolean isEmpty() {

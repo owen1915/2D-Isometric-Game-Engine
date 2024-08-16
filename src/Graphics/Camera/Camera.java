@@ -13,7 +13,7 @@ public class Camera {
     public Camera(GameData gameData) {
         this.gameData = gameData;
 
-        xOffset = gameData.screenWidth/2;
+        xOffset = gameData.screenWidth/2 - gameData.tileSize/2;
         yOffset = gameData.screenHeight/2 - (gameData.tileSize / 2 * gameData.worldSize/2);
     }
 
