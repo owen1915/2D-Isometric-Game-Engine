@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 public class BlockManipulator {
 
     private GameData gameData;
+    private Block[] emptyBlocks = new Block[2];
 
     public BlockManipulator(GameData gameData) {
         this.gameData = gameData;
@@ -31,6 +32,8 @@ public class BlockManipulator {
         }
 
         Block[] blocks = world.getBlocksAround(block);
+        emptyBlocks[0] = blocks[0];
+        emptyBlocks[1] = blocks[4];
         return world.checkPolygonHitting(blocks, mouseX, mouseY, remove);
     }
 
@@ -53,7 +56,7 @@ public class BlockManipulator {
         if (targetBlock != null && targetBlock.isEmpty() && checkBoundary(targetBlock.getGridX(), targetBlock.getGridY())) {
             world.setBlockOnGrid(targetBlock.getGridX(), targetBlock.getGridY(), targetBlock.getGridZ(), blockType);
             gameData.inventory.placeItem();
-        } else if (block.isEmpty() && checkBoundary(block.getGridX(), block.getGridY())) {
+        } else if (block.isEmpty() && checkBoundary(block.getGridX(), block.getGridY()) && (emptyBlocks[0].isEmpty() && emptyBlocks[1].isEmpty())) {
             block.setBlockType(blockType);
             gameData.inventory.placeItem();
         }
