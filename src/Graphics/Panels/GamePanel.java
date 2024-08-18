@@ -126,6 +126,9 @@ public class GamePanel extends JPanel {
                     System.out.println("-------------------------------------------");
                     System.out.println("Min Render Time " + min + "ms\nMax Render Time " + max + "ms");
                     System.out.println("Average render time " + average + "ms");
+                    if (gameGraphics.getCount() != 0) {
+                        System.out.println("Iterated through Graphic Loop " + gameGraphics.getCount() + " times");
+                    }
                     System.out.println("-------------------------------------------");
                     renderTime.clear();
                     gameData.frameCounter = 0;

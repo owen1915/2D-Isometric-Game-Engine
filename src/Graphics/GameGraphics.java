@@ -21,6 +21,7 @@ public class GameGraphics {
     private Graphics2D bufferedGraphics;
     private InventoryGraphics inventoryGraphics;
     private BufferedImage background;
+    private int count = 0;
 
     public GameGraphics(GameData gameData) {
         this.gameData = gameData;
@@ -39,19 +40,34 @@ public class GameGraphics {
         bufferedGraphics.clearRect(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight());
         //bufferedGraphics.drawImage(background, 0, 0, null);
 
+        int cameraX = gameData.camera.getxOffset();
+        int cameraY = gameData.camera.getyOffset();
+
+        int topLeftCorner = isoCordTool.getXFromIso(-cameraX, -cameraY);
+        int topRightCorner = isoCordTool.getYFromIso(-cameraX + gameData.screenWidth, -cameraY);
+        int bottomRightCorner = isoCordTool.getXFromIso(-cameraX + gameData.screenWidth, -cameraY + gameData.screenHeight) + 1;
+        int bottomLeftCorner = isoCordTool.getYFromIso(-cameraX, -cameraY + gameData.screenHeight) + 1;
+        topLeftCorner = Math.max(0, topLeftCorner);
+        topRightCorner = Math.max(0, topRightCorner);
+        bottomRightCorner = Math.min(gameData.worldSize, bottomRightCorner);
+        bottomLeftCorner = Math.min(gameData.worldSize, bottomLeftCorner);
+
         int tileSize = gameData.tileSize;
         // iterate over the (current) world that holds the tiles
+        if (gameData.debug) {
+            count = 0;
+        }
         for (int z = 0; z < 3; z++) {
-            for (int x = 0; x < gameData.world.getWorldYSize(); x++) {
-                for (int y = 0; y < gameData.world.getWorldXSize(); y++) {
-                    if (withinBounds(x, y)) {
-                        //Get the world tile
-                        Block block = gameData.world.getBlockOnGrid(x, y, z);
+            for (int x = topLeftCorner; x < bottomRightCorner; x++) {
+                for (int y = topRightCorner; y < bottomLeftCorner; y++) {
+                    Block block = gameData.world.getBlockOnGrid(x, y, z);
 
-                        if (block != null && !block.isEmpty()) {
-                            bufferedGraphics.drawImage(imageLoader.getTextures()[block.getBlockType().ordinal()], isoCordTool.getXIso(x, y) + gameData.camera.getxOffset(), isoCordTool.getYIso(x, y) + (gameData.camera.getyOffset() - (z * tileSize/2)), null);
-                            block.setDirty(false);
-                        }
+                    if (block != null && !block.isEmpty()) {
+                        bufferedGraphics.drawImage(imageLoader.getTextures()[block.getBlockType().ordinal()], isoCordTool.getXIso(x, y) + gameData.camera.getxOffset(), isoCordTool.getYIso(x, y) + (gameData.camera.getyOffset() - (z * tileSize/2)), null);
+                        block.setDirty(false);
+                    }
+                    if (gameData.debug) {
+                        count++;
                     }
                 }
             }
@@ -84,11 +100,7 @@ public class GameGraphics {
         g2.drawImage(bufferedImage, 0, 0, null);
     }
 
-    private boolean withinBounds(int x, int y) {
-        // Convert isometric coordinates to screen coordinates
-        int screenX = isoCordTool.getXIso(x, y) + gameData.camera.getxOffset();
-        int screenY = isoCordTool.getYIso(x, y) + gameData.camera.getyOffset();
-
-        return screenX <= gameData.screenWidth + gameData.tileSize && screenX >= -gameData.tileSize && screenY <= gameData.screenHeight + gameData.tileSize && screenY >= -gameData.tileSize;
+    public int getCount() {
+        return count;
     }
 }

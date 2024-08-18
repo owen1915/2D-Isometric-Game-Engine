@@ -31,7 +31,7 @@ public class GameData {
     // random
     public Random random = new Random();
 
-    public int worldSize = 32;
+    public int worldSize = 256;
 
     // default tile screenHeight and screenWidth
     public int tileSize = 64;

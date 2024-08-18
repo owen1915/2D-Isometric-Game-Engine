@@ -20,7 +20,11 @@ public class MouseListener implements java.awt.event.MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        int gridX = gameData.isoCordTool.getXFromIso(e.getX() - gameData.camera.getxOffset(), e.getY() - gameData.camera.getyOffset());
+        int gridY = gameData.isoCordTool.getYFromIso(e.getX() - gameData.camera.getxOffset(), e.getY() - gameData.camera.getyOffset());
 
+        System.out.println("gridx : " + gridX);
+        System.out.println("gridy : " + gridY);
     }
 
     @Override
