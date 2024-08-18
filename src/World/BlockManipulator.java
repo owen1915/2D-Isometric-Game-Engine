@@ -42,10 +42,10 @@ public class BlockManipulator {
     }
 
     public void placeBlock(int mouseX, int mouseY) {
-        WorldTile.Tile blockType = gameData.inventory.getInventory()[gameData.selectedSlot].getTileType();
-        if (blockType == null) {
+        if (!gameData.inventory.checkWithinHotbar(gameData.selectedSlot) || gameData.inventory.getInventory()[gameData.selectedSlot] == null) {
             return;
         }
+        WorldTile.Tile blockType = gameData.inventory.getInventory()[gameData.selectedSlot].getTileType();
 
         int gridX = gameData.isoCordTool.getXFromIso(mouseX - gameData.camera.getxOffset(), mouseY - gameData.camera.getyOffset());
         int gridY = gameData.isoCordTool.getYFromIso(mouseX - gameData.camera.getxOffset(), mouseY - gameData.camera.getyOffset());
@@ -66,11 +66,12 @@ public class BlockManipulator {
         Block block = getBlock(mouseX, mouseY, true);
         World world = gameData.world;
 
-        WorldTile.Tile blockType = block.getBlockType();
-
-        if (checkBoundary(block.getGridX(), block.getGridY())) {
-            world.setBlockOnGrid(block.getGridX(), block.getGridY(), block.getGridZ(), WorldTile.Tile.Empty);
-            gameData.inventory.removeItem(blockType);
+        if (block != null) {
+            WorldTile.Tile blockType = block.getBlockType();
+            if (checkBoundary(block.getGridX(), block.getGridY())) {
+                world.setBlockOnGrid(block.getGridX(), block.getGridY(), block.getGridZ(), WorldTile.Tile.Empty);
+                gameData.inventory.removeItem(blockType);
+            }
         }
     }
 }

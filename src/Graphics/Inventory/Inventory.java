@@ -72,6 +72,10 @@ public class Inventory {
         return inventoryGraphics;
     }
 
+    public boolean checkWithinHotbar(int check) {
+        return check >= 0 && check < gameData.hotbarSize;
+    }
+
     public void checkEmpty() {
         for (int i = 0; i < inventory.length; i++) {
             if (inventory[i] != null) {

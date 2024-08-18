@@ -40,7 +40,7 @@ public class GameData {
 
     public final int maxTileSize = 512;
 
-    public final int minTileSize = 48;
+    public final int minTileSize = 16;
 
     // max rows and cols
     public World world = new World(worldSize, this);
@@ -61,7 +61,7 @@ public class GameData {
      * Game state indicates what we are drawing.
      * When GAMESTATE is 1 it will render the Menu, when GAMESTATE is 2 it can render the game, etc...
      */
-    public int GAMESTATE = 2;
+    public int GAMESTATE = 1;
 
 
     // game panel instance
