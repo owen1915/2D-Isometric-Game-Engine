@@ -26,10 +26,6 @@ public class Chunk {
 
     public void updateChunk() {
         createChunk();
-        if (tileSize != gameData.tileSize) {
-            tileSize = gameData.tileSize;
-            createImage();
-        }
     }
 
     private void createChunk() {
@@ -50,6 +46,7 @@ public class Chunk {
     }
 
     private void createImage() {
+        tileSize = gameData.tileSize;
         chunkImage = new BufferedImage(gameData.chunkSize * tileSize, gameData.chunkSize * tileSize/2 + (tileSize/2 * 3), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = chunkImage.createGraphics();
         Image[] textures = gameData.imageLoader.getTextures();
