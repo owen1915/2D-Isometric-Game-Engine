@@ -74,6 +74,7 @@ public class ImageLoader {
         textures[WorldTile.Tile.RedSelection.ordinal()] = sprites[20].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
         textures[WorldTile.Tile.MaskingTile.ordinal()] = sprites[26].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
         textures[WorldTile.Tile.Belt.ordinal()] = sprites[12].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
+        textures[WorldTile.Tile.Transparent.ordinal()] = sprites[21].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
     }
 
     public Image[] getTextures() {

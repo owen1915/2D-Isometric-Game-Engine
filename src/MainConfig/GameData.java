@@ -28,10 +28,13 @@ public class GameData {
     // fullscreen
     public boolean fullscreen = false;
 
+    //chunk size
+    public int chunkSize = 4;
+
     // random
     public Random random = new Random();
 
-    public int worldSize = 256;
+    public int worldSize = 32;
 
     // default tile screenHeight and screenWidth
     public int tileSize = 64;

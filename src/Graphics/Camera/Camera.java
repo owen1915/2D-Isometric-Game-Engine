@@ -9,6 +9,7 @@ public class Camera {
     private int xSpeed = 16;
     private int ySpeed = 16;
     private int zoomAmnt = 8;
+    private boolean dirty = false;
 
     public Camera(GameData gameData) {
         this.gameData = gameData;
@@ -37,18 +38,22 @@ public class Camera {
 
     public void ifLeftPressed() {
         xOffset += xSpeed;
+        dirty = true;
     }
 
     public void ifRightPressed() {
         xOffset -= xSpeed;
+        dirty = true;
     }
 
     public void ifUpPressed() {
         yOffset += ySpeed;
+        dirty = true;
     }
 
     public void ifDownPressed() {
         yOffset -= ySpeed;
+        dirty = true;
     }
 
     public void zoomIn() {
@@ -57,6 +62,7 @@ public class Camera {
             gameData.imageLoader.createTextures();
             gameData.isoCordTool.updateIso();
         }
+        dirty = true;
     }
 
     public void zoomOut() {
@@ -65,7 +71,14 @@ public class Camera {
             gameData.imageLoader.createTextures();
             gameData.isoCordTool.updateIso();
         }
+        dirty = true;
     }
 
+    public boolean isDirty() {
+        return dirty;
+    }
 
+    public void setDirty(boolean dirty) {
+        this.dirty = dirty;
+    }
 }

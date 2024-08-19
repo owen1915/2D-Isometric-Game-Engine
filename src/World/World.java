@@ -18,7 +18,7 @@ public class World {
     private Block[][] middleLayer;
 
     //World object;
-    private Block[][][] worldTiles = new Block[3][0][0];
+    private Block[][][] worldTiles = new Block[3][][];
 
     private GameData gameData;
 
@@ -51,7 +51,8 @@ public class World {
             }
         }
 
-        middleLayer[3][3] = new Block(gameData, 3, 3, 1, WorldTile.Tile.Dirt, true);
+        middleLayer[0][0] = new Block(gameData, 3, 3, 1, WorldTile.Tile.Dirt, true);
+        topLayer[0][0] = new Block(gameData, 3, 3, 1, WorldTile.Tile.Dirt, true);
 
         worldTiles[0] = bottomLayer;
         worldTiles[1] = middleLayer;
