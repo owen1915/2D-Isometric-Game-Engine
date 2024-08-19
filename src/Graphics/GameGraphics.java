@@ -47,8 +47,12 @@ public class GameGraphics {
         chunks = new ArrayList<Chunk>();
 
         for (int x = 0; x < gameData.worldSize; x += gameData.chunkSize) {
-            chunks.add(new Chunk(gameData, x));
+            for (int y = 0; y < gameData.worldSize; y += gameData.chunkSize) {
+                chunks.add(new Chunk(gameData, x, y));
+            }
         }
+
+        System.out.println("AMNT OF CHUNKS: " + chunks.size());
     }
 
     public void render(Graphics2D g2) {
@@ -110,6 +114,14 @@ public class GameGraphics {
                 bufferedGraphics.drawImage(imageLoader.getTextures()[WorldTile.Tile.Selection.ordinal()], drawX, drawY, null);
             }
         }
+
+        chunks.get(0).updateChunk();
+        chunks.get(1).updateChunk();
+        chunks.get(8).updateChunk();
+
+        bufferedGraphics.drawImage(chunks.get(0).chunkImage, 300, 300, null);
+        bufferedGraphics.drawImage(chunks.get(1).chunkImage, 300 - tileSize * 2, 300 + tileSize, null);
+        bufferedGraphics.drawImage(chunks.get(8).chunkImage, 300 + tileSize * 2, 300 + tileSize, null);
 
         inventoryGraphics.render(bufferedGraphics);
         gameData.camera.setDirty(false);

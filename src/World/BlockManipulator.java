@@ -56,7 +56,7 @@ public class BlockManipulator {
         if (targetBlock != null && targetBlock.isEmpty() && checkBoundary(targetBlock.getGridX(), targetBlock.getGridY())) {
             world.setBlockOnGrid(targetBlock.getGridX(), targetBlock.getGridY(), targetBlock.getGridZ(), blockType);
             gameData.inventory.placeItem();
-        } else if (block.isEmpty() && checkBoundary(block.getGridX(), block.getGridY()) && (emptyBlocks[0].isEmpty() && emptyBlocks[1].isEmpty())) {
+        } else if (block != null && block.isEmpty() && checkBoundary(block.getGridX(), block.getGridY()) && (emptyBlocks[0] != null && emptyBlocks[0].isEmpty() || emptyBlocks[1] != null && emptyBlocks[1].isEmpty())) {
             block.setBlockType(blockType);
             gameData.inventory.placeItem();
         }
