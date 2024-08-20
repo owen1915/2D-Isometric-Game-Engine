@@ -95,6 +95,15 @@ public class GameGraphics {
             }
         }
 
+        chunks.get(0).updateChunk();
+        chunks.get(1).updateChunk();
+        chunks.get(8).updateChunk();
+
+        bufferedGraphics.drawImage(chunks.get(0).chunkImage, cameraXOffset - chunks.get(0).chunkImage.getWidth()/2 + tileSize/2, cameraYOffset - tileSize, null);
+        bufferedGraphics.drawImage(chunks.get(1).chunkImage, cameraXOffset - chunks.get(1).chunkImage.getWidth()/2 + tileSize/2 - tileSize * 2, cameraYOffset - tileSize + tileSize, null);
+        bufferedGraphics.drawImage(chunks.get(8).chunkImage, cameraXOffset - chunks.get(8).chunkImage.getWidth()/2 + tileSize/2 + tileSize * 2, cameraYOffset - tileSize + tileSize, null);
+
+
         //selection block
         int[] mouseWorldCor = gameData.gamePanel.getMouseMotionListener().getMouseWorldCords();
         selectionBlock = gameData.blockManipulator.getBlock(mouseWorldCor[0], mouseWorldCor[1], false);
@@ -114,14 +123,6 @@ public class GameGraphics {
                 bufferedGraphics.drawImage(imageLoader.getTextures()[WorldTile.Tile.Selection.ordinal()], drawX, drawY, null);
             }
         }
-
-        chunks.get(0).updateChunk();
-        chunks.get(1).updateChunk();
-        chunks.get(8).updateChunk();
-
-        bufferedGraphics.drawImage(chunks.get(0).chunkImage, 300, 300, null);
-        bufferedGraphics.drawImage(chunks.get(1).chunkImage, 300 - tileSize * 2, 300 + tileSize, null);
-        bufferedGraphics.drawImage(chunks.get(8).chunkImage, 300 + tileSize * 2, 300 + tileSize, null);
 
         inventoryGraphics.render(bufferedGraphics);
         gameData.camera.setDirty(false);
