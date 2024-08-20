@@ -95,15 +95,6 @@ public class GameGraphics {
             }
         }
 
-        chunks.get(0).updateChunk();
-        chunks.get(1).updateChunk();
-        chunks.get(8).updateChunk();
-
-        bufferedGraphics.drawImage(chunks.get(0).chunkImage, cameraXOffset - chunks.get(0).chunkImage.getWidth()/2 + tileSize/2, cameraYOffset - tileSize, null);
-        bufferedGraphics.drawImage(chunks.get(1).chunkImage, cameraXOffset - chunks.get(1).chunkImage.getWidth()/2 + tileSize/2 - tileSize * 2, cameraYOffset - tileSize + tileSize, null);
-        bufferedGraphics.drawImage(chunks.get(8).chunkImage, cameraXOffset - chunks.get(8).chunkImage.getWidth()/2 + tileSize/2 + tileSize * 2, cameraYOffset - tileSize + tileSize, null);
-
-
         //selection block
         int[] mouseWorldCor = gameData.gamePanel.getMouseMotionListener().getMouseWorldCords();
         selectionBlock = gameData.blockManipulator.getBlock(mouseWorldCor[0], mouseWorldCor[1], false);
