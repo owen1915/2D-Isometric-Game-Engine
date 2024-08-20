@@ -4,23 +4,23 @@ import MainConfig.GameData;
 
 public class IsoCordTool {
 
-    private GameData gameData;
     private int width;
     private int height;
     private double[] xVector;
     private double[] yVector;
+    private int tilesize;
 
-    public IsoCordTool(GameData gameData) {
-        this.gameData = gameData;
-        width = gameData.tileSize;
-        height = gameData.tileSize;
+    public IsoCordTool(int scale) {
+        tilesize = 32 + (32 * scale);
+        width = tilesize;
+        height = tilesize;
         xVector = new double[]{0.5 * width, 0.25 * height};
         yVector = new double[]{-0.5 * width, 0.25 * height};
     }
 
     public void updateIso() {
-        width = gameData.tileSize;
-        height = gameData.tileSize;
+        width = tilesize;
+        height = tilesize;
         xVector = new double[]{0.5 * width, 0.25 * height};
         yVector = new double[]{-0.5 * width, 0.25 * height};
     }
@@ -70,8 +70,8 @@ public class IsoCordTool {
     public int[] screenToIso(int xCor, int yCor){
         int[] cordArray = new int[2];
 
-        float isoX = (float) (xCor + 2 * yCor) / (gameData.tileSize);
-        float isoY = (float) (2 * yCor - xCor) / (gameData.tileSize);
+        float isoX = (float) (xCor + 2 * yCor) / (tilesize);
+        float isoY = (float) (2 * yCor - xCor) / (tilesize);
 
         if (isoX < 0){
             isoX--;
@@ -87,8 +87,8 @@ public class IsoCordTool {
     }
 
     public int[] isometricToGrid(int isoX, int isoY) {
-        int gridX =  isoX / gameData.tileSize;
-        int gridY =  isoY / gameData.tileSize;
+        int gridX =  isoX / tilesize;
+        int gridY =  isoY / tilesize;
         return new int[] {gridX, gridY};
     }
 }

@@ -18,7 +18,7 @@ public class Camera {
         yOffset = gameData.screenHeight/2 - (gameData.tileSize / 2 * gameData.worldSize/2);
     }
 
-    float scale = 1;
+    public int scale = 1;
 
     public int getyOffset() {
         return yOffset;
@@ -57,21 +57,30 @@ public class Camera {
     }
 
     public void zoomIn() {
-        if (!(gameData.tileSize + zoomAmnt > gameData.maxTileSize)) {
+        /*if (!(gameData.tileSize + zoomAmnt > gameData.maxTileSize)) {
             gameData.tileSize += zoomAmnt;
             gameData.imageLoader.createTextures();
             gameData.isoCordTool.updateIso();
+            gameData.world.updateChunkImages();
+        }*/
+        if (scale < 2) {
+            scale++;
+            gameData.tileSize += 64/2;
         }
-        dirty = true;
     }
 
     public void zoomOut() {
-        if (!(gameData.tileSize - zoomAmnt < gameData.minTileSize)) {
+        /*if (!(gameData.tileSize - zoomAmnt < gameData.minTileSize)) {
             gameData.tileSize -= zoomAmnt;
             gameData.imageLoader.createTextures();
             gameData.isoCordTool.updateIso();
+            gameData.world.updateChunkImages();
+        }*/
+        if (scale > 0) {
+            scale--;
+            gameData.tileSize -= 64/2;
         }
-        dirty = true;
+        System.out.println(scale);
     }
 
     public boolean isDirty() {

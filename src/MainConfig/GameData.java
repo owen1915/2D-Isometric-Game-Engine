@@ -38,7 +38,7 @@ public class GameData {
 
     // default tile screenHeight and screenWidth
     public int tileSize = 64;
-    public IsoCordTool isoCordTool = new IsoCordTool(this);
+    //public IsoCordTool isoCordTool = new IsoCordTool(this);
     public Camera camera = new Camera(this);
 
     public final int maxTileSize = 512;

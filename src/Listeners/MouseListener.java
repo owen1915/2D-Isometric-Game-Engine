@@ -7,6 +7,7 @@ import World.World;
 import World.WorldTile;
 import com.sun.source.tree.UsesTree;
 
+import World.Chunk;
 import java.awt.event.MouseEvent;
 
 
@@ -21,8 +22,9 @@ public class MouseListener implements java.awt.event.MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (gameData.debug) {
-            int gridX = gameData.isoCordTool.getXFromIso(e.getX() - gameData.camera.getxOffset(), e.getY() - gameData.camera.getyOffset());
-            int gridY = gameData.isoCordTool.getYFromIso(e.getX() - gameData.camera.getxOffset(), e.getY() - gameData.camera.getyOffset());
+            IsoCordTool isoCordTool = new IsoCordTool(gameData.camera.scale);
+            int gridX = isoCordTool.getXFromIso(e.getX() - gameData.camera.getxOffset(), e.getY() - gameData.camera.getyOffset());
+            int gridY = isoCordTool.getYFromIso(e.getX() - gameData.camera.getxOffset(), e.getY() - gameData.camera.getyOffset());
 
             System.out.println("gridx : " + gridX);
             System.out.println("gridy : " + gridY);
@@ -43,6 +45,9 @@ public class MouseListener implements java.awt.event.MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        for (Chunk chunk : gameData.world.getChunks()) {
+            chunk.updateChunk();
+        }
     }
 
     @Override

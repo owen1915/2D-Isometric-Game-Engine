@@ -1,5 +1,6 @@
 package World;
 
+import Graphics.IsoCordTool;
 import MainConfig.GameData;
 
 import java.awt.event.MouseEvent;
@@ -14,8 +15,9 @@ public class BlockManipulator {
     }
 
     public Block getBlock(int mouseX, int mouseY, boolean remove) {
-        int gridX = gameData.isoCordTool.getXFromIso(mouseX - gameData.camera.getxOffset(), mouseY - gameData.camera.getyOffset());
-        int gridY = gameData.isoCordTool.getYFromIso(mouseX - gameData.camera.getxOffset(), mouseY - gameData.camera.getyOffset());
+        IsoCordTool isoCordTool = new IsoCordTool(gameData.camera.scale);
+        int gridX = isoCordTool.getXFromIso(mouseX - gameData.camera.getxOffset(), mouseY - gameData.camera.getyOffset());
+        int gridY = isoCordTool.getYFromIso(mouseX - gameData.camera.getxOffset(), mouseY - gameData.camera.getyOffset());
 
         World world = gameData.world;
         Block block = gameData.world.findBlockByRayCasting(gridX, gridY);
@@ -47,8 +49,9 @@ public class BlockManipulator {
         }
         WorldTile.Tile blockType = gameData.inventory.getInventory()[gameData.selectedSlot].getTileType();
 
-        int gridX = gameData.isoCordTool.getXFromIso(mouseX - gameData.camera.getxOffset(), mouseY - gameData.camera.getyOffset());
-        int gridY = gameData.isoCordTool.getYFromIso(mouseX - gameData.camera.getxOffset(), mouseY - gameData.camera.getyOffset());
+        IsoCordTool isoCordTool = new IsoCordTool(gameData.camera.scale);
+        int gridX = isoCordTool.getXFromIso(mouseX - gameData.camera.getxOffset(), mouseY - gameData.camera.getyOffset());
+        int gridY = isoCordTool.getYFromIso(mouseX - gameData.camera.getxOffset(), mouseY - gameData.camera.getyOffset());
         Block block = gameData.world.findBlockByRayCasting(gridX, gridY);
 
         Block targetBlock = getBlock(mouseX, mouseY, false);

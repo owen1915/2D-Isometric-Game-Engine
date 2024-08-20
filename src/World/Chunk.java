@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 public class Chunk {
 
     public Block[][][] chunk;
-    public BufferedImage chunkImage;
+    public BufferedImage[] chunkImage;
 
     private int startIndexX, startIndexY;
     private GameData gameData;
@@ -20,8 +20,8 @@ public class Chunk {
         this.startIndexY = startY;
         this.gameData = gameData;
         this.tileSize = gameData.tileSize;
+        chunkImage = new BufferedImage[3];
         createChunk();
-        createImage();
     }
 
     public void updateChunk() {
@@ -42,15 +42,18 @@ public class Chunk {
                 x++;
             }
         }
-        createImage();
+        for (int i = 0; i < 3; i++) {
+            chunkImage[i] = createImage(i);
+        }
     }
 
-    private void createImage() {
-        tileSize = gameData.tileSize;
-        chunkImage = new BufferedImage(gameData.chunkSize * tileSize, gameData.chunkSize * tileSize/2 + (tileSize/2 * 3), BufferedImage.TYPE_INT_ARGB);
+    public BufferedImage createImage(int scale) {
+        int tileSize = 64/2 + ((64/2) * scale);
+        System.out.println(tileSize);
+        BufferedImage chunkImage = new BufferedImage(gameData.chunkSize * tileSize, gameData.chunkSize * tileSize/2 + (tileSize/2 * 3), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = chunkImage.createGraphics();
-        Image[] textures = gameData.imageLoader.getTextures();
-        IsoCordTool isoCordTool = gameData.isoCordTool;
+        Image[] textures = gameData.imageLoader.getScaledTextures(scale);
+        IsoCordTool isoCordTool = new IsoCordTool(scale);
         int width = (gameData.chunkSize * tileSize)/2 - tileSize/2;
         for (int z = 0; z < 3; z++) {
             for (int x = 0; x < gameData.chunkSize; x++) {
@@ -64,5 +67,6 @@ public class Chunk {
                 }
             }
         }
+        return chunkImage;
     }
 }

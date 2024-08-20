@@ -4,6 +4,7 @@ package World;
 import MainConfig.GameData;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 
 public class World {
@@ -21,6 +22,7 @@ public class World {
     private Block[][][] worldTiles = new Block[3][][];
 
     private GameData gameData;
+    private ArrayList<Chunk> chunks;
 
     public World(int worldSize, GameData gameData){
         this.gameData = gameData;
@@ -57,6 +59,18 @@ public class World {
         worldTiles[0] = bottomLayer;
         worldTiles[1] = middleLayer;
         worldTiles[2] = topLayer;
+    }
+
+    public void createChunks() {
+        chunks = new ArrayList<Chunk>();
+
+        for (int x = 0; x < gameData.worldSize; x += gameData.chunkSize) {
+            for (int y = 0; y < gameData.worldSize; y += gameData.chunkSize) {
+                chunks.add(new Chunk(gameData, x, y));
+            }
+        }
+
+        System.out.println("AMNT OF CHUNKS: " + chunks.size());
     }
 
     public Block findBlockByRayCasting(int gridX, int gridY) {
@@ -125,6 +139,10 @@ public class World {
         }
 
         return rotated;
+    }
+
+    public ArrayList<Chunk> getChunks() {
+        return chunks;
     }
 
     public int getWorldXSize() {

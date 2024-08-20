@@ -77,6 +77,24 @@ public class ImageLoader {
         textures[WorldTile.Tile.Transparent.ordinal()] = sprites[21].getScaledInstance(gameData.tileSize, gameData.tileSize, Image.SCALE_SMOOTH);
     }
 
+    public Image[] getScaledTextures(int scale) {
+        Image[] textures = new Image[WorldTile.Tile.values().length];
+        int tileSize = 64/2 + (scale * (64/2));
+        textures[WorldTile.Tile.Grass.ordinal()] = sprites[0].getScaledInstance(tileSize, tileSize, Image.SCALE_SMOOTH);
+        textures[WorldTile.Tile.Wall.ordinal()] = sprites[1].getScaledInstance(tileSize, tileSize, Image.SCALE_SMOOTH);
+        textures[WorldTile.Tile.FurnaceOff.ordinal()] = sprites[2].getScaledInstance(tileSize, tileSize, Image.SCALE_SMOOTH);
+        textures[WorldTile.Tile.FurnaceOn.ordinal()] = sprites[3].getScaledInstance(tileSize, tileSize, Image.SCALE_SMOOTH);
+        textures[WorldTile.Tile.Dirt.ordinal()] = sprites[11].getScaledInstance(tileSize, tileSize, Image.SCALE_SMOOTH);
+        textures[WorldTile.Tile.Selection.ordinal()] = sprites[9].getScaledInstance(tileSize, tileSize, Image.SCALE_SMOOTH);
+        textures[WorldTile.Tile.turret.ordinal()] = sprites[10].getScaledInstance(tileSize, tileSize, Image.SCALE_SMOOTH);
+        textures[WorldTile.Tile.RedSelection.ordinal()] = sprites[20].getScaledInstance(tileSize, tileSize, Image.SCALE_SMOOTH);
+        textures[WorldTile.Tile.MaskingTile.ordinal()] = sprites[26].getScaledInstance(tileSize, tileSize, Image.SCALE_SMOOTH);
+        textures[WorldTile.Tile.Belt.ordinal()] = sprites[12].getScaledInstance(tileSize, tileSize, Image.SCALE_SMOOTH);
+        textures[WorldTile.Tile.Transparent.ordinal()] = sprites[21].getScaledInstance(tileSize, tileSize, Image.SCALE_SMOOTH);
+
+        return textures;
+    }
+
     public Image[] getTextures() {
         return textures;
     }

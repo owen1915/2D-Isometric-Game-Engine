@@ -3,12 +3,14 @@ package World;
 import MainConfig.GameData;
 
 import java.awt.*;
+import Graphics.IsoCordTool;
 
 public class Block {
     private int gridX, gridY, gridZ; // Grid coordinates
     private WorldTile.Tile block;
     private GameData gameData;
     private boolean dirty;
+    private IsoCordTool isoCordTool;
 
     public Block(GameData gameData, int gridX, int gridY, int gridZ, WorldTile.Tile block, boolean dirty) {
         this.gridX = gridX;
@@ -17,6 +19,7 @@ public class Block {
         this.gridZ = gridZ;
         this.block = block;
         this.gameData = gameData;
+        isoCordTool = new IsoCordTool(1);
     }
 
     public void setDirty(boolean dirty) {
@@ -36,9 +39,9 @@ public class Block {
     }
 
     private Polygon getLeftPolygon() {
-
-        int screenX = gameData.isoCordTool.getXIso(gridX, gridY) + gameData.camera.getxOffset();
-        int screenY = gameData.isoCordTool.getYIso(gridX, gridY) + gameData.camera.getyOffset();
+        isoCordTool = new IsoCordTool(gameData.camera.scale);
+        int screenX = isoCordTool.getXIso(gridX, gridY) + gameData.camera.getxOffset();
+        int screenY = isoCordTool.getYIso(gridX, gridY) + gameData.camera.getyOffset();
         int zOffset = gridZ * gameData.tileSize/2;
 
         int[] xPoints = {screenX, screenX + gameData.tileSize/2, screenX + gameData.tileSize/2, screenX};
@@ -48,8 +51,9 @@ public class Block {
     }
 
     private Polygon getTopPolygon() {
-        int screenX = gameData.isoCordTool.getXIso(gridX, gridY) + gameData.camera.getxOffset();
-        int screenY = gameData.isoCordTool.getYIso(gridX, gridY) + gameData.camera.getyOffset();
+        isoCordTool = new IsoCordTool(gameData.camera.scale);
+        int screenX = isoCordTool.getXIso(gridX, gridY) + gameData.camera.getxOffset();
+        int screenY = isoCordTool.getYIso(gridX, gridY) + gameData.camera.getyOffset();
         int zOffset = gridZ * gameData.tileSize/2;
 
         int[] xPoints = new int[7];
@@ -73,8 +77,9 @@ public class Block {
     }
 
     private Polygon getRightPolygon() {
-        int screenX = gameData.isoCordTool.getXIso(gridX, gridY) + gameData.camera.getxOffset() + gameData.tileSize/2;
-        int screenY = gameData.isoCordTool.getYIso(gridX, gridY) + gameData.camera.getyOffset();
+        isoCordTool = new IsoCordTool(gameData.camera.scale);
+        int screenX = isoCordTool.getXIso(gridX, gridY) + gameData.camera.getxOffset() + gameData.tileSize/2;
+        int screenY = isoCordTool.getYIso(gridX, gridY) + gameData.camera.getyOffset();
         int zOffset = gridZ * gameData.tileSize/2;
 
         int[] xPoints = {screenX, screenX + gameData.tileSize/2, screenX + gameData.tileSize/2, screenX};
@@ -89,14 +94,6 @@ public class Block {
 
     public WorldTile.Tile getBlockType() {
         return block;
-    }
-
-    public int getScreenX() {
-        return gameData.isoCordTool.getXIso(gridX, gridY);
-    }
-
-    public int getScreenY() {
-        return gameData.isoCordTool.getYIso(gridX, gridY) - (gridZ * gameData.tileSize/2);
     }
 
     public int getGridZ() { return gridZ; }
