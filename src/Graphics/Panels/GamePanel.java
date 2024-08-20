@@ -123,12 +123,8 @@ public class GamePanel extends JPanel {
                     }
 
                     average /= renderTime.size();
-                    System.out.println("-------------------------------------------");
-                    System.out.println("Min Render Time " + min + "ms\nMax Render Time " + max + "ms");
-                    System.out.println("Average render time " + average + "ms");
-                    if (gameGraphics.getCount() != 0) {
-                        System.out.println("Iterated through Graphic Loop " + gameGraphics.getCount() + " times");
-                    }
+                    //System.out.println("Min Render Time " + min + "ms\nMax Render Time " + max + "ms");
+                    System.out.println("Render time " + average + "ms");
                     System.out.println("-------------------------------------------");
                     renderTime.clear();
                     gameData.frameCounter = 0;
@@ -142,10 +138,6 @@ public class GamePanel extends JPanel {
 
     public GameData getGameData() {
         return gameData;
-    }
-
-    public MouseListener getMouseListener(){
-        return this.mouseListener;
     }
 
     public MouseMotionListener getMouseMotionListener(){

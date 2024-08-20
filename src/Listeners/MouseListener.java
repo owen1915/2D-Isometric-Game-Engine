@@ -26,7 +26,9 @@ public class MouseListener implements java.awt.event.MouseListener {
             int gridX = isoCordTool.getXFromIso(e.getX() - gameData.camera.getxOffset(), e.getY() - gameData.camera.getyOffset());
             int gridY = isoCordTool.getYFromIso(e.getX() - gameData.camera.getxOffset(), e.getY() - gameData.camera.getyOffset());
 
-            System.out.println("gridx : " + gridX);
+            int chunkX = gridX / gameData.chunkSize;
+
+            System.out.println("chunkx : " + chunkX);
             System.out.println("gridy : " + gridY);
         }
 

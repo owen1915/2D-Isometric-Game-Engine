@@ -29,16 +29,15 @@ public class GameData {
     public boolean fullscreen = false;
 
     //chunk size
-    public int chunkSize = 4;
+    public int chunkSize = 8;
 
     // random
     public Random random = new Random();
 
-    public int worldSize = 32;
+    public int worldSize = 64;
 
     // default tile screenHeight and screenWidth
     public int tileSize = 64;
-    //public IsoCordTool isoCordTool = new IsoCordTool(this);
     public Camera camera = new Camera(this);
 
     public final int maxTileSize = 512;
@@ -64,7 +63,7 @@ public class GameData {
      * Game state indicates what we are drawing.
      * When GAMESTATE is 1 it will render the Menu, when GAMESTATE is 2 it can render the game, etc...
      */
-    public int GAMESTATE = 1;
+    public int GAMESTATE = 2;
 
 
     // game panel instance

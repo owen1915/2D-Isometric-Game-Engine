@@ -13,13 +13,11 @@ public class Chunk {
 
     private int startIndexX, startIndexY;
     private GameData gameData;
-    private int tileSize;
 
     public Chunk(GameData gameData, int startX, int startY) {
         this.startIndexX = startX;
         this.startIndexY = startY;
         this.gameData = gameData;
-        this.tileSize = gameData.tileSize;
         chunkImage = new BufferedImage[3];
         createChunk();
     }
@@ -49,7 +47,6 @@ public class Chunk {
 
     public BufferedImage createImage(int scale) {
         int tileSize = 64/2 + ((64/2) * scale);
-        System.out.println(tileSize);
         BufferedImage chunkImage = new BufferedImage(gameData.chunkSize * tileSize, gameData.chunkSize * tileSize/2 + (tileSize/2 * 3), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = chunkImage.createGraphics();
         Image[] textures = gameData.imageLoader.getScaledTextures(scale);

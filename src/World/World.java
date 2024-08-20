@@ -53,9 +53,6 @@ public class World {
             }
         }
 
-        middleLayer[0][0] = new Block(gameData, 3, 3, 1, WorldTile.Tile.Dirt, true);
-        topLayer[0][0] = new Block(gameData, 3, 3, 1, WorldTile.Tile.Dirt, true);
-
         worldTiles[0] = bottomLayer;
         worldTiles[1] = middleLayer;
         worldTiles[2] = topLayer;
