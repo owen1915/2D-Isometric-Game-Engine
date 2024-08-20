@@ -22,7 +22,7 @@ public class World {
     private Block[][][] worldTiles = new Block[3][][];
 
     private GameData gameData;
-    private ArrayList<Chunk> chunks;
+    private Chunk[][] chunks;
 
     public World(int worldSize, GameData gameData){
         this.gameData = gameData;
@@ -59,15 +59,19 @@ public class World {
     }
 
     public void createChunks() {
-        chunks = new ArrayList<Chunk>();
+        int amntOfChunks = gameData.worldSize/gameData.chunkSize;
+        chunks = new Chunk[amntOfChunks][amntOfChunks];
 
+        int row = 0;
+        int col = 0;
         for (int x = 0; x < gameData.worldSize; x += gameData.chunkSize) {
             for (int y = 0; y < gameData.worldSize; y += gameData.chunkSize) {
-                chunks.add(new Chunk(gameData, x, y));
+                chunks[row][col] = new Chunk(gameData, x, y);
+                row++;
             }
+            col++;
+            row = 0;
         }
-
-        System.out.println("AMNT OF CHUNKS: " + chunks.size());
     }
 
     public Block findBlockByRayCasting(int gridX, int gridY) {
@@ -138,7 +142,7 @@ public class World {
         return rotated;
     }
 
-    public ArrayList<Chunk> getChunks() {
+    public Chunk[][] getChunks() {
         return chunks;
     }
 

@@ -62,28 +62,25 @@ public class GameGraphics {
         }
 
         // rendering chunks
-        ArrayList<Chunk> chunks = gameData.world.getChunks();
-        int index = 0;
+        Chunk[][] chunks = gameData.world.getChunks();
         int chunksize = gameData.chunkSize;
         int scale = gameData.camera.scale;
         int tilesPerRow = gameData.worldSize / chunksize;
-        for (Chunk chunk : chunks) {
-            int row = index / tilesPerRow;
-            int col = index % tilesPerRow;
+        for (int i = 0; i < tilesPerRow; i++) {
+            for (int j = 0; j < tilesPerRow; j++) {
+                BufferedImage image = chunks[i][j].chunkImage[scale];
 
-            BufferedImage image = chunk.chunkImage[scale];
+                int x = cameraXOffset - image.getWidth()/2 + tileSize/2;
+                int y = cameraYOffset - tileSize;
 
-            int x = cameraXOffset - image.getWidth()/2 + tileSize/2;
-            int y = cameraYOffset - tileSize;
+                int chunkHalfWidth = image.getWidth()/2;
 
-            int chunkHalfWidth = image.getWidth()/2;
+                int drawX = x - ((chunkHalfWidth * i)) + (chunkHalfWidth * j);
+                int drawY = y + ((chunksize * tileSize)/(chunksize/2) * i) + (chunksize * tileSize)/(chunksize/2) * j;
 
-            int drawX = x - ((chunkHalfWidth * col)) + (chunkHalfWidth * row);
-            int drawY = y + ((chunksize * tileSize)/(chunksize/2) * col) + (chunksize * tileSize)/(chunksize/2) * row;
-
-            bufferedGraphics.drawImage(chunk.chunkImage[scale], drawX, drawY, null);
-            index++;
-            count++;
+                bufferedGraphics.drawImage(image, drawX, drawY, null);
+                count++;
+            }
         }
 
         //selection block
