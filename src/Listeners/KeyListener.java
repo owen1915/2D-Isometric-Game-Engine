@@ -15,7 +15,6 @@ public class KeyListener implements java.awt.event.KeyListener {
 
     public KeyListener(GameData gameData) {
         this.gameData = gameData;
-        this.inventoryGraphics = gameData.inventory.getInventoryGraphics();
     }
 
     @Override
@@ -25,6 +24,7 @@ public class KeyListener implements java.awt.event.KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        this.inventoryGraphics = gameData.inventory.getInventoryGraphics();
         switch (e.getKeyCode()) {
             case KeyEvent.VK_W:
                 upPressed = true;

@@ -27,6 +27,7 @@ public class MainMenu {
         this.gameData = gameData;
 
         Runnable newGame = () -> {
+            gameData.newGame();
             gameData.GAMESTATE = 2;
         };
 

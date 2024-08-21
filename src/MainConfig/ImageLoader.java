@@ -94,6 +94,26 @@ public class ImageLoader {
         return textures;
     }
 
+    public BufferedImage toBufferedImage(Image img) {
+        if (img instanceof BufferedImage) {
+            return (BufferedImage) img;
+        }
+
+        // Create a buffered image with transparency
+        BufferedImage bufferedImage = new BufferedImage(
+                img.getWidth(null),
+                img.getHeight(null),
+                BufferedImage.TYPE_INT_ARGB
+        );
+
+        // Draw the image on to the buffered image
+        Graphics2D bGr = bufferedImage.createGraphics();
+        bGr.drawImage(img, 0, 0, null);
+        bGr.dispose();
+
+        return bufferedImage;
+    }
+
     public Image[] getTextures() {
         return textures;
     }

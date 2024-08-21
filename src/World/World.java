@@ -46,10 +46,10 @@ public class World {
                             bottomLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Wall, true);
                             break;
                         case 1:
-                            middleLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Empty, true);
+                            middleLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Wall, true);
                             break;
                         case 2:
-                            topLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Empty, true);
+                            topLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Dirt, true);
                             break;
                     }
                 }
@@ -84,7 +84,6 @@ public class World {
 
         if (chunkX > -1 && chunkX < amntOfChunks && chunkY > -1 && chunkY < amntOfChunks) {
             gameData.world.getChunks()[chunkY][chunkX].updateChunk();
-            System.out.println("UPDATED");
         }
     }
 

@@ -13,6 +13,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 import Graphics.IsoCordTool;
+import World.World;
 
 public class GamePanel extends JPanel {
 
@@ -45,7 +46,6 @@ public class GamePanel extends JPanel {
         this.mouseWheelListener = new MouseWheelListener(gameData);
 
         mainMenu = new MainMenu(gameData);
-        gameGraphics = new GameGraphics(gameData);
     }
 
     private void addListeners() {
@@ -125,9 +125,11 @@ public class GamePanel extends JPanel {
                     average /= renderTime.size();
                     //System.out.println("Min Render Time " + min + "ms\nMax Render Time " + max + "ms");
                     System.out.println("Render time " + average + "ms");
-                    int count = gameGraphics.getCount();
-                    if (count != 0) {
-                        System.out.println("Rendered " + count + " chunks");
+                    if (gameGraphics != null) {
+                        int count = gameGraphics.getCount();
+                        if (count != 0) {
+                            System.out.println("Rendered " + count + " chunks");
+                        }
                     }
                     System.out.println("-------------------------------------------");
                     renderTime.clear();
@@ -146,5 +148,9 @@ public class GamePanel extends JPanel {
 
     public MouseMotionListener getMouseMotionListener(){
         return this.mouseMotionListener;
+    }
+
+    public void setGameGraphics(GameGraphics gameGraphics) {
+        this.gameGraphics = gameGraphics;
     }
 }

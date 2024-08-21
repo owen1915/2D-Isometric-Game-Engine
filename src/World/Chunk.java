@@ -50,7 +50,6 @@ public class Chunk {
         int tileSize = zoomAmnt + (zoomAmnt * scale);
         BufferedImage chunkImage = new BufferedImage(gameData.chunkSize * tileSize, gameData.chunkSize * tileSize/2 + (tileSize/2 * 3), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = chunkImage.createGraphics();
-        Image[] textures = gameData.imageLoader.getScaledTextures(scale);
         IsoCordTool isoCordTool = new IsoCordTool(scale, zoomAmnt);
         int width = (gameData.chunkSize * tileSize)/2 - tileSize/2;
         for (int z = 0; z < 3; z++) {
@@ -58,9 +57,39 @@ public class Chunk {
                 for (int y = 0; y < gameData.chunkSize; y++) {
                     Block block = chunk[z][x][y];
                     if (block != null && !block.isEmpty()) {
+                        boolean drawTop = false;
+                        boolean drawRight = false;
+                        boolean drawLeft = false;
+                        if (z != 2) {
+                            if (chunk[z + 1][x][y].isEmpty()) {
+                                drawTop = true;
+                            }
+                        } else {
+                            drawTop = true;
+                            drawRight = true;
+                            drawLeft = true;
+                        }
+
+                        if (y + 1 > gameData.chunkSize - 1 || chunk[z][x][y + 1].isEmpty()) {
+                            drawLeft = true;
+                        }
+
+                        if (x + 1 > gameData.chunkSize - 1 || chunk[z][x + 1][y].isEmpty()) {
+                            drawRight = true;
+                        }
+
                         int drawX = isoCordTool.getXIso(x, y) + width;
                         int drawY = isoCordTool.getYIso(x, y) - (z * tileSize/2) + tileSize;
-                        g.drawImage(textures[block.getBlockType().ordinal()], drawX, drawY, null);
+
+                        if (drawTop) {
+                            g.drawImage(block.getTop(scale), drawX, drawY, null);
+                        }
+                        if (drawLeft) {
+                            g.drawImage(block.getLeftSide(scale), drawX, drawY, null);
+                        }
+                        if (drawRight) {
+                            g.drawImage(block.getRightSide(scale), drawX, drawY, null);
+                        }
                     }
                 }
             }
