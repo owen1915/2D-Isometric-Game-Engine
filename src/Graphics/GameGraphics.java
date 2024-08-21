@@ -64,9 +64,20 @@ public class GameGraphics {
         int tileSize = gameData.tileSize;
         int chunksize = gameData.chunkSize;
         int scale = gameData.camera.scale;
-        int tilesPerRow = gameData.worldSize / chunksize;
-        for (int i = 0; i < tilesPerRow; i++) {
-            for (int j = 0; j < tilesPerRow; j++) {
+        int totalChunks = gameData.worldSize / chunksize;
+
+        int minCol = topLeftCorner/chunksize;
+        int maxCol = bottomRightCorner/chunksize;
+        int minRow = topRightCorner/chunksize;
+        int maxRow = bottomLeftCorner/chunksize;
+
+        minCol = Math.max(minCol, 0);
+        minRow = Math.max(minRow, 0);
+        maxCol = Math.min(maxCol + 1, totalChunks);
+        maxRow = Math.min(maxRow + 1, totalChunks);
+
+        for (int i = minRow; i < maxRow; i++) {
+            for (int j = minCol; j < maxCol; j++) {
                 BufferedImage image = chunks[i][j].chunkImage[scale];
 
                 int x = cameraXOffset - image.getWidth()/2 + tileSize/2;

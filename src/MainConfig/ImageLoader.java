@@ -91,7 +91,6 @@ public class ImageLoader {
         textures[WorldTile.Tile.MaskingTile.ordinal()] = sprites[26].getScaledInstance(tileSize, tileSize, Image.SCALE_SMOOTH);
         textures[WorldTile.Tile.Belt.ordinal()] = sprites[12].getScaledInstance(tileSize, tileSize, Image.SCALE_SMOOTH);
         textures[WorldTile.Tile.Transparent.ordinal()] = sprites[21].getScaledInstance(tileSize, tileSize, Image.SCALE_SMOOTH);
-
         return textures;
     }
 
