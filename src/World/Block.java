@@ -19,7 +19,7 @@ public class Block {
         this.gridZ = gridZ;
         this.block = block;
         this.gameData = gameData;
-        isoCordTool = new IsoCordTool(1);
+        isoCordTool = new IsoCordTool(gameData);
     }
 
     public void setDirty(boolean dirty) {
@@ -39,7 +39,7 @@ public class Block {
     }
 
     private Polygon getLeftPolygon() {
-        isoCordTool = new IsoCordTool(gameData.camera.scale);
+        isoCordTool = new IsoCordTool(gameData);
         int screenX = isoCordTool.getXIso(gridX, gridY) + gameData.camera.getxOffset();
         int screenY = isoCordTool.getYIso(gridX, gridY) + gameData.camera.getyOffset();
         int zOffset = gridZ * gameData.tileSize/2;
@@ -51,7 +51,7 @@ public class Block {
     }
 
     private Polygon getTopPolygon() {
-        isoCordTool = new IsoCordTool(gameData.camera.scale);
+        isoCordTool = new IsoCordTool(gameData);
         int screenX = isoCordTool.getXIso(gridX, gridY) + gameData.camera.getxOffset();
         int screenY = isoCordTool.getYIso(gridX, gridY) + gameData.camera.getyOffset();
         int zOffset = gridZ * gameData.tileSize/2;
@@ -77,7 +77,7 @@ public class Block {
     }
 
     private Polygon getRightPolygon() {
-        isoCordTool = new IsoCordTool(gameData.camera.scale);
+        isoCordTool = new IsoCordTool(gameData);
         int screenX = isoCordTool.getXIso(gridX, gridY) + gameData.camera.getxOffset() + gameData.tileSize/2;
         int screenY = isoCordTool.getYIso(gridX, gridY) + gameData.camera.getyOffset();
         int zOffset = gridZ * gameData.tileSize/2;

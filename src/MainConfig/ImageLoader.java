@@ -79,7 +79,7 @@ public class ImageLoader {
 
     public Image[] getScaledTextures(int scale) {
         Image[] textures = new Image[WorldTile.Tile.values().length];
-        int tileSize = 64/2 + (scale * (64/2));
+        int tileSize = gameData.camera.getZoomAmnt() + (scale * gameData.camera.getZoomAmnt());
         textures[WorldTile.Tile.Grass.ordinal()] = sprites[0].getScaledInstance(tileSize, tileSize, Image.SCALE_SMOOTH);
         textures[WorldTile.Tile.Wall.ordinal()] = sprites[1].getScaledInstance(tileSize, tileSize, Image.SCALE_SMOOTH);
         textures[WorldTile.Tile.FurnaceOff.ordinal()] = sprites[2].getScaledInstance(tileSize, tileSize, Image.SCALE_SMOOTH);

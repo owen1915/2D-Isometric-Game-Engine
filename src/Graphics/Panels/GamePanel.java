@@ -125,6 +125,10 @@ public class GamePanel extends JPanel {
                     average /= renderTime.size();
                     //System.out.println("Min Render Time " + min + "ms\nMax Render Time " + max + "ms");
                     System.out.println("Render time " + average + "ms");
+                    int count = gameGraphics.getCount();
+                    if (count != 0) {
+                        System.out.println("Rendered " + count + " chunks");
+                    }
                     System.out.println("-------------------------------------------");
                     renderTime.clear();
                     gameData.frameCounter = 0;

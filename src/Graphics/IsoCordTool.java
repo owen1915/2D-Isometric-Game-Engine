@@ -10,15 +10,16 @@ public class IsoCordTool {
     private double[] yVector;
     private int tilesize;
 
-    public IsoCordTool(int scale) {
-        tilesize = 32 + (32 * scale);
+    public IsoCordTool(GameData gameData) {
+        tilesize = gameData.camera.getZoomAmnt() + (gameData.camera.getZoomAmnt() * gameData.camera.scale);
         width = tilesize;
         height = tilesize;
         xVector = new double[]{0.5 * width, 0.25 * height};
         yVector = new double[]{-0.5 * width, 0.25 * height};
     }
 
-    public void updateIso() {
+    public IsoCordTool(int scale, int zoomAmnt) {
+        tilesize = zoomAmnt + (zoomAmnt * scale);
         width = tilesize;
         height = tilesize;
         xVector = new double[]{0.5 * width, 0.25 * height};
@@ -65,30 +66,5 @@ public class IsoCordTool {
 
         double y = (isoY * a - isoX * c) / denominator;
         return (int) Math.round(y);
-    }
-
-    public int[] screenToIso(int xCor, int yCor){
-        int[] cordArray = new int[2];
-
-        float isoX = (float) (xCor + 2 * yCor) / (tilesize);
-        float isoY = (float) (2 * yCor - xCor) / (tilesize);
-
-        if (isoX < 0){
-            isoX--;
-        }
-        if (isoY < 0){
-            isoY--;
-        }
-
-        cordArray[0] = (int) isoX;
-        cordArray[1] = (int) isoY;
-
-        return cordArray;
-    }
-
-    public int[] isometricToGrid(int isoX, int isoY) {
-        int gridX =  isoX / tilesize;
-        int gridY =  isoY / tilesize;
-        return new int[] {gridX, gridY};
     }
 }

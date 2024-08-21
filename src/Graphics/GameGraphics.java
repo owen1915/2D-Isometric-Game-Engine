@@ -46,7 +46,7 @@ public class GameGraphics {
 
         int cameraXOffset = gameData.camera.getxOffset();
         int cameraYOffset = gameData.camera.getyOffset();
-        isoCordTool = new IsoCordTool(gameData.camera.scale);
+        isoCordTool = new IsoCordTool(gameData);
 
         // Calculate corners
 
@@ -55,14 +55,13 @@ public class GameGraphics {
         int bottomRightCorner = Math.min(gameData.worldSize, isoCordTool.getXFromIso(-cameraXOffset + gameData.screenWidth, -cameraYOffset + gameData.screenHeight) + 1);
         int bottomLeftCorner = Math.min(gameData.worldSize, isoCordTool.getYFromIso(-cameraXOffset, -cameraYOffset + gameData.screenHeight) + 1);
 
-        int tileSize = gameData.tileSize;
-
         if (gameData.debug) {
             count = 0;
         }
 
         // rendering chunks
         Chunk[][] chunks = gameData.world.getChunks();
+        int tileSize = gameData.tileSize;
         int chunksize = gameData.chunkSize;
         int scale = gameData.camera.scale;
         int tilesPerRow = gameData.worldSize / chunksize;
@@ -74,9 +73,10 @@ public class GameGraphics {
                 int y = cameraYOffset - tileSize;
 
                 int chunkHalfWidth = image.getWidth()/2;
+                int chunkHeight = chunksize * (tileSize/2);
 
                 int drawX = x - ((chunkHalfWidth * i)) + (chunkHalfWidth * j);
-                int drawY = y + ((chunksize * tileSize)/(chunksize/2) * i) + (chunksize * tileSize)/(chunksize/2) * j;
+                int drawY = y + (chunkHeight/2 * i) + (chunkHeight/2 * j);
 
                 bufferedGraphics.drawImage(image, drawX, drawY, null);
                 count++;

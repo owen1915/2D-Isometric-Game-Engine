@@ -8,7 +8,7 @@ public class Camera {
     private int yOffset;
     private int xSpeed = 16;
     private int ySpeed = 16;
-    private int zoomAmnt = 8;
+    private int zoomAmnt = 32;
     private boolean dirty = false;
 
     public Camera(GameData gameData) {
@@ -18,6 +18,7 @@ public class Camera {
         yOffset = gameData.screenHeight/2 - (gameData.tileSize / 2 * gameData.worldSize/2);
     }
 
+    public int maxScale = 3;
     public int scale = 1;
 
     public int getyOffset() {
@@ -38,49 +39,38 @@ public class Camera {
 
     public void ifLeftPressed() {
         xOffset += xSpeed;
-        dirty = true;
     }
 
     public void ifRightPressed() {
         xOffset -= xSpeed;
-        dirty = true;
     }
 
     public void ifUpPressed() {
         yOffset += ySpeed;
-        dirty = true;
     }
 
     public void ifDownPressed() {
         yOffset -= ySpeed;
-        dirty = true;
     }
 
     public void zoomIn() {
-        /*if (!(gameData.tileSize + zoomAmnt > gameData.maxTileSize)) {
-            gameData.tileSize += zoomAmnt;
-            gameData.imageLoader.createTextures();
-            gameData.isoCordTool.updateIso();
-            gameData.world.updateChunkImages();
-        }*/
-        if (scale < 2) {
+        if (scale < maxScale - 1) {
             scale++;
-            gameData.tileSize += 64/2;
+            gameData.tileSize += zoomAmnt;
+            System.out.println(gameData.tileSize);
         }
     }
 
     public void zoomOut() {
-        /*if (!(gameData.tileSize - zoomAmnt < gameData.minTileSize)) {
-            gameData.tileSize -= zoomAmnt;
-            gameData.imageLoader.createTextures();
-            gameData.isoCordTool.updateIso();
-            gameData.world.updateChunkImages();
-        }*/
         if (scale > 0) {
             scale--;
-            gameData.tileSize -= 64/2;
+            gameData.tileSize -= zoomAmnt;
+            System.out.println(gameData.tileSize);
         }
-        System.out.println(scale);
+    }
+
+    public int getZoomAmnt() {
+        return zoomAmnt;
     }
 
     public boolean isDirty() {

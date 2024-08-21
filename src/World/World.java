@@ -4,8 +4,7 @@ package World;
 import MainConfig.GameData;
 
 import java.awt.*;
-import java.util.ArrayList;
-
+import Graphics.IsoCordTool;
 
 public class World {
 
@@ -13,6 +12,9 @@ public class World {
     private int worldXSize;
     private int worldYSize;
     private int defaultDepth;
+
+    //chunks
+    private int amntOfChunks;
 
     private Block[][] bottomLayer;
     private Block[][] topLayer;
@@ -29,7 +31,8 @@ public class World {
         //Create a new array for the storage of the world tiles
         this.worldXSize = worldSize;
         this.worldYSize = worldSize;
-        defaultDepth = 3;
+        this.defaultDepth = 3;
+        this.amntOfChunks = gameData.worldSize/gameData.chunkSize;
 
         bottomLayer = new Block[worldXSize][worldYSize];
         middleLayer = new Block[worldXSize][worldYSize];
@@ -40,7 +43,7 @@ public class World {
                 for (int x = 0; x < worldSize; x++) {
                     switch (z) {
                         case 0:
-                            bottomLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Grass, true);
+                            bottomLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Wall, true);
                             break;
                         case 1:
                             middleLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Empty, true);
@@ -53,13 +56,14 @@ public class World {
             }
         }
 
+        middleLayer[(gameData.worldSize - 1)/2][(gameData.worldSize - 1)/2].setBlockType(WorldTile.Tile.FurnaceOn);
+
         worldTiles[0] = bottomLayer;
         worldTiles[1] = middleLayer;
         worldTiles[2] = topLayer;
     }
 
     public void createChunks() {
-        int amntOfChunks = gameData.worldSize/gameData.chunkSize;
         chunks = new Chunk[amntOfChunks][amntOfChunks];
 
         int row = 0;
@@ -71,6 +75,16 @@ public class World {
             }
             col++;
             row = 0;
+        }
+    }
+
+    public void updateChunk(int x, int y) {
+        int chunkX = x / gameData.chunkSize;
+        int chunkY = y / gameData.chunkSize;
+
+        if (chunkX > -1 && chunkX < amntOfChunks && chunkY > -1 && chunkY < amntOfChunks) {
+            gameData.world.getChunks()[chunkY][chunkX].updateChunk();
+            System.out.println("UPDATED");
         }
     }
 

@@ -18,7 +18,7 @@ public class Chunk {
         this.startIndexX = startX;
         this.startIndexY = startY;
         this.gameData = gameData;
-        chunkImage = new BufferedImage[3];
+        chunkImage = new BufferedImage[gameData.camera.maxScale];
         createChunk();
     }
 
@@ -40,17 +40,18 @@ public class Chunk {
                 x++;
             }
         }
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < chunkImage.length; i++) {
             chunkImage[i] = createImage(i);
         }
     }
 
     public BufferedImage createImage(int scale) {
-        int tileSize = 64/2 + ((64/2) * scale);
+        int zoomAmnt = gameData.camera.getZoomAmnt();
+        int tileSize = zoomAmnt + (zoomAmnt * scale);
         BufferedImage chunkImage = new BufferedImage(gameData.chunkSize * tileSize, gameData.chunkSize * tileSize/2 + (tileSize/2 * 3), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = chunkImage.createGraphics();
         Image[] textures = gameData.imageLoader.getScaledTextures(scale);
-        IsoCordTool isoCordTool = new IsoCordTool(scale);
+        IsoCordTool isoCordTool = new IsoCordTool(scale, zoomAmnt);
         int width = (gameData.chunkSize * tileSize)/2 - tileSize/2;
         for (int z = 0; z < 3; z++) {
             for (int x = 0; x < gameData.chunkSize; x++) {
@@ -64,6 +65,17 @@ public class Chunk {
                 }
             }
         }
+
+        if (gameData.debug) {
+            g.setColor(Color.red);
+            g.setStroke(new BasicStroke(2));
+            g.drawLine(chunkImage.getWidth()/2, tileSize, 0, (gameData.chunkSize * tileSize/2 + (tileSize/2 * 3))/2 + tileSize/4);
+            g.drawLine(0, (gameData.chunkSize * tileSize/2 + (tileSize/2 * 3))/2 + tileSize/4, chunkImage.getWidth()/2, chunkImage.getHeight() - tileSize/2);
+            g.drawLine(chunkImage.getWidth()/2, chunkImage.getHeight() - tileSize/2, chunkImage.getWidth(), (gameData.chunkSize * tileSize/2 + (tileSize/2 * 3))/2 + tileSize/4);
+            g.drawLine(chunkImage.getWidth(), (gameData.chunkSize * tileSize/2 + (tileSize/2 * 3))/2 + tileSize/4, chunkImage.getWidth()/2, tileSize);
+        }
+
+        g.dispose();
         return chunkImage;
     }
 }

@@ -15,7 +15,7 @@ public class BlockManipulator {
     }
 
     public Block getBlock(int mouseX, int mouseY, boolean remove) {
-        IsoCordTool isoCordTool = new IsoCordTool(gameData.camera.scale);
+        IsoCordTool isoCordTool = new IsoCordTool(gameData);
         int gridX = isoCordTool.getXFromIso(mouseX - gameData.camera.getxOffset(), mouseY - gameData.camera.getyOffset());
         int gridY = isoCordTool.getYFromIso(mouseX - gameData.camera.getxOffset(), mouseY - gameData.camera.getyOffset());
 
@@ -49,7 +49,7 @@ public class BlockManipulator {
         }
         WorldTile.Tile blockType = gameData.inventory.getInventory()[gameData.selectedSlot].getTileType();
 
-        IsoCordTool isoCordTool = new IsoCordTool(gameData.camera.scale);
+        IsoCordTool isoCordTool = new IsoCordTool(gameData);
         int gridX = isoCordTool.getXFromIso(mouseX - gameData.camera.getxOffset(), mouseY - gameData.camera.getyOffset());
         int gridY = isoCordTool.getYFromIso(mouseX - gameData.camera.getxOffset(), mouseY - gameData.camera.getyOffset());
         Block block = gameData.world.findBlockByRayCasting(gridX, gridY);
@@ -58,9 +58,11 @@ public class BlockManipulator {
         World world = gameData.world;
         if (targetBlock != null && targetBlock.isEmpty() && checkBoundary(targetBlock.getGridX(), targetBlock.getGridY())) {
             world.setBlockOnGrid(targetBlock.getGridX(), targetBlock.getGridY(), targetBlock.getGridZ(), blockType);
+            world.updateChunk(targetBlock.getGridX(), targetBlock.getGridY());
             gameData.inventory.placeItem();
         } else if (block != null && block.isEmpty() && checkBoundary(block.getGridX(), block.getGridY()) && (emptyBlocks[0] != null && emptyBlocks[0].isEmpty() || emptyBlocks[1] != null && emptyBlocks[1].isEmpty())) {
             block.setBlockType(blockType);
+            world.updateChunk(block.getGridX(), block.getGridY());
             gameData.inventory.placeItem();
         }
     }
@@ -73,6 +75,7 @@ public class BlockManipulator {
             WorldTile.Tile blockType = block.getBlockType();
             if (checkBoundary(block.getGridX(), block.getGridY())) {
                 world.setBlockOnGrid(block.getGridX(), block.getGridY(), block.getGridZ(), WorldTile.Tile.Empty);
+                world.updateChunk(block.getGridX(), block.getGridY());
                 gameData.inventory.removeItem(blockType);
             }
         }
