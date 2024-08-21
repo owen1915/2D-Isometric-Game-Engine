@@ -20,10 +20,22 @@ public class Chunk {
         this.gameData = gameData;
         chunkImage = new BufferedImage[gameData.camera.maxScale];
         createChunk();
+        for (int i = 0; i < chunkImage.length; i++) {
+            chunkImage[i] = createImage(i);
+        }
     }
 
-    public void updateChunk() {
-        createChunk();
+    public void updateChunk(Block block) {
+        int x = block.getGridX() % gameData.chunkSize;
+        int y = block.getGridY() % gameData.chunkSize;
+
+        //update block array
+        chunk[block.getGridZ()][x][y] = block;
+
+        //update image
+        for (int i = 0; i < chunkImage.length; i++) {
+            chunkImage[i] = createImage(i);
+        }
     }
 
     private void createChunk() {
@@ -40,9 +52,6 @@ public class Chunk {
                 x++;
             }
         }
-        for (int i = 0; i < chunkImage.length; i++) {
-            chunkImage[i] = createImage(i);
-        }
     }
 
     public BufferedImage createImage(int scale) {
@@ -57,26 +66,9 @@ public class Chunk {
                 for (int y = 0; y < gameData.chunkSize; y++) {
                     Block block = chunk[z][x][y];
                     if (block != null && !block.isEmpty()) {
-                        boolean drawTop = false;
-                        boolean drawRight = false;
-                        boolean drawLeft = false;
-                        if (z != 2) {
-                            if (chunk[z + 1][x][y].isEmpty()) {
-                                drawTop = true;
-                            }
-                        } else {
-                            drawTop = true;
-                            drawRight = true;
-                            drawLeft = true;
-                        }
-
-                        if (y + 1 > gameData.chunkSize - 1 || chunk[z][x][y + 1].isEmpty()) {
-                            drawLeft = true;
-                        }
-
-                        if (x + 1 > gameData.chunkSize - 1 || chunk[z][x + 1][y].isEmpty()) {
-                            drawRight = true;
-                        }
+                        boolean drawTop = true;
+                        boolean drawRight = true;
+                        boolean drawLeft = true;
 
                         int drawX = isoCordTool.getXIso(x, y) + width;
                         int drawY = isoCordTool.getYIso(x, y) - (z * tileSize/2) + tileSize;

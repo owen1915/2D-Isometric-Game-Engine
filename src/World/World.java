@@ -46,10 +46,10 @@ public class World {
                             bottomLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Wall, true);
                             break;
                         case 1:
-                            middleLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Wall, true);
+                            middleLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Empty, true);
                             break;
                         case 2:
-                            topLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Dirt, true);
+                            topLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Empty, true);
                             break;
                     }
                 }
@@ -78,17 +78,17 @@ public class World {
         }
     }
 
-    public void updateChunk(int x, int y) {
-        int chunkX = x / gameData.chunkSize;
-        int chunkY = y / gameData.chunkSize;
+    public void updateChunk(Block block) {
+        int chunkX = block.getGridX() / gameData.chunkSize;
+        int chunkY = block.getGridY() / gameData.chunkSize;
 
         if (chunkX > -1 && chunkX < amntOfChunks && chunkY > -1 && chunkY < amntOfChunks) {
-            gameData.world.getChunks()[chunkY][chunkX].updateChunk();
+            gameData.world.getChunks()[chunkY][chunkX].updateChunk(block);
         }
     }
 
     public Block findBlockByRayCasting(int gridX, int gridY) {
-        return getBlockOnGrid(gridX, gridY, 1);
+        return getBlockOnGrid(gridX, gridY, 0);
     }
 
     public Block checkPolygonHitting(Block[] blocks, int mouseX, int mouseY, boolean remove) {
@@ -115,18 +115,25 @@ public class World {
     }
 
     public Block[] getBlocksAround(Block block) {
-        Block[] blocks = new Block[11];
-        blocks[10] = getBlockOnGrid(block.getGridX(), block.getGridY(), block.getGridZ());
-        blocks[9] = getBlockOnGrid(block.getGridX() + 1, block.getGridY(), block.getGridZ());
-        blocks[8] = getBlockOnGrid(block.getGridX(), block.getGridY() + 1, block.getGridZ());
-        blocks[7] = getBlockOnGrid(block.getGridX() + 1, block.getGridY() + 1, block.getGridZ());
-        blocks[6] = getBlockOnGrid(block.getGridX(), block.getGridY(), block.getGridZ() + 1);
-        blocks[5] = getBlockOnGrid(block.getGridX() + 1, block.getGridY(), block.getGridZ() + 1);
-        blocks[4] = getBlockOnGrid(block.getGridX(), block.getGridY() + 1, block.getGridZ() + 1);
-        blocks[3] = getBlockOnGrid(block.getGridX() + 1, block.getGridY() + 1, block.getGridZ() + 1);
-        blocks[2] = getBlockOnGrid(block.getGridX() + 2, block.getGridY() + 1, block.getGridZ() + 1);
-        blocks[1] = getBlockOnGrid(block.getGridX() + 1, block.getGridY() + 2, block.getGridZ() + 1);
-        blocks[0] = getBlockOnGrid(block.getGridX() + 2, block.getGridY() + 2, block.getGridZ() + 1);
+        Block[] blocks = new Block[18];
+        blocks[17] = getBlockOnGrid(block.getGridX(), block.getGridY(), 0);
+        blocks[16] = getBlockOnGrid(block.getGridX() + 1, block.getGridY(), 0);
+        blocks[15] = getBlockOnGrid(block.getGridX(), block.getGridY() + 1, 0);
+        blocks[14] = getBlockOnGrid(block.getGridX() + 1, block.getGridY() + 1, 0);
+        blocks[13] = getBlockOnGrid(block.getGridX(), block.getGridY(), 1);
+        blocks[12] = getBlockOnGrid(block.getGridX() + 1, block.getGridY(), 1);
+        blocks[11] = getBlockOnGrid(block.getGridX(), block.getGridY() + 1, 1);
+        blocks[10] = getBlockOnGrid(block.getGridX() + 1, block.getGridY() + 1, 1);
+        blocks[9] = getBlockOnGrid(block.getGridX() + 2, block.getGridY() + 1, 1);
+        blocks[8] = getBlockOnGrid(block.getGridX() + 1, block.getGridY() + 2, 1);
+        blocks[7] = getBlockOnGrid(block.getGridX() + 2, block.getGridY() + 2, 1);
+        blocks[6] = getBlockOnGrid(block.getGridX(), block.getGridY(), 2);
+        blocks[5] = getBlockOnGrid(block.getGridX() + 1, block.getGridY(), 2);
+        blocks[4] = getBlockOnGrid(block.getGridX(), block.getGridY() + 1, 2);
+        blocks[3] = getBlockOnGrid(block.getGridX() + 1, block.getGridY() + 1, 2);
+        blocks[2] = getBlockOnGrid(block.getGridX() + 2, block.getGridY() + 1, 2);
+        blocks[1] = getBlockOnGrid(block.getGridX() + 1, block.getGridY() + 2, 2);
+        blocks[0] = getBlockOnGrid(block.getGridX() + 2, block.getGridY() + 2, 2);
         return blocks;
     }
 

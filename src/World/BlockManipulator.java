@@ -21,22 +21,14 @@ public class BlockManipulator {
 
         World world = gameData.world;
         Block block = gameData.world.findBlockByRayCasting(gridX, gridY);
-        int count = 0;
-        while (block == null && count < 3) {
-            gridX += 1;
-            gridY += 1;
-            block = gameData.world.findBlockByRayCasting(gridX, gridY);
-            count++;
-        }
 
-        if (block == null) {
-            return null;
+        if (block != null) {
+            Block[] blocks = world.getBlocksAround(block);
+            emptyBlocks[0] = blocks[0];
+            emptyBlocks[1] = blocks[4];
+            return world.checkPolygonHitting(blocks, mouseX, mouseY, remove);
         }
-
-        Block[] blocks = world.getBlocksAround(block);
-        emptyBlocks[0] = blocks[0];
-        emptyBlocks[1] = blocks[4];
-        return world.checkPolygonHitting(blocks, mouseX, mouseY, remove);
+        return null;
     }
 
     public boolean checkBoundary(int x, int y) {
@@ -49,20 +41,12 @@ public class BlockManipulator {
         }
         WorldTile.Tile blockType = gameData.inventory.getInventory()[gameData.selectedSlot].getTileType();
 
-        IsoCordTool isoCordTool = new IsoCordTool(gameData);
-        int gridX = isoCordTool.getXFromIso(mouseX - gameData.camera.getxOffset(), mouseY - gameData.camera.getyOffset());
-        int gridY = isoCordTool.getYFromIso(mouseX - gameData.camera.getxOffset(), mouseY - gameData.camera.getyOffset());
-        Block block = gameData.world.findBlockByRayCasting(gridX, gridY);
-
         Block targetBlock = getBlock(mouseX, mouseY, false);
         World world = gameData.world;
+
         if (targetBlock != null && targetBlock.isEmpty() && checkBoundary(targetBlock.getGridX(), targetBlock.getGridY())) {
             world.setBlockOnGrid(targetBlock.getGridX(), targetBlock.getGridY(), targetBlock.getGridZ(), blockType);
-            world.updateChunk(targetBlock.getGridX(), targetBlock.getGridY());
-            gameData.inventory.placeItem();
-        } else if (block != null && block.isEmpty() && checkBoundary(block.getGridX(), block.getGridY()) && (emptyBlocks[0] != null && emptyBlocks[0].isEmpty() || emptyBlocks[1] != null && emptyBlocks[1].isEmpty())) {
-            block.setBlockType(blockType);
-            world.updateChunk(block.getGridX(), block.getGridY());
+            world.updateChunk(targetBlock);
             gameData.inventory.placeItem();
         }
     }
@@ -73,9 +57,9 @@ public class BlockManipulator {
 
         if (block != null) {
             WorldTile.Tile blockType = block.getBlockType();
-            if (checkBoundary(block.getGridX(), block.getGridY())) {
+            if (checkBoundary(block.getGridX(), block.getGridY()) && block.getGridZ() > 0) {
                 world.setBlockOnGrid(block.getGridX(), block.getGridY(), block.getGridZ(), WorldTile.Tile.Empty);
-                world.updateChunk(block.getGridX(), block.getGridY());
+                world.updateChunk(block);
                 gameData.inventory.removeItem(blockType);
             }
         }

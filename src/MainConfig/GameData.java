@@ -20,8 +20,8 @@ public class GameData {
     // when creating debug options like printing fps, always check if debug is true
     public boolean debug = true;
     // screenWidth and screenHeight
-    public int screenWidth = 1280;
-    public int screenHeight = 720;
+    public int screenWidth = 1920;
+    public int screenHeight = 1080;
     // fullscreen
     public boolean fullscreen = false;
     //chunk size
