@@ -163,8 +163,10 @@ public class Chunk {
             Block blockToLeft = null;
             Block blockToRight = null;
             Block blockDiagonal = null;
+            Block blockAbove = null;
 
             if (z != 2) {
+                blockAbove = chunk[z + 1][x][y];
                 if (yInRange) {
                     upToLeftBlock = chunk[z + 1][x][y + 1];
                 }
@@ -202,6 +204,11 @@ public class Chunk {
             if (blockDiagonal == null || blockDiagonal.isEmpty()) {
                 drawLeftBotTri = true;
                 drawRightBotTri = true;
+            }
+
+            if (blockAbove != null && !blockAbove.isEmpty()) {
+                drawTopLeftTri = false;
+                drawTopRightTri = false;
             }
 
             if (drawTopLeftTri && drawTopRightTri) {
