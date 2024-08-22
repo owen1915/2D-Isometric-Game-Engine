@@ -91,8 +91,6 @@ public class Chunk {
 
             g.setComposite(AlphaComposite.Clear);
 
-            System.out.println(drawX + " " + drawY);
-
             // Calculate the isometric coordinates for the polygon
             int[] xPoints = {
                     drawX + tileSize / 2,
@@ -117,6 +115,9 @@ public class Chunk {
 
             g.setComposite(AlphaComposite.SrcOver);
 
+            draw(z - 1, x - 1, y - 1, g, i, isoCordTool, tileSize);
+            draw(z - 1, x - 1, y, g, i, isoCordTool, tileSize);
+            draw(z - 1, x, y - 1, g, i, isoCordTool, tileSize);
             draw(z - 1, x, y, g, i, isoCordTool, tileSize);
             draw(z, x, y, g, i, isoCordTool, tileSize);
 
