@@ -41,6 +41,70 @@ public class Block {
         return new Polygon[] {getLeftPolygon(), getRightPolygon(), getTopPolygon()};
     }
 
+    public BufferedImage getLeftTopTriangle(int scale) {
+        Image block = gameData.imageLoader.getScaledTextures(scale)[getBlockType().ordinal()];
+        BufferedImage blockImage = gameData.imageLoader.toBufferedImage(block);
+        int tilesize = gameData.camera.getZoomAmnt() + (gameData.camera.getZoomAmnt() * scale);
+
+        // Assuming the top of the isometric tile is triangular
+        int[] xPoints = {
+                tilesize / 2,
+                0,
+                tilesize / 2,
+        };
+
+        int[] yPoints = {
+                0,
+                tilesize / 4,
+                tilesize / 2
+        };
+
+        Polygon topLeftTriangle = new Polygon(xPoints, yPoints, xPoints.length);
+
+        // Create a new BufferedImage for the top triangle
+        BufferedImage topLeftTriangleImage = new BufferedImage(tilesize, tilesize / 2, BufferedImage.TYPE_INT_ARGB);
+
+        // Draw the top triangle from the original blockImage
+        Graphics2D g2d = topLeftTriangleImage.createGraphics();
+        g2d.setClip(topLeftTriangle);
+        g2d.drawImage(blockImage, 0, 0, null);
+        g2d.dispose();
+
+        return topLeftTriangleImage;
+    }
+
+    public BufferedImage getRightTopTriangle(int scale) {
+        Image block = gameData.imageLoader.getScaledTextures(scale)[getBlockType().ordinal()];
+        BufferedImage blockImage = gameData.imageLoader.toBufferedImage(block);
+        int tilesize = gameData.camera.getZoomAmnt() + (gameData.camera.getZoomAmnt() * scale);
+
+        // Assuming the top of the isometric tile is triangular
+        int[] xPoints = {
+                tilesize / 2,
+                tilesize,
+                tilesize / 2,
+        };
+
+        int[] yPoints = {
+                0,
+                tilesize / 4,
+                tilesize / 2
+        };
+
+        Polygon topRightTriangle = new Polygon(xPoints, yPoints, xPoints.length);
+
+        // Create a new BufferedImage for the top triangle
+        BufferedImage topRightTriangleImage = new BufferedImage(tilesize, tilesize / 2, BufferedImage.TYPE_INT_ARGB);
+
+        // Draw the top triangle from the original blockImage
+        Graphics2D g2d = topRightTriangleImage.createGraphics();
+        g2d.setClip(topRightTriangle);
+        g2d.drawImage(blockImage, 0, 0, null);
+        g2d.dispose();
+
+        return topRightTriangleImage;
+    }
+
     private Polygon getLeftPolygon() {
         isoCordTool = new IsoCordTool(gameData);
         int screenX = isoCordTool.getXIso(gridX, gridY) + gameData.camera.getxOffset();
@@ -87,6 +151,70 @@ public class Block {
         return topImage;
     }
 
+    public BufferedImage getRightSideLeftTriangle(int scale) {
+        Image block = gameData.imageLoader.getScaledTextures(scale)[getBlockType().ordinal()];
+        BufferedImage blockImage = gameData.imageLoader.toBufferedImage(block);
+        int tilesize = gameData.camera.getZoomAmnt() + (gameData.camera.getZoomAmnt() * scale);
+
+        // Assuming the top of the isometric tile is triangular
+        int[] xPoints = {
+                tilesize / 2,
+                tilesize / 2,
+                tilesize
+        };
+
+        int[] yPoints = {// Top center
+                tilesize/2,
+                tilesize,
+                tilesize - tilesize/4
+        };
+
+        Polygon leftTriangle = new Polygon(xPoints, yPoints, xPoints.length);
+
+        // Create a new BufferedImage for the top triangle
+        BufferedImage leftImage = new BufferedImage(tilesize, tilesize, BufferedImage.TYPE_INT_ARGB);
+
+        // Draw the top triangle from the original blockImage
+        Graphics2D g2d = leftImage.createGraphics();
+        g2d.setClip(leftTriangle);
+        g2d.drawImage(blockImage, 0, 0, null);
+        g2d.dispose();
+
+        return leftImage;
+    }
+
+    public BufferedImage getRightSideRightTriangle(int scale) {
+        Image block = gameData.imageLoader.getScaledTextures(scale)[getBlockType().ordinal()];
+        BufferedImage blockImage = gameData.imageLoader.toBufferedImage(block);
+        int tilesize = gameData.camera.getZoomAmnt() + (gameData.camera.getZoomAmnt() * scale);
+
+        // Assuming the top of the isometric tile is triangular
+        int[] xPoints = {
+                tilesize / 2,
+                tilesize,
+                tilesize
+        };
+
+        int[] yPoints = {// Top center
+                tilesize/2,
+                tilesize/4,
+                tilesize - tilesize/4
+        };
+
+        Polygon leftTriangle = new Polygon(xPoints, yPoints, xPoints.length);
+
+        // Create a new BufferedImage for the top triangle
+        BufferedImage leftImage = new BufferedImage(tilesize, tilesize, BufferedImage.TYPE_INT_ARGB);
+
+        // Draw the top triangle from the original blockImage
+        Graphics2D g2d = leftImage.createGraphics();
+        g2d.setClip(leftTriangle);
+        g2d.drawImage(blockImage, 0, 0, null);
+        g2d.dispose();
+
+        return leftImage;
+    }
+
     public BufferedImage getRightSide(int scale) {
         Image block = gameData.imageLoader.getScaledTextures(scale)[getBlockType().ordinal()];
         BufferedImage blockImage = gameData.imageLoader.toBufferedImage(block);
@@ -112,6 +240,70 @@ public class Block {
 
         // Create a new BufferedImage for the top triangle
         BufferedImage leftImage = new BufferedImage(tilesize, tilesize, BufferedImage.TYPE_INT_ARGB);
+
+        // Draw the top triangle from the original blockImage
+        Graphics2D g2d = leftImage.createGraphics();
+        g2d.setClip(leftTriangle);
+        g2d.drawImage(blockImage, 0, 0, null);
+        g2d.dispose();
+
+        return leftImage;
+    }
+
+    public BufferedImage getLeftSideRightTriangle(int scale) {
+        Image block = gameData.imageLoader.getScaledTextures(scale)[getBlockType().ordinal()];
+        BufferedImage blockImage = gameData.imageLoader.toBufferedImage(block);
+        int tilesize = gameData.camera.getZoomAmnt() + (gameData.camera.getZoomAmnt() * scale);
+
+        // Assuming the top of the isometric tile is triangular
+        int[] xPoints = {
+                0,
+                tilesize / 2,
+                tilesize / 2
+        };
+
+        int[] yPoints = {
+                tilesize - tilesize/4,
+                tilesize/2,
+                tilesize
+        };
+
+        Polygon leftTriangle = new Polygon(xPoints, yPoints, xPoints.length);
+
+        // Create a new BufferedImage for the top triangle
+        BufferedImage leftImage = new BufferedImage(tilesize/2, tilesize, BufferedImage.TYPE_INT_ARGB);
+
+        // Draw the top triangle from the original blockImage
+        Graphics2D g2d = leftImage.createGraphics();
+        g2d.setClip(leftTriangle);
+        g2d.drawImage(blockImage, 0, 0, null);
+        g2d.dispose();
+
+        return leftImage;
+    }
+
+    public BufferedImage getLeftSideLeftTriangle(int scale) {
+        Image block = gameData.imageLoader.getScaledTextures(scale)[getBlockType().ordinal()];
+        BufferedImage blockImage = gameData.imageLoader.toBufferedImage(block);
+        int tilesize = gameData.camera.getZoomAmnt() + (gameData.camera.getZoomAmnt() * scale);
+
+        // Assuming the top of the isometric tile is triangular
+        int[] xPoints = {
+                0,
+                0,
+                tilesize / 2
+        };
+
+        int[] yPoints = {
+                tilesize / 4,
+                tilesize - tilesize/4,
+                tilesize/2
+        };
+
+        Polygon leftTriangle = new Polygon(xPoints, yPoints, xPoints.length);
+
+        // Create a new BufferedImage for the top triangle
+        BufferedImage leftImage = new BufferedImage(tilesize/2, tilesize, BufferedImage.TYPE_INT_ARGB);
 
         // Draw the top triangle from the original blockImage
         Graphics2D g2d = leftImage.createGraphics();

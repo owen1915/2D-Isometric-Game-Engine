@@ -3,14 +3,9 @@ package MainConfig;
 import Graphics.Camera.Camera;
 import Graphics.GameGraphics;
 import Graphics.Inventory.Inventory;
-import Graphics.IsoCordTool;
 import Graphics.Panels.GamePanel;
 import World.BlockManipulator;
-import MainConfig.TextureSplicer.GridManager;
-import MainConfig.TextureSplicer.TextureManager;
 import World.World;
-import World.WorldTile.Tile;
-import org.w3c.dom.Text;
 
 import java.util.Random;
 
@@ -25,7 +20,7 @@ public class GameData {
     // fullscreen
     public boolean fullscreen = false;
     //chunk size
-    public int chunkSize = 8;
+    public int chunkSize = 16;
     //random
     public Random random = new Random();
     //default worldsize

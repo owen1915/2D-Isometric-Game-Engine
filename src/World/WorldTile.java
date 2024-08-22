@@ -16,6 +16,7 @@ public class WorldTile {
         turret,
         Belt,
         RedSelection,
+        Bedrock,
         Transparent,
         MaskingTile
     }

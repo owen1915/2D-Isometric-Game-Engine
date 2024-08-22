@@ -18,7 +18,7 @@ public class Item {
 
         itemImage = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = itemImage.createGraphics();
-        g.drawImage(gameData.imageLoader.getTextures()[tileType.ordinal()].getScaledInstance(64, 64, Image.SCALE_SMOOTH), 0, 0, null);
+        g.drawImage(gameData.imageLoader.getScaledTextures(1)[tileType.ordinal()].getScaledInstance(64, 64, Image.SCALE_SMOOTH), 0, 0, null);
         g.dispose();
     }
 

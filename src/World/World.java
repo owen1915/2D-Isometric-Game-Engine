@@ -43,7 +43,7 @@ public class World {
                 for (int x = 0; x < worldSize; x++) {
                     switch (z) {
                         case 0:
-                            bottomLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Wall, true);
+                            bottomLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Bedrock, true);
                             break;
                         case 1:
                             middleLayer[x][y] = new Block(gameData, x, y, z, WorldTile.Tile.Empty, true);

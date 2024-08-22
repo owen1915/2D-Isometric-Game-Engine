@@ -115,63 +115,117 @@ public class Chunk {
 
             g.setComposite(AlphaComposite.SrcOver);
 
-            draw(z - 1, x - 1, y - 1, g, i, isoCordTool, tileSize);
-            draw(z - 1, x - 1, y, g, i, isoCordTool, tileSize);
-            draw(z - 1, x, y - 1, g, i, isoCordTool, tileSize);
-            draw(z - 1, x, y, g, i, isoCordTool, tileSize);
-            draw(z, x, y, g, i, isoCordTool, tileSize);
+            for (int drawZ = 0; drawZ < 3; drawZ++) {
+                draw(drawZ, x - 2, y - 2, g, i, isoCordTool, tileSize); // very back
+                draw(drawZ, x - 2, y - 1, g, i, isoCordTool, tileSize); // left forward of last
+                draw(drawZ, x - 1, y - 2, g, i, isoCordTool, tileSize); // right forward of last
+                draw(drawZ, x - 1, y - 1, g, i, isoCordTool, tileSize); // diagonal of very back
+                draw(drawZ, x - 1, y, g, i, isoCordTool, tileSize); // left forward of last
+                draw(drawZ, x, y - 1, g, i, isoCordTool, tileSize); // right forward of last
+                draw(drawZ, x, y, g, i, isoCordTool, tileSize); // original tile
+                draw(drawZ, x + 1, y - 1, g, i, isoCordTool, tileSize); // right of original
+                draw(drawZ,  x - 1, y + 1, g, i, isoCordTool, tileSize); // left of original
+                draw(drawZ, x + 1, y, g, i, isoCordTool, tileSize); // right forward of original
+                draw(drawZ, x, y + 1, g, i, isoCordTool, tileSize); // left forward of original
+                draw(drawZ, x + 1, y + 1, g, i, isoCordTool, tileSize); // diagonal of original
+                draw(drawZ, x + 2, y + 1, g, i, isoCordTool, tileSize); // right forward of last
+                draw(drawZ, x + 1, y + 2, g, i, isoCordTool, tileSize); // left forward of last
+                draw(drawZ, x + 2, y + 2, g, i, isoCordTool, tileSize); // diagonal of last
+            }
 
-            // Dispose of the graphics context
+            // Dispose of the graphics
             g.dispose();
         }
     }
 
     public void draw(int z, int x, int y, Graphics2D g, int scale, IsoCordTool isoCordTool, int tileSize) {
+        if (z < 0 || z > 3 || x < 0 || x >= gameData.chunkSize || y < 0 || y >= gameData.chunkSize) {
+            return;
+        }
+
         Block block = chunk[z][x][y];
         if (block != null && !block.isEmpty()) {
-            boolean drawTop = false;
-            boolean drawRight = false;
-            boolean drawLeft = false;
+            boolean drawTopLeftTri = false;
+            boolean drawTopRightTri = false;
+            boolean drawRightBotTri = false;
+            boolean drawRightTopTri = false;
+            boolean drawLeftTopTri = false;
+            boolean drawLeftBotTri = false;
 
             int drawX = isoCordTool.getXIso(x, y) + (gameData.chunkSize * tileSize)/2 - tileSize/2;;
             int drawY = isoCordTool.getYIso(x, y) - (z * tileSize/2) + tileSize;
 
-            Block blockAbove = null;
-            Block blockForwardLeft = null;
-            Block blockForwardRight = null;
+            boolean yInRange = y > 0 && y < gameData.chunkSize - 1;
+            boolean xInRange = x > 0 && x < gameData.chunkSize - 1;
+
+            Block upToLeftBlock = null;
+            Block upToRightBlock = null;
+            Block blockToLeft = null;
+            Block blockToRight = null;
+            Block blockDiagonal = null;
 
             if (z != 2) {
-                blockAbove = chunk[z + 1][x][y];
+                if (yInRange) {
+                    upToLeftBlock = chunk[z + 1][x][y + 1];
+                }
+                if (xInRange) {
+                    upToRightBlock = chunk[z + 1][x + 1][y];
+                }
             }
 
-            if (y != gameData.chunkSize - 1) {
-                blockForwardLeft = chunk[z][x][y + 1];
+            if (yInRange) {
+                blockToLeft = chunk[z][x][y + 1];
+            }
+            if (xInRange) {
+                blockToRight = chunk[z][x + 1][y];
+            }
+            if (xInRange && yInRange) {
+                blockDiagonal = chunk[z][x + 1][y + 1];
             }
 
-            if (x != gameData.chunkSize - 1) {
-                blockForwardRight = chunk[z][x + 1][y];
+            if (upToLeftBlock == null || upToLeftBlock.isEmpty()) {
+                drawTopLeftTri = true;
             }
 
-            if (blockAbove != null && blockAbove.isEmpty()) {
-                drawTop = true;
+            if (upToRightBlock == null || upToRightBlock.isEmpty()) {
+                drawTopRightTri = true;
             }
 
-            if (blockForwardLeft == null || blockForwardLeft.isEmpty()) {
-                drawLeft = true;
+            if (blockToLeft == null || blockToLeft.isEmpty()) {
+                drawLeftTopTri = true;
             }
 
-            if (blockForwardRight == null || blockForwardRight.isEmpty()) {
-                drawRight = true;
+            if (blockToRight == null || blockToRight.isEmpty()) {
+                drawRightTopTri = true;
             }
 
-            if (drawTop) {
+            if (blockDiagonal == null || blockDiagonal.isEmpty()) {
+                drawLeftBotTri = true;
+                drawRightBotTri = true;
+            }
+
+            if (drawTopLeftTri && drawTopRightTri) {
                 g.drawImage(block.getTop(scale), drawX, drawY, null);
+            } else if (drawTopLeftTri) {
+                g.drawImage(block.getLeftTopTriangle(scale), drawX, drawY, null);
+            } else if (drawTopRightTri) {
+                g.drawImage(block.getRightTopTriangle(scale), drawX, drawY, null);
             }
-            if (drawLeft) {
+
+            if (drawLeftTopTri && drawLeftBotTri) {
                 g.drawImage(block.getLeftSide(scale), drawX, drawY, null);
+            } else if (drawLeftTopTri) {
+                g.drawImage(block.getLeftSideLeftTriangle(scale), drawX, drawY, null);
+            } else if (drawLeftBotTri) {
+                g.drawImage(block.getLeftSideRightTriangle(scale), drawX, drawY, null);
             }
-            if (drawRight) {
+
+            if (drawRightTopTri && drawRightBotTri) {
                 g.drawImage(block.getRightSide(scale), drawX, drawY, null);
+            } else if (drawRightBotTri) {
+                g.drawImage(block.getRightSideLeftTriangle(scale), drawX, drawY, null);
+            } else if (drawRightTopTri) {
+                g.drawImage(block.getRightSideRightTriangle(scale), drawX, drawY, null);
             }
         }
     }
